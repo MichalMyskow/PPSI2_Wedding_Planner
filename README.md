@@ -43,7 +43,7 @@ docker-compose up -d --build
 docker-compose exec php composer install
 ```
 
-###Udostępnione porty
+### Udostępnione porty
 
 ***Aplikacja powinna być dostępna pod:***
 ```
@@ -55,7 +55,7 @@ http://localhost:8080
 http://localhost:8081
 ```
 
-###Dane logowania do phpMyAdmin
+### Dane logowania do phpMyAdmin
 ```
 Serwer: database
 Użytkownik: user
