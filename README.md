@@ -7,6 +7,7 @@ This project was created for the purpose of passing the PPSI 2 course (Design an
 * Michał Myśków *(DevOps/Backend)*
 * Anna Sokołowska *(Frontend/Backend)*
 * Jan Kwiatkowski *(Frontend/Backend)*
+* test
 * Szymon Michno *(Tester)*
 
 ### Technologie 
