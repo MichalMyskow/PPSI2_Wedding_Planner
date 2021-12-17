@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,73 +14,53 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
-     * @var int
-     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer", nullable=false)
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="email", type="string", length=180, unique=true, nullable=false)
      * @Assert\NotBlank()
      * @Assert\Email()
      */
-    private $email;
+    private string $email;
 
     /**
-     * @var array
-     *
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private array $roles = [];
 
     /**
      * @var string The hashed password
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
-     * @Assert\NotBlank()
      */
-    private $password;
+    private string $password;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="username" ,type="string", length=255, nullable=false)
      * @Assert\NotBlank()
      */
-    private $username;
+    private string $username;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="first_name", type="string", length=255, nullable=false)
+     * @ORM\Column(name="registered_at", type="datetimetz", nullable=false, options={"default":"CURRENT_TIMESTAMP"})
      * @Assert\NotBlank()
      */
-    private $firstName;
+    private DateTimeInterface $registeredAt;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="last_name", type="string", length=255, nullable=false)
-     * @Assert\NotBlank()
+     * @ORM\OneToOne(targetEntity=Wedding::class, inversedBy="owner", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="wedding_id", nullable=true)
      */
-    private $lastName;
-
-    /**
-     * @var DateTimeInterface
-     *
-     * @ORM\Column(name="registered_at", type="datetime", nullable=false)
-     * @Assert\NotBlank()
-     */
-    private $registeredAt;
+    private Wedding $wedding;
 
     public function __construct()
     {
@@ -172,33 +153,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->username;
     }
 
-    public function setUsername(?string $username): self
+    public function setUsername(string $username): self
     {
         $this->username = $username;
-
-        return $this;
-    }
-
-    public function getFirstName(): string
-    {
-        return $this->firstName;
-    }
-
-    public function setFirstName(string $firstName): self
-    {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    public function getLastName(): string
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName(string $lastName): self
-    {
-        $this->lastName = $lastName;
 
         return $this;
     }
@@ -206,5 +163,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRegisteredAt(): DateTimeInterface
     {
         return $this->registeredAt;
+    }
+
+    public function getWedding(): Wedding
+    {
+        return $this->wedding;
+    }
+
+    public function setWedding(Wedding $wedding): self
+    {
+        if ($wedding->getOwner() !== $this) {
+            $wedding->setOwner($this);
+        }
+
+        $this->wedding = $wedding;
+
+        return $this;
     }
 }

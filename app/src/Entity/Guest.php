@@ -13,45 +13,40 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Guest
 {
     /**
-     * @var int
-     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer", nullable=false)
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
-    private $email;
+    private ?string $email;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="first_name", type="string", length=255, nullable=false)
      * @Assert\NotBlank()
      */
-    private $firstName;
+    private string $firstName;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="last_name", type="string", length=255, nullable=false)
      * @Assert\NotBlank()
      */
-    private $lastName;
+    private string $lastName;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="acceptation", type="boolean", nullable=false)
      * @Assert\Type(type="bool")
      * @Assert\NotNull()
      */
-    private $acceptation = false;
+    private bool $acceptation = false;
+
+    /**
+     * @ORM\Column(name="seat_number", type="integer", nullable=true)
+     */
+    private ?int $seatNumber;
 
     public function getId(): ?int
     {
@@ -102,6 +97,18 @@ class Guest
     public function setAcceptation(bool $acceptation): self
     {
         $this->acceptation = $acceptation;
+
+        return $this;
+    }
+
+    public function getSeatNumber(): ?int
+    {
+        return $this->seatNumber;
+    }
+
+    public function setSeatNumber(?int $seatNumber): self
+    {
+        $this->seatNumber = $seatNumber;
 
         return $this;
     }

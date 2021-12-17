@@ -13,29 +13,29 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Room
 {
     /**
-     * @var int
-     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer", nullable=false)
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="size", type="integer", nullable=false)
      * @Assert\NotBlank()
      */
-    private $size;
+    private int $size;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      * @Assert\NotBlank()
      */
-    private $name;
+    private string $name;
+
+    /**
+     * @ORM\Column(name="address", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
+     */
+    private string $address;
 
     public function getId(): ?int
     {
@@ -62,6 +62,18 @@ class Room
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getAddress(): string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): self
+    {
+        $this->address = $address;
 
         return $this;
     }
