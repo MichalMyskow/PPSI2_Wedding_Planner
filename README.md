@@ -43,6 +43,13 @@ docker-compose up -d --build
 docker-compose exec php composer install
 ```
 
+### Migracje
+**Utworzenie migracji**
+```
+php bin/console doctrine:migrations:diff
+php bin/console doctrine:migrations:migrate
+```
+
 ### Udostępnione porty
 
 ***Aplikacja powinna być dostępna pod:***
