@@ -39,4 +39,16 @@
         Sign in
     </button>
 </form>
+
+    <hr>
+
+    <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}">
+        <span>Login with Facebook</span>
+    </a>
+
+    <hr>
+    Nie masz konta?
+    <a href="{{ path('app_register') }}">
+        <span>Zarejestruj się!</span>
+    </a>
 {% endblock %}
