@@ -62,6 +62,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private Wedding $wedding;
 
+    /**
+     * @ORM\Column(name="facebook_id" ,type="string", length=255, nullable=true)
+     */
+    private string $facebookID;
+
+    /**
+     * @ORM\Column(name="facebook_access_token" ,type="string", length=2000, nullable=true)
+     */
+    private string $facebookAccessToken;
+
     public function __construct()
     {
         $this->registeredAt = new DateTimeImmutable();
@@ -179,5 +189,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->wedding = $wedding;
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFacebookID(): ?string
+    {
+        return $this->facebookID;
+    }
+
+    /**
+     * @param string|null $facebookID
+     * @return mixed
+     */
+    public function setFacebookID(?string $facebookID): void
+    {
+        $this->facebookID = $facebookID;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFacebookAccessToken(): ?string
+    {
+        return $this->facebookAccessToken;
+    }
+
+    /**
+     * @param string|null $facebookAccessToken
+     * @return mixed
+     */
+    public function setFacebookAccessToken(?string $facebookAccessToken): void
+    {
+        $this->facebookAccessToken = $facebookAccessToken;
     }
 }
