@@ -38,9 +38,21 @@ cp .env .env.local
 docker-compose up -d --build
 ```
 
-**4. Pobranie zależności**
+**4. Pobranie zależności Composer**
 ```
 docker-compose exec php composer install
+```
+
+**5. Pobranie zależności npm**
+```
+docker-compose exec php npm install
+```
+
+### Migracje
+**Utworzenie migracji**
+```
+php bin/console doctrine:migrations:diff
+php bin/console doctrine:migrations:migrate
 ```
 
 ### Udostępnione porty
