@@ -1,0 +1,78 @@
+html{
+    scrollbar-width : thin;
+    scrollbar-color: $second transparent;
+}
+
+body{
+    background-color: $first;
+    margin: 0;
+    overflow-x: hidden;
+    font-family: $main-font;
+    color: #fff;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+    color: unset;
+    cursor: pointer;
+}
+  
+p{
+    margin: 0;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-size: unset;
+    margin-block-start: unset;
+    margin-block-end: unset;
+    margin-inline-start: unset;
+    margin-inline-end: unset;
+    font-weight: unset;
+}
+
+*::selection{
+    color: $second;
+    background: white;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+    background-color: transparent
+    }
+    ::-webkit-scrollbar-thumb {
+    background-color: $second;
+    border-radius: 60px;
+}
+
+.first-color {
+    color: $second;
+}
+.muted{
+    color: #d9d9d9;
+}
+.main-link--first{
+    color: $second;
+    &:hover{
+        color: #fff;
+    }
+}
+.main-link--second{
+    color: #fff;
+    &:hover{
+        color: $second;
+    }
+}
+
+.main-margin-inline{
+    @include main-margin-inline;
+
+}
+.main-margin-block{
+    @include main-margin-block;
+}

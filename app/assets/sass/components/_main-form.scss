@@ -1,0 +1,118 @@
+input{
+    border: unset;
+    outline: unset;
+    font-family: $main-font;
+}
+.main-form{
+    margin: 10px 0;
+
+    &__input-group{
+        margin: 15px 0;
+        padding-top: .8rem;
+        padding-bottom: .4rem;
+        &--inline{
+            display: flex;
+            align-items: center;
+            font-size: 1.3rem;
+        }
+    }
+    &__input{
+        width: 100%;
+        padding: .8rem .8rem;
+        background: transparent;
+        color:#efefef;
+        border-bottom: 2px solid $second;
+        font-size: 1.2rem;
+        font-weight: 100;
+    }
+    &__label{
+        color: #fff;
+        font-size: 1.3rem;
+        display: block;
+        cursor: pointer;
+    }        
+    &__submit{
+        background-color: transparent;
+        color: $second;
+        font-size: 2.2rem;
+        margin-left: auto;
+        text-decoration-color: $second;
+        cursor: pointer;
+        border-bottom: 2px solid $second;
+        font-weight: 500;
+        width: 100%;
+        padding-bottom: 1rem;
+        margin-block: 4rem 2rem;
+        font-family: $decorative-font;
+        transition: 200ms color ease-in-out, 200ms border ease-in-out;
+        &:hover{
+            color: #fff;
+            border-color: #fff;
+        }
+    }
+    &__checkbox{
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      position: relative;
+      height: 20px;
+      width: 20px;
+      outline: none;
+      border: 1px solid $second;
+      border-radius: 3px;
+      margin: 0px 15px 0px 0;
+      cursor: pointer;
+      background: transparent;
+      display: grid;
+      align-items: center;
+      &::before,
+      &::after {
+        content:"";
+        position: absolute;
+        height: 1px;
+        top: auto;
+        background: $second;
+      }
+      &::before {
+        width: 0px;
+        right: 60%;
+        transform-origin: right bottom;
+      }
+      &::after {
+        width: 0px;
+        left: 40%;
+        transform-origin: left bottom;
+      }
+      &:checked {
+        &::before {
+            top: 13px;
+            animation: check-before .1s ease forwards;
+        }
+        &::after {
+            top: 13px;
+    
+          animation: check-after .4s ease forwards;
+        }
+      }
+    }
+}
+  @keyframes check-before {
+    0% {
+      width: 0px;
+      transform: rotate(50deg);
+    }
+    100% {
+      width: 5px;
+      transform: rotate(50deg);
+    }
+  }
+  @keyframes check-after {
+    0% {
+      width: 2px;
+      transform: rotate(-50deg);
+    }
+    100% {
+      width: 12px;
+      transform: rotate(-50deg);
+    }
+  }
+  

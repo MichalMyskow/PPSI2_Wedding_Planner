@@ -1,11 +1,57 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/app.html.twig' %}
 
-{% block title %}Register{% endblock %}
-
-{% block body %}
-    <h1>Register</h1>
-
-    {{ form_start(registrationForm) }}
+{% block style %} 
+        {{ encore_entry_link_tags('auth') }}
+{% endblock %}
+{% block main %}
+<div class="main-margin-inline main-margin-block">
+    <section>
+        <h1 class="welcome-header">Wedding<br>planner</h1>
+    </section>
+    <section>
+       <div class="welcome-content">
+            <div class="welcome-nav">
+                <h2 class="welcome-nav__current">Rejestracja</h2>
+            </div>
+            <div class="main-form welcome-form">
+                    {{ form_start(registrationForm) }}
+                        <div class="main-form__input-group">
+                            {{ form_label(registrationForm.email, 'Adres E-mail', {'label_attr': {'class': 'main-form__label'}}) }}
+                            {{ form_widget(registrationForm.email, {'attr': {'class': 'main-form__input'}}) }}
+                            {{ form_errors(registrationForm.email) }}
+                        </div>
+                        <div class="main-form__input-group">
+                            {{ form_label(registrationForm.plainPassword, 'Hasło', {'label_attr': {'class': 'main-form__label'}}) }}
+                            {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'main-form__input'}}) }}
+                            {{ form_errors(registrationForm.plainPassword) }}
+                        </div>
+                        <div class="main-form__input-group">
+                            {{ form_label(registrationForm.username, 'Nazwa użytkownika', {'label_attr': {'class': 'main-form__label'}}) }}
+                            {{ form_widget(registrationForm.username, {'attr': {'class': 'main-form__input'}}) }}
+                            {{ form_errors(registrationForm.username) }}
+                        </div>
+                        <div class="main-form__input-group--inline">
+                            {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'main-form__checkbox'}}) }}
+                            {{ form_label(registrationForm.agreeTerms, 'Akceptuję politykę prywatnosci', {'label_attr': {'class': 'main-form__label'}}) }}
+                            {{ form_errors(registrationForm.agreeTerms) }}
+                        </div>
+                        <input type="submit" value="Zarejestruj się"  class="main-form__submit">
+                    {{ form_end(registrationForm) }}
+                <div class="welcome-bottom">
+                    <div>
+                        <p>Masz już konto?</p>
+                        <a href="{{ path('app_login') }}" class="main-link--first">Zaloguj się</a>
+                    </div>
+                    
+                    <div>              
+                        <a class="main-link--first">Nie pamiętasz hasła?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+    {# {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
@@ -14,5 +60,5 @@
         {{ form_row(registrationForm.agreeTerms) }}
 
         <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+    {{ form_end(registrationForm) }} #}
 {% endblock %}

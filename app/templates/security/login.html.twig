@@ -1,54 +1,71 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/app.html.twig' %}
+{% block style %} 
+        {{ encore_entry_link_tags('auth') }}
+{% endblock %}
+{% block main %}
+<div class="main-margin-inline main-margin-block">
 
-{% block title %}Log in!{% endblock %}
+    <div class="welcome-content">
+        <section>
+            <h1 class="welcome-header">Wedding<br>planner</h1>
+        </section>
+        <section>
+            <div class="welcome-nav">
+                <h2 class="welcome-nav__current">Logowanie</h2>
+            </div>
+        </section>
+        <section>
+            <div class="main-form welcome-form">
+                <form method="post">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
 
-{% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+                    {% if app.user %}
+                        <div class="mb-3">
+                            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                        </div>
+                    {% endif %}
+                    <div class="main-form__input-group">
+                        <label for="inputEmail" class="main-form__label">Adres E-mail</label>
+                        <input type="email" class="main-form__input" value="{{ last_username }}" name="email" id="inputEmail" autocomplete="email" required autofocus>
+                    </div>                
+                    <div class="main-form__input-group">
+                        <label for="inputPassword" class="main-form__label">Hasło</label>
+                        <input type="password" name="password" id="inputPassword" class="main-form__input" autocomplete="current-password" required>
+                    </div>
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
+                    <input type="hidden" name="_csrf_token"
+                        value="{{ csrf_token('authenticate') }}"
+                    >
+                    <input type="submit" value="Zaloguj się"  class="main-form__submit">
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
-
-    <hr>
-
-    <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}">
-        <span>Login with Facebook</span>
-    </a>
-
-    <hr>
-    Nie masz konta?
-    <a href="{{ path('app_register') }}">
-        <span>Zarejestruj się!</span>
-    </a>
+                    {# Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                        See https://symfony.com/doc/current/security/remember_me.html
+                        
+                        <div class="checkbox mb-3">
+                            <label>
+                                <input type="checkbox" name="_remember_me"> Remember me
+                            </label>
+                        </div>
+                    #}
+                </form>
+                <div class="welcome-bottom">
+                    <div>
+                        <p>Nie masz konta?</p>
+                        <a href="{{ path('app_register') }}" class="main-link--first">Zarejestruj się</a>
+                        <p>lub</p>
+                        <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" class="main-link--first">
+                            Zaloguj się przez Facebook
+                        </a>
+                    </div>
+                    <div>                    
+                        <a class="main-link--first">Nie pamiętasz hasła?</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</main>
 {% endblock %}
