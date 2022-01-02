@@ -48,11 +48,22 @@ docker-compose exec php composer install
 docker-compose exec php npm install
 ```
 
+**6. Budowanie Assetów**
+```
+docker-compose exec php npm run dev
+```
+
 ### Migracje
 **Utworzenie migracji**
 ```
 php bin/console doctrine:migrations:diff
 php bin/console doctrine:migrations:migrate
+```
+
+### Bez migracji
+**Utworzenie schematu bazy danych**
+```
+php bin/console doctrine:schema:update --force
 ```
 
 ### Udostępnione porty

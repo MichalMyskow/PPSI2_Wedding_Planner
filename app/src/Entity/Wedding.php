@@ -21,32 +21,31 @@ class Wedding
     private int $id;
 
     /**
-     * @ORM\Column(name="date", type="datetimetz", nullable=true)
+     * @ORM\Column(name="date", type="datetimetz", nullable=false)
      */
     private DateTimeInterface $date;
 
     /**
-     * @ORM\Column(name="address", type="string", length=255, nullable=true)
-     */
-    private string $address;
-
-    /**
-     * @ORM\Column(name="bride_first_name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="bride_first_name", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private string $brideFirstName;
 
     /**
-     * @ORM\Column(name="bride_last_name",type="string", length=255, nullable=true)
+     * @ORM\Column(name="bride_last_name",type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private string $brideLastName;
 
     /**
-     * @ORM\Column(name="groom_first_name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="groom_first_name", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private string $groomFirstName;
 
     /**
-     * @ORM\Column(name="groom_last_name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="groom_last_name", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private string $groomLastName;
 
@@ -61,26 +60,14 @@ class Wedding
         return $this->id;
     }
 
-    public function getDate(): ?DateTimeInterface
+    public function getDate(): DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(?DateTimeInterface $date): self
+    public function setDate(DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(?string $address): self
-    {
-        $this->address = $address;
 
         return $this;
     }
@@ -101,48 +88,48 @@ class Wedding
         return $this;
     }
 
-    public function getBrideFirstName(): ?string
+    public function getBrideFirstName(): string
     {
         return $this->brideFirstName;
     }
 
-    public function setBrideFirstName(?string $brideFirstName): self
+    public function setBrideFirstName(string $brideFirstName): self
     {
         $this->brideFirstName = $brideFirstName;
 
         return $this;
     }
 
-    public function getBrideLastName(): ?string
+    public function getBrideLastName(): string
     {
         return $this->brideLastName;
     }
 
-    public function setBrideLastName(?string $brideLastName): self
+    public function setBrideLastName(string $brideLastName): self
     {
         $this->brideLastName = $brideLastName;
 
         return $this;
     }
 
-    public function getGroomFirstName(): ?string
+    public function getGroomFirstName(): string
     {
         return $this->groomFirstName;
     }
 
-    public function setGroomFirstName(?string $groomFirstName): self
+    public function setGroomFirstName(string $groomFirstName): self
     {
         $this->groomFirstName = $groomFirstName;
 
         return $this;
     }
 
-    public function getGroomLastName(): ?string
+    public function getGroomLastName(): string
     {
         return $this->groomLastName;
     }
 
-    public function setGroomLastName(?string $groomLastName): self
+    public function setGroomLastName(string $groomLastName): self
     {
         $this->groomLastName = $groomLastName;
 

@@ -1,0 +1,29 @@
+.home-card{
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: 2rem 1rem;
+    &__header{
+        border-bottom: 2px solid $second;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        &--guests{
+            &:before {
+                @extend %fa-icon;
+                @extend .fas;
+              content: fa-content($fa-var-users);
+              color: $second;
+            }
+        }
+        &--budget{
+            &:before {
+                @extend %fa-icon;
+                @extend .fas;
+              content: fa-content($fa-var-wallet);
+              color: $second;
+            }
+        }
+    }
+    &__content{
+
+    }
+}

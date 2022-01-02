@@ -1,0 +1,23 @@
+@import '../base/font-awesome';
+@import '../helpers/helpers';
+@import '../base/core';
+@import '../layout/layout';
+@import "../components/home-card";
+.wedding-counter{
+    font-family: $decorative-font;
+    font-size: 5rem;
+    text-align: center;
+    border-bottom: 2px solid $second;
+}
+
+.dashboard-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    margin: 30px 0px;
+    gap: 20px 40px;
+
+}
+
+
+
+
