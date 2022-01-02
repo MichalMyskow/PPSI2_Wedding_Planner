@@ -1,0 +1,40 @@
+.top-nav{
+    background-color: #fefefe;
+    padding-block: 1rem;
+    box-shadow: 0px 4px 15px #00000033;
+    &__content{
+        @include main-margin-inline;
+        display: flex;
+        justify-content: end;
+        gap: 1rem;
+    }
+    &__user{
+        &-avatar{
+            &:before{
+                @extend %fa-icon;
+                @extend .fas;
+                content: fa-content($fa-var-user);
+                color: $second;
+                font-size: 1.6rem;
+            }
+        }
+        &-logout{
+            &:before{
+                @extend %fa-icon;
+                @extend .fas;
+                content: fa-content($fa-var-power-off);
+                color: $second;
+                font-size: 1.6rem;
+            }
+        }
+        &-wedding-settings{
+            &:before{
+                @extend %fa-icon;
+                @extend .fas;
+                content: fa-content($fa-var-cog);
+                color: $second;
+                font-size: 1.6rem;
+            }
+        }
+    }
+}
