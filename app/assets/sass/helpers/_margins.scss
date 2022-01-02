@@ -1,0 +1,18 @@
+$margin-xl: 100px;
+$margin-l: 50px;
+$margin-s: 15px;
+@mixin main-margin-inline() {
+    margin-inline: $margin-s;
+    @media (min-width: $mobile-xl) {
+        margin-inline: $margin-l;
+    }
+    @media (min-width: $desktop-s) {
+        margin-inline: $margin-xl;
+    }
+}
+@mixin main-margin-block() {
+    margin-block: $margin-s;
+    @media (min-width: $mobile-xl) {
+        margin-block: $margin-l;
+    }
+}

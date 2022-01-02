@@ -1,0 +1,42 @@
+.welcome{
+    &-header{
+        font-family: $decorative-font;
+        font-size: 6rem;
+        line-height: 5rem;
+        text-align: center;
+        margin-block: 1rem 2rem;
+        color: $second;
+        font-weight: 300;
+    }
+    &-nav{
+        border-bottom: 2px solid $second;
+        margin-bottom: 2rem;
+        &__current{
+            color: $second;
+            font-weight: 500;
+            font-size: 3rem;
+            font-family: $decorative-font;
+        }
+    }
+
+    &-form{
+        @media (min-width: $mobile-xl) {
+            padding-inline: 50px;
+        }
+        margin: auto;
+    }
+
+    &-bottom{
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        line-height: 1.5rem;
+    }
+
+    &-content{
+        max-width: 900px;
+        margin: auto;
+    }
+}
