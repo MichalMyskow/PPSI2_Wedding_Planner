@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RoomRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -36,6 +38,16 @@ class Room
      * @Assert\NotBlank()
      */
     private string $address;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Wedding::class, mappedBy="room")
+     */
+    private $weddings;
+
+    public function __construct()
+    {
+        $this->weddings = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +86,36 @@ class Room
     public function setAddress(string $address): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Wedding[]
+     */
+    public function getWeddings(): Collection
+    {
+        return $this->weddings;
+    }
+
+    public function addWedding(Wedding $wedding): self
+    {
+        if (!$this->weddings->contains($wedding)) {
+            $this->weddings[] = $wedding;
+            $wedding->setRoom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWedding(Wedding $wedding): self
+    {
+        if ($this->weddings->removeElement($wedding)) {
+            // set the owning side to null (unless already changed)
+            if ($wedding->getRoom() === $this) {
+                $wedding->setRoom(null);
+            }
+        }
 
         return $this;
     }
