@@ -1,0 +1,18 @@
+.page-nav{
+    margin: 30px 150px;
+    color: $second;
+    display: flex;
+    gap: 2rem;
+    &__item{
+        // border-bottom: 1px solid $second;
+        // display: inline;
+        // padding-bottom: .2rem;
+        &:before {
+            @extend %fa-icon;
+            @extend .fas;
+          content: fa-content($fa-var-user-plus);
+          color: $second;
+          
+        }
+    }
+}
