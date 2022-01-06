@@ -6,12 +6,6 @@
     <div class="main-margin-inline main-margin-block">
         <section>
             <div class="welcome-content">
-                {% if app.user %}
-                    <div class="mb-3">
-                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-                    </div>
-                {% endif %}
-                You are logged in as {{ app.user.email }}, <a href="{{ path('app_logout') }}">Logout</a>
                 <div class="welcome-nav">
                     <h2 class="welcome-nav__current">Tworzenie wesela</h2>
                 </div>
