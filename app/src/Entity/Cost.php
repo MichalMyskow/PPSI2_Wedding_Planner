@@ -19,7 +19,7 @@ class Cost
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer", nullable=false)
      */
-    private $id;
+    private int $id;
 
     /**
      * @var string
@@ -27,14 +27,14 @@ class Cost
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      * @Assert\NotBlank()
      */
-    private $name;
+    private string $name;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="description", type="text", nullable=true)
      */
-    private $description;
+    private ?string $description;
 
     /**
      * @var float
@@ -42,7 +42,13 @@ class Cost
      * @ORM\Column(name="cost", type="float", nullable=false)
      * @Assert\NotBlank()
      */
-    private $cost;
+    private float $cost;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Wedding::class, inversedBy="costs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private Wedding $wedding;
 
     public function getId(): ?int
     {
@@ -81,6 +87,18 @@ class Cost
     public function setCost(float $cost): self
     {
         $this->cost = $cost;
+
+        return $this;
+    }
+
+    public function getWedding(): Wedding
+    {
+        return $this->wedding;
+    }
+
+    public function setWedding(Wedding $wedding): self
+    {
+        $this->wedding = $wedding;
 
         return $this;
     }

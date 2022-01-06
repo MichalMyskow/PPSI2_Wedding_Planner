@@ -3,16 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\RegistrationFormType;
+use App\Entity\Wedding;
+use App\Form\CreateWeddingFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class RegistrationController extends AbstractController
+class CreateWeddingController extends AbstractController
 {
+
     private TokenStorageInterface $tokenStorage;
 
     public function __construct(TokenStorageInterface $tokenStorage)
@@ -21,40 +22,40 @@ class RegistrationController extends AbstractController
         $this->tokenStorage = $tokenStorage;
     }
 
-    #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface): Response
+    #[Route('/create-wedding', name: 'create_wedding')]
+    public function create(Request $request): Response
     {
         /** @var User $user */
         $user = $this->tokenStorage->getToken()?->getUser() ?: null;
 
-        if ($user)
+        if ($user && $user->getWedding())
         {
             return $this->redirectToRoute('home');
         }
 
-        $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $wedding = new Wedding();
+        $form = $this->createForm(CreateWeddingFormType::class, $wedding);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-            $userPasswordHasherInterface->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-
+            $wedding->setOwner($user);
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
+            if ($entityManager->getRepository(Wedding::class)->findOneByDateAndRoom($wedding))
+            {
+                throw new \LogicException('Data zajęta');
+            }
+            $entityManager->persist($wedding);
             $entityManager->flush();
-            // do anything else you need here, like send an email
 
             return $this->redirectToRoute('home');
         }
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
+
+        return $this->render('feature/create_wedding.html.twig', [
+            'createWeddingForm' => $form->createView(),
         ]);
+
+
+
     }
 }

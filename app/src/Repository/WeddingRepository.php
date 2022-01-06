@@ -19,32 +19,17 @@ class WeddingRepository extends ServiceEntityRepository
         parent::__construct($registry, Wedding::class);
     }
 
-    // /**
-    //  * @return Wedding[] Returns an array of Wedding objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findOneByDateAndRoom(Wedding $wedding): ?Wedding
     {
         return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('w.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Wedding
-    {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('w.date BETWEEN :date1 AND :date2')
+            ->setParameter('date1', $wedding->getDate()->format('Y-m-d 00:00:00'))
+            ->setParameter('date2', $wedding->getDate()->format('Y-m-d 23:59:59'))
+            ->andWhere('w.room = :room')
+            ->setParameter('room', $wedding->getRoom())
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
 }

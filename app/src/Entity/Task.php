@@ -27,14 +27,14 @@ class Task
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      * @Assert\NotBlank()
      */
-    private $name;
+    private string $name;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="description", type="text", nullable=true)
      */
-    private $description;
+    private ?string $description;
 
     /**
      * @var bool
@@ -43,7 +43,12 @@ class Task
      * @Assert\Type(type="bool")
      * @Assert\NotNull()
      */
-    private $completed = false;
+    private bool $completed = false;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Wedding::class, inversedBy="tasks")
+     */
+    private ?Wedding $wedding;
 
     public function getId(): ?int
     {
@@ -82,6 +87,18 @@ class Task
     public function setCompleted(bool $completed): self
     {
         $this->completed = $completed;
+
+        return $this;
+    }
+
+    public function getWedding(): ?Wedding
+    {
+        return $this->wedding;
+    }
+
+    public function setWedding(?Wedding $wedding): self
+    {
+        $this->wedding = $wedding;
 
         return $this;
     }
