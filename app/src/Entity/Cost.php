@@ -19,7 +19,7 @@ class Cost
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer", nullable=false)
      */
-    private int $id;
+    private $id;
 
     /**
      * @var string

@@ -17,7 +17,7 @@ class Guest
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer", nullable=false)
      */
-    private int $id;
+    private $id;
 
     /**
      * @ORM\Column(name="email", type="string", length=255, nullable=true)

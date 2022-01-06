@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% block style %}
+    {{ encore_entry_link_tags('auth') }}
+{% endblock %}
+{% block main %}
+    <div class="main-margin-inline main-margin-block">
+        <section>
+            <div class="welcome-content">
+                <div class="welcome-nav">
+                    <h2 class="welcome-nav__current">Edycja wesela</h2>
+                </div>
+                <div class="main-form welcome-form">
+                    {{ form_start(weddingForm) }}
+                    {{ form_errors(weddingForm) }}
+                    <div class="main-form__input-group">
+                        {{ form_label(weddingForm.brideFirstName, 'Imię panny młodej', {'label_attr': {'class': 'main-form__label'}}) }}
+                        {{ form_widget(weddingForm.brideFirstName, {'attr': {'class': 'main-form__input'}}) }}
+                        {{ form_errors(weddingForm.brideFirstName) }}
+                    </div>
+                    <div class="main-form__input-group">
+                        {{ form_label(weddingForm.brideLastName, 'Nazwisko panny młodej', {'label_attr': {'class': 'main-form__label'}}) }}
+                        {{ form_widget(weddingForm.brideLastName, {'attr': {'class': 'main-form__input'}}) }}
+                        {{ form_errors(weddingForm.brideLastName) }}
+                    </div>
+                    <div class="main-form__input-group">
+                        {{ form_label(weddingForm.groomFirstName, 'Imię pana młodego', {'label_attr': {'class': 'main-form__label'}}) }}
+                        {{ form_widget(weddingForm.groomFirstName, {'attr': {'class': 'main-form__input'}}) }}
+                        {{ form_errors(weddingForm.groomFirstName) }}
+                    </div>
+                    <div class="main-form__input-group">
+                        {{ form_label(weddingForm.groomLastName, 'Nazwisko pana młodego', {'label_attr': {'class': 'main-form__label'}}) }}
+                        {{ form_widget(weddingForm.groomLastName, {'attr': {'class': 'main-form__input'}}) }}
+                        {{ form_errors(weddingForm.groomLastName) }}
+                    </div>
+                    <div class="main-form__input-group">
+                        {{ form_label(weddingForm.date, 'Planowana data wesela', {'label_attr': {'class': 'main-form__label'}}) }}
+                        {{ form_widget(weddingForm.date, {'attr': {'class': 'main-form__input'}}) }}
+                        {{ form_errors(weddingForm.date) }}
+                    </div>
+                    <div class="main-form__input-group">
+                        {{ form_label(weddingForm.room, 'Sala weselna', {'label_attr': {'class': 'main-form__label'}}) }}
+                        {{ form_widget(weddingForm.room, {'attr': {'class': 'main-form__input'}}) }}
+                        {{ form_errors(weddingForm.room) }}
+                    </div>
+                    <input type="submit" value="Edytuj wesele"  class="main-form__submit">
+                    {{ form_end(weddingForm) }}
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
