@@ -60,7 +60,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToOne(targetEntity=Wedding::class, inversedBy="owner", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="wedding_id", nullable=true)
      */
-    private Wedding $wedding;
+    private ?Wedding $wedding;
 
     /**
      * @ORM\Column(name="facebook_id" ,type="string", length=255, nullable=true)
@@ -175,14 +175,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->registeredAt;
     }
 
-    public function getWedding(): Wedding
+    public function getWedding(): ?Wedding
     {
         return $this->wedding;
     }
 
-    public function setWedding(Wedding $wedding): self
+    public function setWedding(?Wedding $wedding): self
     {
-        if ($wedding->getOwner() !== $this) {
+        if ($wedding && $wedding->getOwner() !== $this) {
             $wedding->setOwner($this);
         }
 

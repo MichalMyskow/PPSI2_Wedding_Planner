@@ -66,6 +66,11 @@ php bin/console doctrine:migrations:migrate
 php bin/console doctrine:schema:update --force
 ```
 
+### Załadowanie zdefiniowanych wczesniej danych do bazy danych
+```
+php bin/console doctrine:fixtures:load
+```
+
 ### Udostępnione porty
 
 ***Aplikacja powinna być dostępna pod:***

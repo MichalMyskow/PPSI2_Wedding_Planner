@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\WeddingRepository;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -51,9 +53,36 @@ class Wedding
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, mappedBy="wedding")
-     * @Assert\NotBlank()
      */
     private User $owner;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Cost::class, mappedBy="wedding", orphanRemoval=true)
+     */
+    private $costs;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Task::class, mappedBy="wedding", orphanRemoval=true)
+     */
+    private $tasks;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Guest::class, mappedBy="wedding", orphanRemoval=true)
+     */
+    private $guests;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="weddings")
+     * @ORM\JoinColumn(name="room_id", nullable=false)
+     */
+    private Room $room;
+
+    public function __construct()
+    {
+        $this->costs = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
+        $this->guests = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -79,11 +108,11 @@ class Wedding
 
     public function setOwner(User $owner): self
     {
+        $this->owner = $owner;
+
         if ($owner->getWedding() !== $this) {
             $owner->setWedding($this);
         }
-
-        $this->owner = $owner;
 
         return $this;
     }
@@ -135,4 +164,113 @@ class Wedding
 
         return $this;
     }
+
+    /**
+     * @return Collection|Cost[]
+     */
+    public function getCosts(): Collection
+    {
+        return $this->costs;
+    }
+
+    public function addCost(Cost $cost): self
+    {
+        if (!$this->costs->contains($cost)) {
+            $this->costs[] = $cost;
+            $cost->setWedding($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCost(Cost $cost): self
+    {
+        if ($this->costs->removeElement($cost)) {
+            // set the owning side to null (unless already changed)
+            if ($cost->getWedding() === $this) {
+                $cost->setWedding(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Task[]
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    public function addTask(Task $task): self
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks[] = $task;
+            $task->setWedding($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): self
+    {
+        if ($this->tasks->removeElement($task)) {
+            // set the owning side to null (unless already changed)
+            if ($task->getWedding() === $this) {
+                $task->setWedding(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Guest[]
+     */
+    public function getGuests(): Collection
+    {
+        return $this->guests;
+    }
+
+    public function addGuest(Guest $guest): self
+    {
+        if (!$this->guests->contains($guest)) {
+            $this->guests[] = $guest;
+            $guest->setWedding($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGuest(Guest $guest): self
+    {
+        if ($this->guests->removeElement($guest)) {
+            // set the owning side to null (unless already changed)
+            if ($guest->getWedding() === $this) {
+                $guest->setWedding(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Room
+     */
+    public function getRoom(): Room
+    {
+        return $this->room;
+    }
+
+    /**
+     * @param Room $room
+     * @return Wedding
+     */
+    public function setRoom(Room $room): self
+    {
+        $this->room = $room;
+        return $this;
+    }
+
 }

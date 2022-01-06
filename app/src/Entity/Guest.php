@@ -48,6 +48,12 @@ class Guest
      */
     private ?int $seatNumber;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Wedding::class, inversedBy="guests")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private Wedding $wedding;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -109,6 +115,18 @@ class Guest
     public function setSeatNumber(?int $seatNumber): self
     {
         $this->seatNumber = $seatNumber;
+
+        return $this;
+    }
+
+    public function getWedding(): Wedding
+    {
+        return $this->wedding;
+    }
+
+    public function setWedding(Wedding $wedding): self
+    {
+        $this->wedding = $wedding;
 
         return $this;
     }
