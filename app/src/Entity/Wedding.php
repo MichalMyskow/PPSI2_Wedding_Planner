@@ -8,70 +8,95 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as WeddingAssert;
 
 /**
  * @ORM\Entity(repositoryClass=WeddingRepository::class)
  * @ORM\Table(name="wedding")
+ * @WeddingAssert\WeddingExist()
  */
 class Wedding
 {
     /**
+     * @var int|null
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer", nullable=false)
      */
-    private int $id;
+    private $id;
 
     /**
+     * @var DateTimeInterface
+     *
      * @ORM\Column(name="date", type="datetimetz", nullable=false)
+     * @Assert\GreaterThan("next month")
      */
-    private DateTimeInterface $date;
+    private $date;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="bride_first_name", type="string", length=255, nullable=false)
      * @Assert\NotBlank()
      */
-    private string $brideFirstName;
+    private $brideFirstName;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="bride_last_name",type="string", length=255, nullable=false)
      * @Assert\NotBlank()
      */
-    private string $brideLastName;
+    private $brideLastName;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="groom_first_name", type="string", length=255, nullable=false)
      * @Assert\NotBlank()
      */
-    private string $groomFirstName;
+    private $groomFirstName;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="groom_last_name", type="string", length=255, nullable=false)
      * @Assert\NotBlank()
      */
-    private string $groomLastName;
+    private $groomLastName;
 
     /**
+     * @var User
+     *
      * @ORM\OneToOne(targetEntity=User::class, mappedBy="wedding")
      */
-    private User $owner;
+    private $owner;
 
     /**
+     * @var Collection|Cost[]
+     *
      * @ORM\OneToMany(targetEntity=Cost::class, mappedBy="wedding", orphanRemoval=true)
      */
     private $costs;
 
     /**
+     * @var Collection|Task[]
+     *
      * @ORM\OneToMany(targetEntity=Task::class, mappedBy="wedding", orphanRemoval=true)
      */
     private $tasks;
 
     /**
+     * @var Collection|Guest[]
+     *
      * @ORM\OneToMany(targetEntity=Guest::class, mappedBy="wedding", orphanRemoval=true)
      */
     private $guests;
 
     /**
+     * @var Room
+     *
      * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="weddings")
      * @ORM\JoinColumn(name="room_id", nullable=false)
      */

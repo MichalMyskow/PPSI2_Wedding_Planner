@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class CreateWeddingController extends AbstractController
+class EditWeddingController extends AbstractController
 {
 
     private TokenStorageInterface $tokenStorage;
@@ -22,25 +22,29 @@ class CreateWeddingController extends AbstractController
         $this->tokenStorage = $tokenStorage;
     }
 
-    #[Route('/create-wedding', name: 'create_wedding')]
-    public function create(Request $request): Response
+    #[Route('/edit-wedding', name: 'edit_wedding')]
+    public function edit(Request $request): Response
     {
         /** @var User $user */
         $user = $this->tokenStorage->getToken()?->getUser() ?: null;
 
-        if ($user && $user->getWedding())
+        if ($user && !$user->getWedding())
         {
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('create_wedding');
         }
 
-        $wedding = new Wedding();
+        /** @var Wedding $wedding */
+        $wedding = $user->getWedding();
+
+        if ($wedding->getDate() < (new \DateTime())) {
+            return $this->redirectToRoute('view_wedding');
+        }
+
         $form = $this->createForm(WeddingFormType::class, $wedding);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $wedding->setOwner($user);
             $entityManager = $this->getDoctrine()->getManager();
-
             $entityManager->persist($wedding);
             $entityManager->flush();
 
@@ -48,10 +52,9 @@ class CreateWeddingController extends AbstractController
         }
 
 
-        return $this->render('pages/create_wedding.html.twig', [
+        return $this->render('pages/edit_wedding.html.twig', [
             'weddingForm' => $form->createView(),
         ]);
-
 
 
     }

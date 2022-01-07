@@ -1,0 +1,30 @@
+.page-header{
+    border-bottom: 2px solid $second;
+    margin-inline: 100px;
+    font-size: 2.4rem;
+    font-family: $decorative-font;
+    margin-block: 2rem;
+    &__content{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 3.3rem;
+        &:before{
+            color: $second;
+            font-size: 2.5rem;
+        }
+        &--guest-list:before {
+            @extend %fa-icon;
+            @extend .fas;
+            content: fa-content($fa-var-users);
+
+
+        }
+        &--checklist:before {
+            @extend %fa-icon;
+            @extend .fas;
+            content: fa-content($fa-var-clipboard-list);
+
+        }
+    }
+}

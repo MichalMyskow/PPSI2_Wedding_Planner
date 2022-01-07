@@ -1,0 +1,35 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block style %} 
+        {{ encore_entry_link_tags('checklist') }}
+{% endblock %}
+{% block main %}
+            <div class="page-header">
+                <div class="page-header__content page-header__content--checklist">
+                    <h2>Lista</h2>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="page-nav">
+                <a href="" class="page-nav__item page-nav__item--add-checklist-item">
+                    Dodaj
+                </a>
+            </div>
+        </section>
+        <section>
+            <div class="checklist">
+                <label class="checklist__label">
+                    <input class="main-form__checkbox checklist__input" type="checkbox" name="" value="" checked>
+                    <div class="checklist__name">Zamówić orkiestrę</div>
+                </label>
+                <label class="checklist__label">
+                    <input class="main-form__checkbox checklist__input" type="checkbox" name="" value="">
+                    <div class="checklist__name">Wpłacić zaliczkę za salę</div>
+                </label>
+              </div>
+        </section>
+{% endblock %}
+{% block script %} 
+        {{ encore_entry_script_tags('checklist') }}
+{% endblock %}

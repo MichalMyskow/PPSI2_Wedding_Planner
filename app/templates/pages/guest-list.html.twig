@@ -1,0 +1,90 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block style %} 
+        {{ encore_entry_link_tags('guest_list') }}
+{% endblock %}
+{% block main %}
+<section>
+            <div class="page-header">
+                <div class="page-header__content page-header__content--guest-list">
+                    <h2>Goście</h2>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="page-nav">
+                <a id="add-guest-btn" class="page-nav__item page-nav__item--add-guest">
+                    Dodaj gościa
+                </a>
+            </div>
+        </section>
+        <section>
+            <div class="guest-list">
+                <div class="guest-list__item">
+                    <div class="guest-list__item-details">
+                        Adam Testowy <span class="muted">(a.testowy@example.com)</span>
+                    </div>
+                    <div class="guest-list__item-action-list">
+                        <a href="" class="guest-list__item-action guest-list__item-action--send" title="wyślij zaproszenie">
+                        </a>
+                        <a href="" class="guest-list__item-action guest-list__item-action--edit" title="edytuj dane">
+                        </a>
+                        <a href="" class="guest-list__item-action guest-list__item-action--delete" title="usuń gościa">
+                        </a>
+                    </div>
+                </div>
+                <!-- <div class="">
+                    <form>
+                        <label>Imię nazwisko
+                        <input class="main-form__input" type="text">
+                    </label>
+                    </form>
+                </div> -->
+                <div class="guest-list__item">
+                    <div class="guest-list__item-details">
+                        Jan Testowy <span class="muted">(a.testowy@example.com)</span>
+                    </div>
+                    <div class="guest-list__item-action-list">
+                        <a href="" class="guest-list__item-action guest-list__item-action--sended" title="zaproszenie wysłane">
+                        </a>
+                        <a href="" class="guest-list__item-action guest-list__item-action--edit" title="edytuj dane">
+                        </a>
+                        <a href="" class="guest-list__item-action guest-list__item-action--delete guest-list__item-action--disable" title="usuń gościa">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="modal" id="modal"> 
+                <div id="modal-content" class="modal-content">
+                    <div class="main-form">
+                        <form>
+                            <div class="main-form__input-group">
+                                <label class="main-form__label">Imię
+                                    <input id="first-name-input" type="text" class="main-form__input">
+                                </label>
+                            </div>
+                            <div class="main-form__input-group">
+                                <label class="main-form__label">Nazwisko
+                                    <input id="last-name-input" type="text" class="main-form__input">
+                                </label>
+                            </div>
+                            <div class="main-form__input-group">
+                                <label class="main-form__label">Adres E-mail
+                                    <input id="email-input" type="email" class="main-form__input">
+                                </label>
+                            </div>
+                            <input id="guest-id-input" type="hidden" value="id">
+
+                            <input type="submit" value="Zatwierdź"  class="main-form__submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock %}
+{% block script %} 
+        {{ encore_entry_script_tags('guest_list') }}
+{% endblock %}
