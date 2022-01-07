@@ -13,19 +13,13 @@
                     Data wesela: {{ wedding.date|date("m.d.Y") }}
                 </div>
                 <div class="mb-3">
-                    Imię panny młodej: {{ wedding.brideFirstName }}
+                    Panna młoda: {{ wedding.brideFirstName }} {{ wedding.brideLastName }}
                 </div>
                 <div class="mb-3">
-                    Nazwisko panny młodej: {{ wedding.brideLastName }}
+                    Pan młody: {{ wedding.groomFirstName }} {{ wedding.groomLastName }}
                 </div>
                 <div class="mb-3">
-                    Imię pana młodego: {{ wedding.groomFirstName }}
-                </div>
-                <div class="mb-3">
-                    Nazwisko pana młodego: {{ wedding.groomLastName }}
-                </div>
-                <div class="mb-3">
-                    Sala weselna: {{ room.name }} ({{ room.size }}) miejsc - {{ room.address }}
+                    Sala weselna: {{ room.name }} ({{ room.size }} miejsc) - {{ room.address }}
                 </div>
                 {% if editable %}
                 <a href="{{ path('edit_wedding') }}" class="main-link--first">Zmień dane wesela</a>
