@@ -23,7 +23,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer", nullable=false)
      */
-    private int $id;
+    private $id;
 
     /**
      * @ORM\Column(name="email", type="string", length=180, unique=true, nullable=false)

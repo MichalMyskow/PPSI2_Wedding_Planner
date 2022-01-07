@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block style %}
+        {{ encore_entry_link_tags('auth') }}
+{% endblock %}
+{% block main %}
+    <div class="main-margin-inline main-margin-block">
+        <section>
+            <div class="welcome-content">
+                <div class="welcome-nav">
+                    <h2 class="welcome-nav__current">Dane wesela</h2>
+                </div>
+                <div class="mb-3">
+                    Data wesela: {{ wedding.date|date("m.d.Y") }}
+                </div>
+                <div class="mb-3">
+                    Panna młoda: {{ wedding.brideFirstName }} {{ wedding.brideLastName }}
+                </div>
+                <div class="mb-3">
+                    Pan młody: {{ wedding.groomFirstName }} {{ wedding.groomLastName }}
+                </div>
+                <div class="mb-3">
+                    Sala weselna: {{ room.name }} ({{ room.size }} miejsc) - {{ room.address }}
+                </div>
+                {% if editable %}
+                <a href="{{ path('edit_wedding') }}" class="main-link--first">Zmień dane wesela</a>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+{% endblock %}

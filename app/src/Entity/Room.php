@@ -19,7 +19,7 @@ class Room
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer", nullable=false)
      */
-    private int $id;
+    private $id;
 
     /**
      * @ORM\Column(name="size", type="integer", nullable=false)
