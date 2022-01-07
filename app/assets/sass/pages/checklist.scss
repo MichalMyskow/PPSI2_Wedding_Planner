@@ -1,0 +1,42 @@
+@import '../base/font-awesome';
+@import '../helpers/helpers';
+@import '../base/core';
+@import '../layout/layout';
+@import '../components/page-header';
+@import '../components/page-nav';
+@import '../components/main-form';
+
+
+.checklist {
+    margin: 30px 150px;
+    grid-template-columns: 30px auto;
+    &__label{
+      display: flex;
+      margin: 20px 0px 20px 0;
+
+    }
+    &__name {
+      position: relative;
+      cursor: pointer;
+      display: grid;
+      align-items: center;
+      width: fit-content;
+    }
+    &__input[type="checkbox"] {
+      &:checked {
+        + .checklist__name {
+          color: #fff;
+          animation: line .4s linear forwards;
+        }
+      }
+    }
+  }
+  
+  @keyframes line {
+    100%{
+        text-decoration: line-through;
+        text-decoration-color: $second;
+        text-decoration-thickness: 2px;
+    }
+  }
+  

@@ -1,0 +1,55 @@
+.guest-list{
+    margin: 30px 150px;
+    &__item{
+        padding-block: 1.5rem;
+        border-bottom: 1px solid $second;
+        display: flex;
+        align-items: center;
+        font-size: 1.2rem;
+        &-datails{
+            display: flex;
+            align-items: center;
+        }
+        &-action-list{
+            margin-left: auto;
+            gap: 10px;
+
+        }
+        &-action{
+            padding: 10px 10px;
+            margin-inline: 10px;
+            font-size: 1.2rem;
+            color: $second;
+            @extend %fa-icon;
+            @extend .fas;
+
+            &--delete{
+                &:before{
+                  content: fa-content($fa-var-user-minus);
+                }
+            }
+            &--send{
+                &:before{
+                  content: fa-content($fa-var-envelope);
+                }
+            }
+            &--edit{
+                &:before{
+                  content: fa-content($fa-var-edit);
+                }
+            }
+            &--sended{
+                opacity: 0.5;
+                // pointer-events: none;
+                cursor: initial;
+                &:before{
+                  content: fa-content($fa-var-envelope-open-text);
+                }
+            }
+            &--disable{
+                opacity: 0.5;
+                cursor: initial;
+            }
+        }
+    }
+}

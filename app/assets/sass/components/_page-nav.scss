@@ -1,0 +1,22 @@
+.page-nav{
+    margin: 30px 150px;
+    color: $second;
+    display: flex;
+    gap: 2rem;
+    &__item{
+        &:before{
+
+            color: $second;
+        }
+        &--add-guest:before {
+            @extend %fa-icon;
+            @extend .fas;
+          content: fa-content($fa-var-user-plus);
+        }
+        &--add-checklist-item:before {
+            @extend %fa-icon;
+            @extend .fas;
+          content: fa-content($fa-var-plus);
+        }
+    }
+}
