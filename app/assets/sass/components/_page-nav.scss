@@ -4,15 +4,19 @@
     display: flex;
     gap: 2rem;
     &__item{
-        // border-bottom: 1px solid $second;
-        // display: inline;
-        // padding-bottom: .2rem;
-        &:before {
+        &:before{
+
+            color: $second;
+        }
+        &--add-guest:before {
             @extend %fa-icon;
             @extend .fas;
           content: fa-content($fa-var-user-plus);
-          color: $second;
-          
+        }
+        &--add-checklist-item:before {
+            @extend %fa-icon;
+            @extend .fas;
+          content: fa-content($fa-var-plus);
         }
     }
 }
