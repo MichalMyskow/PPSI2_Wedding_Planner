@@ -191,16 +191,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getFacebookID(): ?string
     {
         return $this->facebookID;
     }
 
     /**
-     * @param string|null $facebookID
      * @return mixed
      */
     public function setFacebookID(?string $facebookID): void
@@ -208,16 +204,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->facebookID = $facebookID;
     }
 
-    /**
-     * @return string|null
-     */
     public function getFacebookAccessToken(): ?string
     {
         return $this->facebookAccessToken;
     }
 
     /**
-     * @param string|null $facebookAccessToken
      * @return mixed
      */
     public function setFacebookAccessToken(?string $facebookAccessToken): void

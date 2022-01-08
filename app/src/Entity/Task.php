@@ -22,23 +22,17 @@ class Task
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      * @Assert\NotBlank()
      */
     private string $name;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private ?string $description;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="completed", type="boolean", nullable=false)
      * @Assert\Type(type="bool")
      * @Assert\NotNull()
