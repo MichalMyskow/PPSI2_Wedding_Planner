@@ -3,12 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\WeddingRepository;
+use App\Validator as WeddingAssert;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Validator as WeddingAssert;
 
 /**
  * @ORM\Entity(repositoryClass=WeddingRepository::class)
@@ -95,8 +95,6 @@ class Wedding
     private $guests;
 
     /**
-     * @var Room
-     *
      * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="weddings")
      * @ORM\JoinColumn(name="room_id", nullable=false)
      */
@@ -280,22 +278,18 @@ class Wedding
         return $this;
     }
 
-    /**
-     * @return Room
-     */
     public function getRoom(): Room
     {
         return $this->room;
     }
 
     /**
-     * @param Room $room
      * @return Wedding
      */
     public function setRoom(Room $room): self
     {
         $this->room = $room;
+
         return $this;
     }
-
 }
