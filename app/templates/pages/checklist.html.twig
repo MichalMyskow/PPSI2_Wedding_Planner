@@ -4,30 +4,101 @@
         {{ encore_entry_link_tags('checklist') }}
 {% endblock %}
 {% block main %}
+     <div class="main-margin-inline main-margin-block">
             <div class="page-header">
                 <div class="page-header__content page-header__content--checklist">
                     <h2>Lista</h2>
                 </div>
             </div>
         </section>
+        
         <section>
             <div class="page-nav">
-                <a href="" class="page-nav__item page-nav__item--add-checklist-item">
+                <a id="add-task-btn" class="page-nav__item page-nav__item--add-checklist-item">
                     Dodaj
                 </a>
             </div>
         </section>
         <section>
+            <form>
             <div class="checklist">
-                <label class="checklist__label">
-                    <input class="main-form__checkbox checklist__input" type="checkbox" name="" value="" checked>
-                    <div class="checklist__name">Zamówić orkiestrę</div>
-                </label>
-                <label class="checklist__label">
-                    <input class="main-form__checkbox checklist__input" type="checkbox" name="" value="">
-                    <div class="checklist__name">Wpłacić zaliczkę za salę</div>
-                </label>
+                {% for task in tasks %}
+                    <div id="task-{{ task.id }}" class="checklist__item" data-id="{{ task.id }}">                 
+                        <label class="checklist__label">
+                            <input class="main-form__checkbox checklist__input" data-id="{{ task.id }}" type="checkbox" name="completed" value="" {% if task.completed %}checked{% endif %}>
+                            <div class="checklist__name">{{ task.name }}</div>
+                        </label>
+                        <div class="checklist__buttons">
+                            <a class="checklist__buttons-item checklist__buttons-item--edit edit-task-btn" data-id="{{ task.id }}"></a>
+                            <a class="checklist__buttons-item checklist__buttons-item--delete delete-task-btn" data-id="{{ task.id }}"></a>
+                        </div>
+                    </div>
+                {% endfor %}
               </div>
+            </form>
+        </section>
+
+    </div>
+
+        <section>
+            <div class="modal" id="modal"> 
+                <div id="modal-content" class="modal-content">
+                    <div class="main-form">
+
+                    {{ form_start(taskForm) }}
+                    <div class="main-form__input-group">
+                        {{ form_label(taskForm.name, 'Nazwa', {'label_attr': {'class': 'main-form__label'}}) }}
+                        {{ form_widget(taskForm.name, {'attr': {'class': 'main-form__input', 'value':''}}) }}
+                        {{ form_errors(taskForm.name) }}
+                    </div>
+
+                    <input type="submit" value="Zatwierdź" class="main-form__submit">
+
+                    {{ form_end(taskForm) }}
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="modal" id="edit-modal"> 
+                <div id="edit-modal-content" class="modal-content">
+                    <div class="main-form">
+                    <form id="edit_task_form">
+                        <div class="main-form__input-group">
+                        <label class="main-form__label">
+                            Nazwa
+                                <input type="text" name="name" class="main-form__input">
+                        </label>
+                        </div>
+                        <input type="hidden" name="task_id">
+                        <input type="submit" value="Zatwierdź"  id="edit_submit" class="main-form__submit">
+                    </form>
+
+                    {# {{ form_start(taskForm, {'attr': {'id':'edit_task_form'}})}}
+                    <div class="main-form__input-group">
+                        {{ form_label(taskForm.name, 'Nazwa', {'label_attr': {'class': 'main-form__label'}}) }}
+                        {{ form_widget(taskForm.name, {'attr': {'class': 'main-form__input'}}) }}
+                        {{ form_errors(taskForm.name) }}
+                    </div>
+
+                    <input type="hidden" name="task_id">
+
+                    <input type="submit" value="Zatwierdź"  id="edit_submit" class="main-form__submit">
+
+                    {{ form_end(taskForm) }} #}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section>
+            <div class="modal" id="loader"> 
+                <div  class="modal-content">
+                    Ładowanie
+                </div>
+            </div>
         </section>
 {% endblock %}
 {% block script %} 
