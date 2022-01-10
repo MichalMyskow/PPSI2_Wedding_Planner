@@ -5,11 +5,16 @@
 @import '../components/page-header';
 @import '../components/page-nav';
 @import '../components/main-form';
-
+@import '../components/modal';
 
 .checklist {
-    margin: 30px 150px;
-    grid-template-columns: 30px auto;
+    // margin-inline: 30px;
+    &__item{
+      grid-template-columns: 1fr 5rem;
+      display: grid;
+      gap: 10px;
+
+    }
     &__label{
       display: flex;
       margin: 20px 0px 20px 0;
@@ -19,14 +24,39 @@
       position: relative;
       cursor: pointer;
       display: grid;
-      align-items: center;
+      // align-items: center;
       width: fit-content;
+      user-select: none;
     }
     &__input[type="checkbox"] {
       &:checked {
         + .checklist__name {
           color: #fff;
           animation: line .4s linear forwards;
+        }
+      }
+    }
+    &__buttons{
+      margin: 20px 0px 20px 0;
+      display: flex;
+      gap: .2rem 1.8rem;
+      font-size: 1.2rem;
+      justify-content: end;
+      &-item{
+        color: $second;
+        &--delete{
+            &:before {
+              @extend %fa-icon;
+              @extend .far;
+              content: fa-content($fa-var-trash-alt);
+          }
+        }
+        &--edit{
+            &:before {
+              @extend %fa-icon;
+              @extend .fas;
+              content: fa-content($fa-var-edit);
+          }
         }
       }
     }
