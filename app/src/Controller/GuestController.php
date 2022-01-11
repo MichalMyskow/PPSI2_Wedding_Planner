@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Guest;
 use App\Entity\User;
+use App\Entity\Wedding;
 use App\Form\GuestFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,7 +45,7 @@ class GuestController extends AbstractController
             $entityManager->persist($guest);
             $entityManager->flush();
 
-            return $this->redirectToRoute('view_wedding');
+            return $this->redirectToRoute('view_guests');
         }
 
         return $this->render('pages/add_guest.html.twig', [
@@ -65,11 +66,11 @@ class GuestController extends AbstractController
         /** @var Guest|null $guest */
         $guest = $this->entityManager->getRepository(Guest::class)->find($id);
         if (!$guest || $guest->getWedding() != $user->getWedding()) {
-            return $this->redirectToRoute('view_wedding');
+            return $this->redirectToRoute('view_guests');
         }
 
         if ($user->getWedding()->getDate() < (new \DateTime())) {
-            return $this->redirectToRoute('view_wedding');
+            return $this->redirectToRoute('view_guests');
         }
 
         $form = $this->createForm(GuestFormType::class, $guest);
@@ -80,7 +81,7 @@ class GuestController extends AbstractController
             $entityManager->persist($guest);
             $entityManager->flush();
 
-            return $this->redirectToRoute('view_wedding');
+            return $this->redirectToRoute('view_guests');
         }
 
         return $this->render('pages/edit_guest.html.twig', [
@@ -101,16 +102,37 @@ class GuestController extends AbstractController
         /** @var Guest|null $guest */
         $guest = $this->entityManager->getRepository(Guest::class)->find($id);
         if (!$guest || $guest->getWedding() != $user->getWedding()) {
-            return $this->redirectToRoute('view_wedding');
+            return $this->redirectToRoute('view_guests');
         }
 
         if ($user->getWedding()->getDate() < (new \DateTime())) {
-            return $this->redirectToRoute('view_wedding');
+            return $this->redirectToRoute('view_guests');
         }
 
         $this->entityManager->remove($guest);
         $this->entityManager->flush();
 
-        return $this->redirectToRoute('view_wedding');
+        return $this->redirectToRoute('view_guests');
+    }
+
+    #[Route('/view-guests', name: 'view_guests')]
+    public function view(Request $request): Response
+    {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()?->getUser() ?: null;
+
+        if ($user && !$user->getWedding()) {
+            return $this->redirectToRoute('create_wedding');
+        }
+
+        /** @var Wedding $wedding */
+        $wedding = $user->getWedding();
+        $guests = $wedding->getGuests();
+        $maxGuests = (count($guests) >= $wedding->getRoom()->getSize());
+
+        return $this->render('pages/guest-list.html.twig', [
+            'guests' => $guests,
+            'maxGuests' => $maxGuests,
+        ]);
     }
 }

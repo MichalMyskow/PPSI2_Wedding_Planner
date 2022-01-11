@@ -27,6 +27,11 @@
                         {{ form_widget(guestForm.lastName, {'attr': {'class': 'main-form__input'}}) }}
                         {{ form_errors(guestForm.lastName) }}
                     </div>
+                    <div class="main-form__input-group--inline">
+                        {{ form_widget(guestForm.acceptation, {'attr': {'class': 'main-form__checkbox'}}) }}
+                        {{ form_label(guestForm.acceptation, 'Obecność potwierdzona', {'label_attr': {'class': 'main-form__label'}}) }}
+                        {{ form_errors(guestForm.acceptation) }}
+                    </div>
                     <input type="submit" value="Dodaj gościa"  class="main-form__submit">
                     {{ form_end(guestForm) }}
                 </div>

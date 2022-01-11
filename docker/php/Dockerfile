@@ -12,7 +12,7 @@ WORKDIR /var/www/Wedding_Planner
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x -o node_setup.sh && \
+RUN curl -sL https://deb.nodesource.com/setup_16.x -o node_setup.sh && \
     bash node_setup.sh && \
     apt-get install -y nodejs && \
     npm install npm -g

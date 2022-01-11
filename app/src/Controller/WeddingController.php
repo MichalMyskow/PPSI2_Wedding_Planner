@@ -97,15 +97,11 @@ class WeddingController extends AbstractController
 
         /** @var Wedding $wedding */
         $wedding = $user->getWedding();
-        $guests = $wedding->getGuests();
-        $maxGuests = (count($guests) >= $wedding->getRoom()->getSize());
 
         return $this->render('pages/view_wedding.html.twig', [
             'wedding' => $wedding,
             'room' => $wedding->getRoom(),
             'editable' => !($wedding->getDate() < (new \DateTime())),
-            'guests' => $guests,
-            'maxGuests' => $maxGuests,
         ]);
     }
 }

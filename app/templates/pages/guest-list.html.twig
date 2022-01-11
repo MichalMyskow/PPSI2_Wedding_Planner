@@ -12,47 +12,33 @@
             </div>
         </section>
         <section>
+            {% if not maxGuests %}
             <div class="page-nav">
-                <a id="add-guest-btn" class="page-nav__item page-nav__item--add-guest">
+                <a href="{{ path('add_guest') }}" {#id="add-guest-btn"#} class="page-nav__item page-nav__item--add-guest">
                     Dodaj gościa
                 </a>
             </div>
+            {% endif %}
         </section>
         <section>
             <div class="guest-list">
+                {% for guest in guests %}
                 <div class="guest-list__item">
+
                     <div class="guest-list__item-details">
-                        Adam Testowy <span class="muted">(a.testowy@example.com)</span>
+                        {{ guest.lastName }} {{ guest.firstName }} <span class="muted"> {% if guest.email %}({{ guest.email }}){% endif %} </span>
                     </div>
                     <div class="guest-list__item-action-list">
                         <a href="" class="guest-list__item-action guest-list__item-action--send" title="wyślij zaproszenie">
                         </a>
-                        <a href="" class="guest-list__item-action guest-list__item-action--edit" title="edytuj dane">
+                        <a href="{{ path('edit_guest', {id: guest.id}) }}" class="guest-list__item-action {#guest-list__item-action--edit#}" title="edytuj dane">
+                            Edytuj
                         </a>
-                        <a href="" class="guest-list__item-action guest-list__item-action--delete" title="usuń gościa">
-                        </a>
-                    </div>
-                </div>
-                <!-- <div class="">
-                    <form>
-                        <label>Imię nazwisko
-                        <input class="main-form__input" type="text">
-                    </label>
-                    </form>
-                </div> -->
-                <div class="guest-list__item">
-                    <div class="guest-list__item-details">
-                        Jan Testowy <span class="muted">(a.testowy@example.com)</span>
-                    </div>
-                    <div class="guest-list__item-action-list">
-                        <a href="" class="guest-list__item-action guest-list__item-action--sended" title="zaproszenie wysłane">
-                        </a>
-                        <a href="" class="guest-list__item-action guest-list__item-action--edit" title="edytuj dane">
-                        </a>
-                        <a href="" class="guest-list__item-action guest-list__item-action--delete guest-list__item-action--disable" title="usuń gościa">
+                        <a href="{{ path('remove_guest', {id: guest.id}) }}" class="guest-list__item-action guest-list__item-action--delete" title="usuń gościa">
                         </a>
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </section>
 

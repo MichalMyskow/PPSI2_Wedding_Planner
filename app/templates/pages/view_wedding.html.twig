@@ -26,28 +26,5 @@
                 {% endif %}
             </div>
         </section>
-        <section>
-            <div class="welcome-content">
-                <div class="welcome-nav">
-                    <h2 class="welcome-nav__current">Goście</h2>
-                </div>
-                <div class="mb-3">
-                    <ol>
-                    {% for guest in guests %}
-                        <li>
-                            {{ guest.lastName }} {{ guest.firstName }} {% if guest.email %}({{ guest.email }}){% endif %} -
-                            <a href="{{ path('edit_guest', {id: guest.id}) }}" class="main-link--first">Edytuj</a> -
-                            <a href="{{ path('remove_guest', {id: guest.id}) }}" class="main-link--first">Usuń</a>
-                        </li>
-                    {% endfor %}
-                    </ol>
-                </div>
-                {% if not maxGuests %}
-                <div class="mb-3">
-                    <a href="{{ path('add_guest') }}" class="main-link--first">Dodaj gościa</a>
-                </div>
-                {% endif %}
-            </div>
-        </section>
     </div>
 {% endblock %}
