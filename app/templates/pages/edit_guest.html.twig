@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block style %} 
+        {{ encore_entry_link_tags('auth') }}
+{% endblock %}
+{% block main %}
+    <div class="main-margin-inline main-margin-block">
+        <section>
+            <div class="welcome-content">
+                <div class="welcome-nav">
+                    <h2 class="welcome-nav__current">Edycja gościa</h2>
+                </div>
+                <div class="main-form welcome-form">
+                    {{ form_start(guestForm) }}
+                    {{ form_errors(guestForm) }}
+                    <div class="main-form__input-group">
+                        {{ form_label(guestForm.email, 'Email gościa', {'label_attr': {'class': 'main-form__label'}}) }}
+                        {{ form_widget(guestForm.email, {'attr': {'class': 'main-form__input'}}) }}
+                        {{ form_errors(guestForm.email) }}
+                    </div>
+                    <div class="main-form__input-group">
+                        {{ form_label(guestForm.firstName, 'Imię gościa', {'label_attr': {'class': 'main-form__label'}}) }}
+                        {{ form_widget(guestForm.firstName, {'attr': {'class': 'main-form__input'}}) }}
+                        {{ form_errors(guestForm.firstName) }}
+                    </div>
+                    <div class="main-form__input-group">
+                        {{ form_label(guestForm.lastName, 'Nazwisko gościa', {'label_attr': {'class': 'main-form__label'}}) }}
+                        {{ form_widget(guestForm.lastName, {'attr': {'class': 'main-form__input'}}) }}
+                        {{ form_errors(guestForm.lastName) }}
+                    </div>
+                    <div class="main-form__input-group--inline">
+                        {{ form_widget(guestForm.acceptation, {'attr': {'class': 'main-form__checkbox'}}) }}
+                        {{ form_label(guestForm.acceptation, 'Obecność potwierdzona', {'label_attr': {'class': 'main-form__label'}}) }}
+                        {{ form_errors(guestForm.acceptation) }}
+                    </div>
+                    <input type="submit" value="Edytuj gościa"  class="main-form__submit">
+                    {{ form_end(guestForm) }}
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

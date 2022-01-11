@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\GuestRepository;
+use App\Validator as WeddingAssert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=GuestRepository::class)
  * @ORM\Table(name="guest")
+ * @WeddingAssert\RoomFilled()
  */
 class Guest
 {
@@ -53,6 +57,20 @@ class Guest
      * @ORM\JoinColumn(nullable=false)
      */
     private Wedding $wedding;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Guest::class)
+     * @ORM\JoinTable(name="conflicted_guests",
+     *      joinColumns={@ORM\JoinColumn(name="guest_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="conflicted_guest_id", referencedColumnName="id")}
+     *      )
+     */
+    private $conflictedGuests;
+
+    public function __construct()
+    {
+        $this->conflictedGuests = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -127,6 +145,30 @@ class Guest
     public function setWedding(Wedding $wedding): self
     {
         $this->wedding = $wedding;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getConflictedGuests(): Collection
+    {
+        return $this->conflictedGuests;
+    }
+
+    public function addConflictedGuest(self $conflictedGuest): self
+    {
+        if (!$this->conflictedGuests->contains($conflictedGuest)) {
+            $this->conflictedGuests[] = $conflictedGuest;
+        }
+
+        return $this;
+    }
+
+    public function removeConflictedGuest(self $conflictedGuest): self
+    {
+        $this->conflictedGuests->removeElement($conflictedGuest);
 
         return $this;
     }
