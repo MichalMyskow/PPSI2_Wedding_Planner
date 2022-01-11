@@ -41,7 +41,7 @@ class ChecklistController extends AbstractController
         $tasks = $user->getWedding()->getTasks();
         $form = $this->createForm(TaskFormType::class);
 
-        return $this->render('pages/guest-list.html.twig', [
+        return $this->render('pages/checklist.html.twig', [
             'tasks' => $tasks,
             'taskForm' => $form->createView(),
         ]);
