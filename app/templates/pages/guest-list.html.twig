@@ -12,6 +12,13 @@
             </div>
         </section>
         <section>
+            {% if not numberOfGuests == 0 %}
+            <div class="page-nav">
+                <a href="{{ path('send_invitations') }}" class="guest-list__item-action" title="wyślij zaproszenia">
+                    Wyślij zaproszenia
+                </a>
+            </div>
+            {% endif %}
             {% if not maxGuests %}
             <div class="page-nav">
                 <a href="{{ path('add_guest') }}" {#id="add-guest-btn"#} class="page-nav__item page-nav__item--add-guest">
@@ -29,8 +36,11 @@
                         {{ guest.lastName }} {{ guest.firstName }} <span class="muted"> {% if guest.email %}({{ guest.email }}){% endif %} </span>
                     </div>
                     <div class="guest-list__item-action-list">
-                        <a href="" class="guest-list__item-action guest-list__item-action--send" title="wyślij zaproszenie">
+                        {% if not guest.invitationSent and not guest.acceptation %}
+                        <a href="{{ path('send_invitation', {id: guest.id}) }}" {#class="guest-list__item-action guest-list__item-action--send"#} title="wyślij zaproszenie">
+                            Wyślij zaproszenie
                         </a>
+                        {% endif %}
                         <a href="{{ path('edit_guest', {id: guest.id}) }}" class="guest-list__item-action {#guest-list__item-action--edit#}" title="edytuj dane">
                             Edytuj
                         </a>

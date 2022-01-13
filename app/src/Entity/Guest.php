@@ -67,6 +67,13 @@ class Guest
      */
     private $conflictedGuests;
 
+    /**
+     * @ORM\Column(name="invitation_sent", type="boolean", nullable=false)
+     * @Assert\Type(type="bool")
+     * @Assert\NotNull()
+     */
+    private $invitationSent = false;
+
     public function __construct()
     {
         $this->conflictedGuests = new ArrayCollection();
@@ -169,6 +176,18 @@ class Guest
     public function removeConflictedGuest(self $conflictedGuest): self
     {
         $this->conflictedGuests->removeElement($conflictedGuest);
+
+        return $this;
+    }
+
+    public function getInvitationSent(): ?bool
+    {
+        return $this->invitationSent;
+    }
+
+    public function setInvitationSent(bool $invitationSent): self
+    {
+        $this->invitationSent = $invitationSent;
 
         return $this;
     }

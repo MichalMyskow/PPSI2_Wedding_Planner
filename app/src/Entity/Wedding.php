@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=WeddingRepository::class)
  * @ORM\Table(name="wedding")
  * @WeddingAssert\WeddingExist()
+ * @WeddingAssert\RoomTooSmall()
  */
 class Wedding
 {

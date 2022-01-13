@@ -10,6 +10,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -133,6 +136,68 @@ class GuestController extends AbstractController
         return $this->render('pages/guest-list.html.twig', [
             'guests' => $guests,
             'maxGuests' => $maxGuests,
+            'numberOfGuests' => count($guests),
         ]);
+    }
+
+    #[Route('/send-invitations', name: 'send_invitations')]
+    public function sendInvitations(MailerInterface $mailer): Response
+    {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()?->getUser() ?: null;
+
+        if ($user && !$user->getWedding()) {
+            return $this->redirectToRoute('create_wedding');
+        }
+
+        /** @var Wedding $wedding */
+        $wedding = $user->getWedding();
+        $guests = $wedding->getGuests();
+
+        foreach ($guests as $guest) {
+            $this->sendMail($guest, $wedding, $mailer);
+        }
+
+        return $this->redirectToRoute('view_guests');
+    }
+
+    #[Route('/send-invitation/{id}', name: 'send_invitation')]
+    public function sendInvitation(int $id, MailerInterface $mailer): Response
+    {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()?->getUser() ?: null;
+
+        if ($user && !$user->getWedding()) {
+            return $this->redirectToRoute('create_wedding');
+        }
+
+        /** @var Guest|null $guest */
+        $guest = $this->entityManager->getRepository(Guest::class)->find($id);
+
+        /** @var Wedding $wedding */
+        $wedding = $user->getWedding();
+
+        $this->sendMail($guest, $wedding, $mailer);
+
+        return $this->redirectToRoute('view_guests');
+    }
+
+    public function sendMail(Guest $guest, Wedding $wedding, MailerInterface $mailer): void
+    {
+        if (!($guest->getAcceptation()) && !($guest->getInvitationSent())) {
+            $email = (new Email())
+                ->from(new Address('weddingplannerppsi2@gmail.com', 'WeddingPlanner'))
+                ->to($guest->getEmail())
+                ->subject('Zaproszenie na wesele')
+                ->text(sprintf('%s %s i %s %s mają zaszczyt zaprosić Sz.P. %s %s na swój ślub',
+                    $wedding->getBrideFirstName(), $wedding->getBrideLastName(), $wedding->getGroomFirstName(), $wedding->getGroomLastName(), $guest->getFirstName(), $guest->getLastName()));
+
+            $mailer->send($email);
+
+            $guest->setInvitationSent(true);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($guest);
+            $entityManager->flush();
+        }
     }
 }
