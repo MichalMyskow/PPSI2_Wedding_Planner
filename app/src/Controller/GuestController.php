@@ -132,11 +132,13 @@ class GuestController extends AbstractController
         $wedding = $user->getWedding();
         $guests = $wedding->getGuests();
         $maxGuests = (count($guests) >= $wedding->getRoom()->getSize());
+        $guestsWithoutInvite = count($this->entityManager->getRepository(Guest::class)->findAllWithoutInvite($wedding));
 
         return $this->render('pages/guest-list.html.twig', [
             'guests' => $guests,
             'maxGuests' => $maxGuests,
             'numberOfGuests' => count($guests),
+            'guestsWithoutInvite' => $guestsWithoutInvite,
         ]);
     }
 
@@ -154,8 +156,10 @@ class GuestController extends AbstractController
         $wedding = $user->getWedding();
         $guests = $wedding->getGuests();
 
+        $counter = 0;
         foreach ($guests as $guest) {
             $this->sendMail($guest, $wedding, $mailer);
+            ++$counter;
         }
 
         return $this->redirectToRoute('view_guests');
@@ -189,8 +193,8 @@ class GuestController extends AbstractController
                 ->from(new Address('weddingplannerppsi2@gmail.com', 'WeddingPlanner'))
                 ->to($guest->getEmail())
                 ->subject('Zaproszenie na wesele')
-                ->text(sprintf('%s %s i %s %s mają zaszczyt zaprosić Sz.P. %s %s na swój ślub',
-                    $wedding->getBrideFirstName(), $wedding->getBrideLastName(), $wedding->getGroomFirstName(), $wedding->getGroomLastName(), $guest->getFirstName(), $guest->getLastName()));
+                ->text(sprintf('%s %s i %s %s mają zaszczyt zaprosić Sz.P. %s %s na swój ślub - https://weddingplannerproject.pl/accept-invitation/%s',
+                    $wedding->getBrideFirstName(), $wedding->getBrideLastName(), $wedding->getGroomFirstName(), $wedding->getGroomLastName(), $guest->getFirstName(), $guest->getLastName(), $guest->getUuid()->toRfc4122()));
 
             $mailer->send($email);
 
@@ -199,5 +203,26 @@ class GuestController extends AbstractController
             $entityManager->persist($guest);
             $entityManager->flush();
         }
+    }
+
+    #[Route('/accept-invitation/{uuid}', name: 'accept_invitation')]
+    public function acceptInvitation(Request $request): Response
+    {
+        $uuid = $request->get('uuid');
+
+        /** @var Guest $guest */
+        $guest = $this->entityManager->getRepository(Guest::class)->findOneBy(['uuid' => $uuid]);
+
+        if (!$guest || $guest->getAcceptation()) {
+            return $this->redirectToRoute('home');
+        }
+
+        // TODO: wyświetlić widok/formularz czy zaakceptować?
+        $guest->setAcceptation(true);
+        $this->entityManager->persist($guest);
+        $this->entityManager->flush();
+
+        // TODO: podziękować za akceptację? wysłać maila (link do zobaczenia miejsc)?
+        return $this->redirectToRoute('home');
     }
 }

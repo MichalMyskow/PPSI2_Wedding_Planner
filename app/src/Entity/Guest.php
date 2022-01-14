@@ -7,6 +7,7 @@ use App\Validator as WeddingAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -22,6 +23,13 @@ class Guest
      * @ORM\Column(name="id", type="integer", nullable=false)
      */
     private $id;
+
+    /**
+     * @var Uuid
+     *
+     * @ORM\Column(name="uuid", type="uuid", nullable=false, unique=true)
+     */
+    private $uuid;
 
     /**
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
@@ -76,12 +84,25 @@ class Guest
 
     public function __construct()
     {
+        $this->uuid = Uuid::v4();
         $this->conflictedGuests = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUuid(): Uuid
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(Uuid $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
     }
 
     public function getEmail(): ?string

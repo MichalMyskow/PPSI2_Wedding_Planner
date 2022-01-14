@@ -12,7 +12,7 @@
             </div>
         </section>
         <section>
-            {% if not numberOfGuests == 0 %}
+            {% if not numberOfGuests == 0 and guestsWithoutInvite > 0 %}
             <div class="page-nav">
                 <a href="{{ path('send_invitations') }}" class="guest-list__item-action" title="wyślij zaproszenia">
                     Wyślij zaproszenia
