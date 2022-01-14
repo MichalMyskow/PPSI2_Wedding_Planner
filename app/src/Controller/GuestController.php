@@ -5,14 +5,17 @@ namespace App\Controller;
 use App\Entity\Guest;
 use App\Entity\User;
 use App\Entity\Wedding;
+use App\Form\AcceptationFormType;
 use App\Form\GuestFormType;
+use App\Service\GeneratorService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Bundle\SnappyBundle\Snappy\Response\SnappyResponse;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -20,11 +23,15 @@ class GuestController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
     private TokenStorageInterface $tokenStorage;
+    private GeneratorService $generatorService;
 
-    public function __construct(EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage)
+    public function __construct(EntityManagerInterface $entityManager,
+                                TokenStorageInterface $tokenStorage,
+                                GeneratorService $generatorService)
     {
         $this->entityManager = $entityManager;
         $this->tokenStorage = $tokenStorage;
+        $this->generatorService = $generatorService;
     }
 
     #[Route('/add-guest', name: 'add_guest')]
@@ -139,6 +146,7 @@ class GuestController extends AbstractController
             'maxGuests' => $maxGuests,
             'numberOfGuests' => count($guests),
             'guestsWithoutInvite' => $guestsWithoutInvite,
+            'sentInvitationsCounter' => $request->get('sent_invitations_counter'),
         ]);
     }
 
@@ -158,11 +166,12 @@ class GuestController extends AbstractController
 
         $counter = 0;
         foreach ($guests as $guest) {
-            $this->sendMail($guest, $wedding, $mailer);
+            $image = $this->generatorService->generateImage($wedding, $guest);
+            $this->sendMail($guest, $wedding, $mailer, $image);
             ++$counter;
         }
 
-        return $this->redirectToRoute('view_guests');
+        return $this->redirectToRoute('view_guests', ['sent_invitations_counter' => $counter]);
     }
 
     #[Route('/send-invitation/{id}', name: 'send_invitation')]
@@ -181,20 +190,53 @@ class GuestController extends AbstractController
         /** @var Wedding $wedding */
         $wedding = $user->getWedding();
 
-        $this->sendMail($guest, $wedding, $mailer);
+        $image = $this->generatorService->generateImage($wedding, $guest);
 
-        return $this->redirectToRoute('view_guests');
+        $this->sendMail($guest, $wedding, $mailer, $image);
+
+        return $this->redirectToRoute('view_guests', ['sent_invitations_counter' => 1]);
     }
 
-    public function sendMail(Guest $guest, Wedding $wedding, MailerInterface $mailer): void
+    #[Route('/download-invitation/{id}', name: 'download_invitation')]
+    public function downloadInvitation(int $id): Response
+    {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()?->getUser() ?: null;
+
+        if ($user && !$user->getWedding()) {
+            return $this->redirectToRoute('create_wedding');
+        }
+
+        /** @var Guest|null $guest */
+        $guest = $this->entityManager->getRepository(Guest::class)->find($id);
+
+        /** @var Wedding $wedding */
+        $wedding = $user->getWedding();
+
+        $image = $this->generatorService->generateImage($wedding, $guest);
+
+        return new SnappyResponse(
+            $image,
+            sprintf('Zaproszenie-%s.png', $guest->getUuid()->toRfc4122()),
+            'image/png'
+        );
+    }
+
+    public function sendMail(Guest $guest, Wedding $wedding, MailerInterface $mailer, $image): void
     {
         if (!($guest->getAcceptation()) && !($guest->getInvitationSent())) {
-            $email = (new Email())
+            $email = (new TemplatedEmail())
                 ->from(new Address('weddingplannerppsi2@gmail.com', 'WeddingPlanner'))
                 ->to($guest->getEmail())
                 ->subject('Zaproszenie na wesele')
-                ->text(sprintf('%s %s i %s %s mają zaszczyt zaprosić Sz.P. %s %s na swój ślub - https://weddingplannerproject.pl/accept-invitation/%s',
-                    $wedding->getBrideFirstName(), $wedding->getBrideLastName(), $wedding->getGroomFirstName(), $wedding->getGroomLastName(), $guest->getFirstName(), $guest->getLastName(), $guest->getUuid()->toRfc4122()));
+                ->htmlTemplate('emails/acceptation.html.twig')
+                ->context([
+                    'wedding' => $wedding,
+                    'guest' => $guest,
+                    'link' => $guest->getUuid()->toRfc4122(),
+                ])
+                ->attach($image, sprintf('Zaproszenie-%s.png', $guest->getUuid()->toRfc4122()))
+            ;
 
             $mailer->send($email);
 
@@ -213,16 +255,30 @@ class GuestController extends AbstractController
         /** @var Guest $guest */
         $guest = $this->entityManager->getRepository(Guest::class)->findOneBy(['uuid' => $uuid]);
 
-        if (!$guest || $guest->getAcceptation()) {
+        if (!$guest) {
             return $this->redirectToRoute('home');
         }
 
-        // TODO: wyświetlić widok/formularz czy zaakceptować?
-        $guest->setAcceptation(true);
-        $this->entityManager->persist($guest);
-        $this->entityManager->flush();
+        if ($guest->getAcceptation()) {
+            return $this->render('pages/acceptation_confirmed.html.twig', []);
+        }
 
-        // TODO: podziękować za akceptację? wysłać maila (link do zobaczenia miejsc)?
-        return $this->redirectToRoute('home');
+        $form = $this->createForm(AcceptationFormType::class, $guest);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($guest);
+            $entityManager->flush();
+
+            return $this->render('pages/acceptation_confirmed.html.twig', []);
+        }
+
+        return $this->render('pages/acceptation.html.twig', [
+            'acceptationForm' => $form->createView(),
+            'wedding' => $guest->getWedding(),
+        ]);
+
+//      TODO: podziękować za akceptację? wysłać maila (link do zobaczenia miejsc)?
     }
 }
