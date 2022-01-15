@@ -12,11 +12,23 @@
             </div>
         </section>
         <section>
+            {% if not numberOfGuests == 0 and guestsWithoutInvite > 0 %}
+            <div class="page-nav">
+                <a href="{{ path('send_invitations') }}" class="guest-list__item-action" title="wyślij zaproszenia">
+                    Wyślij zaproszenia
+                </a>
+            </div>
+            {% endif %}
             {% if not maxGuests %}
             <div class="page-nav">
                 <a href="{{ path('add_guest') }}" {#id="add-guest-btn"#} class="page-nav__item page-nav__item--add-guest">
                     Dodaj gościa
                 </a>
+            </div>
+            {% endif %}
+            {% if sentInvitationsCounter %}
+            <div class="page-nav">
+                Wysłano {{ sentInvitationsCounter }} zaprosze{% if sentInvitationsCounter < 2 %}nie{% elseif sentInvitationsCounter < 5 %}nia{% else %}ń{% endif %}
             </div>
             {% endif %}
         </section>
@@ -29,14 +41,33 @@
                         {{ guest.lastName }} {{ guest.firstName }} <span class="muted"> {% if guest.email %}({{ guest.email }}){% endif %} </span>
                     </div>
                     <div class="guest-list__item-action-list">
-                        <a href="" class="guest-list__item-action guest-list__item-action--send" title="wyślij zaproszenie">
+                        <a href="{{ path('edit_guest_conflicts', {id: guest.id}) }}" {#class="guest-list__item-action guest-list__item-action--send"#} title="edytuj konflikty">
+                            Edytuj konflikty
                         </a>
+                        <a href="{{ path('download_invitation', {id: guest.id}) }}" {#class="guest-list__item-action guest-list__item-action--send"#} title="pobierz zaproszenie">
+                            Pobierz zaproszenie
+                        </a>
+                        {% if not guest.invitationSent and not guest.acceptation and guest.email %}
+                        <a href="{{ path('send_invitation', {id: guest.id}) }}" {#class="guest-list__item-action guest-list__item-action--send"#} title="wyślij zaproszenie">
+                            Wyślij zaproszenie
+                        </a>
+                        {% endif %}
                         <a href="{{ path('edit_guest', {id: guest.id}) }}" class="guest-list__item-action {#guest-list__item-action--edit#}" title="edytuj dane">
                             Edytuj
                         </a>
                         <a href="{{ path('remove_guest', {id: guest.id}) }}" class="guest-list__item-action guest-list__item-action--delete" title="usuń gościa">
                         </a>
                     </div>
+                    {% if guest.conflictedGuests|length > 0 %}
+                    <div>
+                        <p>Nie chce siedzieć obok:</p>
+                        <ul>
+                            {% for conflictedGuest in guest.conflictedGuests %}
+                            <li>{{ conflictedGuest.lastName }} {{ conflictedGuest.firstName }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>

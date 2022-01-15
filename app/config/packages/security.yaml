@@ -44,4 +44,5 @@ security:
         - { path: ^/reset-password/check-email, roles: PUBLIC_ACCESS }
         - { path: ^/reset-password/reset/, roles: PUBLIC_ACCESS }
         - { path: ^/privacy-policy, roles: PUBLIC_ACCESS }
+        - { path: ^/accept-invitation/, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: ROLE_USER }

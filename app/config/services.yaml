@@ -29,3 +29,7 @@ services:
             - '@doctrine'
             - 'App\Entity\User'
             - {facebook: facebookID}
+
+    App\EventListener\GuestConflictListener:
+        tags:
+            - { name: doctrine.event_listener, event: onFlush }

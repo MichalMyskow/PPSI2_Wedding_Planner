@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Akceptacja</title>
+</head>
+
+<p>{{ wedding.brideFirstName }} {{ wedding.brideLastName }} oraz {{ wedding.groomFirstName }} {{ wedding.groomLastName }} mają zaszczyt zaprosić</p>
+
+<p>Sz.P. {{ guest.firstName }} {{ guest.lastName }} na swoje wesele.</p>
+
+<p>Aby zaakceptować zaproszenie, kliknij w poniższy link.</p>
+
+<a href="{{ url('accept_invitation', {uuid: uuid}) }}">Potwierdzenie obecności na weselu</a>

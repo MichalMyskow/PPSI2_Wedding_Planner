@@ -1,4 +1,7 @@
 {% extends 'base.html.twig' %}
+{% block style %}
+    {{ encore_entry_link_tags('dashboard') }}
+{% endblock %}
 {% block main %}
     <div class="main-margin-inline main-margin-block">
         <section>
@@ -6,7 +9,6 @@
                 <div class="welcome-nav">
                     <h2 class="welcome-nav__current">Privacy Policy</h2>
                 </div>
-                    <h1>Privacy Policy</h1>
                     <p>Last updated: January 11, 2022</p>
                     <p>This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.</p>
                     <p>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the <a href="https://www.freeprivacypolicy.com/blog/sample-privacy-policy-template/" target="_blank">Privacy Policy Template</a>.</p>

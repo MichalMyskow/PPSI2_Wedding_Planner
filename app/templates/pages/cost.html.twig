@@ -1,0 +1,48 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block style %} 
+        {{ encore_entry_link_tags('guest_list') }}
+{% endblock %}
+{% block main %}
+<section>
+            <div class="page-header">
+                <div class="page-header__content page-header__content--guest-list">
+                    <h2>Koszt</h2>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="page-nav">
+                <a href="{{ path('add_cost') }}" {#id="add-guest-btn"#} class="page-nav__item page-nav__item--add-guest">
+                    Dodaj koszty
+                </a>
+            </div>
+        </section>
+        <section>
+            <div class="guest-list">
+                {% for cost in costs %}
+                <div class="guest-list__item">
+
+                    <div class="guest-list__item-details">
+                        {{ cost.name }} {{ cost.description }} {{ cost.cost }}zł
+                    </div>
+                    <div class="guest-list__item-action-list">
+
+                        <a href="{{ path('edit_cost', {id: cost.id}) }}" class="guest-list__item-action {#guest-list__item-action--edit#}" title="edytuj dane">
+                            Edytuj
+                        </a>
+                        <a href="{{ path('remove_cost', {id: cost.id}) }}" class="guest-list__item-action guest-list__item-action--delete" title="usuń">
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div>
+                {{sum}}
+            </div>
+        </section>
+
+{% endblock %}
+{% block script %} 
+        {{ encore_entry_script_tags('guest_list') }}
+{% endblock %}

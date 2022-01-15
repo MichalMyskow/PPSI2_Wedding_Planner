@@ -1,7 +1,7 @@
 FROM php:8.0-fpm
 
 RUN apt-get update \
-    && apt-get install -y zlib1g-dev g++ git libicu-dev zip libzip-dev zip \
+    && apt-get install -y zlib1g-dev g++ git libicu-dev zip libzip-dev zip wkhtmltopdf \
     && docker-php-ext-install intl opcache pdo pdo_mysql \
     && pecl install apcu \
     && docker-php-ext-enable apcu \

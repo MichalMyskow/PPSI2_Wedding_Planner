@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block style %}
+    {{ encore_entry_link_tags('auth') }}
+{% endblock %}
+{% block main %}
+    <div class="main-margin-inline main-margin-block">
+        <section>
+            <div class="welcome-content">
+                <div class="welcome-nav">
+                    <h2 class="welcome-nav__current">Edycja użytkownika</h2>
+                </div>
+                <div class="main-form welcome-form">
+                    {{ form_start(userForm) }}
+                    {{ form_errors(userForm) }}
+                    <div class="main-form__input-group">
+                        {{ form_label(userForm.username, 'Nazwa użytkownika', {'label_attr': {'class': 'main-form__label'}}) }}
+                        {{ form_widget(userForm.username, {'attr': {'class': 'main-form__input'}}) }}
+                        {{ form_errors(userForm.username) }}
+                    </div>
+                    <input type="submit" value="Edytuj nazwę użytkownika"  class="main-form__submit">
+                    {{ form_end(userForm) }}
+                </div>
+                <a href="{{ path('app_forgot_password_request') }}" class="main-link--first">Zmień hasło</a>
+            </div>
+        </section>
+    </div>
+{% endblock %}

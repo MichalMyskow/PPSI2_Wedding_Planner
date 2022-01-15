@@ -7,6 +7,7 @@ use App\Validator as WeddingAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -22,6 +23,13 @@ class Guest
      * @ORM\Column(name="id", type="integer", nullable=false)
      */
     private $id;
+
+    /**
+     * @var Uuid
+     *
+     * @ORM\Column(name="uuid", type="uuid", nullable=false, unique=true)
+     */
+    private $uuid;
 
     /**
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
@@ -59,7 +67,7 @@ class Guest
     private Wedding $wedding;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Guest::class)
+     * @ORM\ManyToMany(targetEntity=Guest::class, cascade={"merge"})
      * @ORM\JoinTable(name="conflicted_guests",
      *      joinColumns={@ORM\JoinColumn(name="guest_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="conflicted_guest_id", referencedColumnName="id")}
@@ -67,14 +75,34 @@ class Guest
      */
     private $conflictedGuests;
 
+    /**
+     * @ORM\Column(name="invitation_sent", type="boolean", nullable=false)
+     * @Assert\Type(type="bool")
+     * @Assert\NotNull()
+     */
+    private $invitationSent = false;
+
     public function __construct()
     {
+        $this->uuid = Uuid::v4();
         $this->conflictedGuests = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUuid(): Uuid
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(Uuid $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
     }
 
     public function getEmail(): ?string
@@ -157,18 +185,30 @@ class Guest
         return $this->conflictedGuests;
     }
 
-    public function addConflictedGuest(self $conflictedGuest): self
+    public function addConflictedGuest(Guest $guest): void
     {
-        if (!$this->conflictedGuests->contains($conflictedGuest)) {
-            $this->conflictedGuests[] = $conflictedGuest;
+        if (!$this->conflictedGuests->contains($guest)) {
+            $this->conflictedGuests->add($guest);
+            $guest->addConflictedGuest($this);
         }
-
-        return $this;
     }
 
-    public function removeConflictedGuest(self $conflictedGuest): self
+    public function removeConflictedGuest(Guest $guest): void
     {
-        $this->conflictedGuests->removeElement($conflictedGuest);
+        if ($this->conflictedGuests->contains($guest)) {
+            $this->conflictedGuests->removeElement($guest);
+            $guest->removeConflictedGuest($this);
+        }
+    }
+
+    public function getInvitationSent(): ?bool
+    {
+        return $this->invitationSent;
+    }
+
+    public function setInvitationSent(bool $invitationSent): self
+    {
+        $this->invitationSent = $invitationSent;
 
         return $this;
     }

@@ -8,12 +8,14 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=WeddingRepository::class)
  * @ORM\Table(name="wedding")
  * @WeddingAssert\WeddingExist()
+ * @WeddingAssert\RoomTooSmall()
  */
 class Wedding
 {
@@ -25,6 +27,13 @@ class Wedding
      * @ORM\Column(name="id", type="integer", nullable=false)
      */
     private $id;
+
+    /**
+     * @var Uuid
+     *
+     * @ORM\Column(name="uuid", type="uuid", nullable=false, unique=true)
+     */
+    private $uuid;
 
     /**
      * @var DateTimeInterface
@@ -102,6 +111,7 @@ class Wedding
 
     public function __construct()
     {
+        $this->uuid = Uuid::v4();
         $this->costs = new ArrayCollection();
         $this->tasks = new ArrayCollection();
         $this->guests = new ArrayCollection();
@@ -110,6 +120,18 @@ class Wedding
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUuid(): Uuid
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid($uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
     }
 
     public function getDate(): DateTimeInterface
