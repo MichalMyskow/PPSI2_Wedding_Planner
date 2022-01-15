@@ -25,6 +25,7 @@ Encore
     .addEntry('dashboard', './assets/pages/dashboard.js')
     .addEntry('guest_list', './assets/pages/guest-list.js')
     .addEntry('checklist', './assets/pages/checklist.js')
+    .addEntry('guest_placement', './assets/pages/guest-placement.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
@@ -36,8 +37,6 @@ Encore
     // but, you probably want this, unless you're building a single-page app
     .enableSingleRuntimeChunk()
 
-
-    .enableSassLoader()
     /*
      * FEATURE CONFIG
      *
@@ -62,7 +61,7 @@ Encore
     })
 
     // enables Sass/SCSS support
-    //.enableSassLoader()
+    .enableSassLoader()
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
