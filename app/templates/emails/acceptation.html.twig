@@ -11,4 +11,4 @@
 
 <p>Aby zaakceptować zaproszenie, kliknij w poniższy link.</p>
 
-<a href="http{#TODO: zmienic link#}{#s#}://{#weddingplannerproject.pl#}localhost:8080/accept-invitation/{{ link }}">Potwierdzenie obecności na weselu</a>
+<a href="{{ url('accept_invitation', {uuid: uuid}) }}">Potwierdzenie obecności na weselu</a>

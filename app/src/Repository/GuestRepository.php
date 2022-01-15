@@ -34,6 +34,15 @@ class GuestRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findByConflictedGuest(Guest $guest)
+    {
+        return $this->createQueryBuilder('g')
+            ->andWhere(':conflictedGuest MEMBER OF g.conflictedGuests')
+            ->setParameter('conflictedGuest', $guest)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Guest[] Returns an array of Guest objects
     //  */

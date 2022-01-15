@@ -41,10 +41,13 @@
                         {{ guest.lastName }} {{ guest.firstName }} <span class="muted"> {% if guest.email %}({{ guest.email }}){% endif %} </span>
                     </div>
                     <div class="guest-list__item-action-list">
+                        <a href="{{ path('edit_guest_conflicts', {id: guest.id}) }}" {#class="guest-list__item-action guest-list__item-action--send"#} title="edytuj konflikty">
+                            Edytuj konflikty
+                        </a>
                         <a href="{{ path('download_invitation', {id: guest.id}) }}" {#class="guest-list__item-action guest-list__item-action--send"#} title="pobierz zaproszenie">
                             Pobierz zaproszenie
                         </a>
-                        {% if not guest.invitationSent and not guest.acceptation %}
+                        {% if not guest.invitationSent and not guest.acceptation and guest.email %}
                         <a href="{{ path('send_invitation', {id: guest.id}) }}" {#class="guest-list__item-action guest-list__item-action--send"#} title="wyślij zaproszenie">
                             Wyślij zaproszenie
                         </a>
@@ -55,6 +58,16 @@
                         <a href="{{ path('remove_guest', {id: guest.id}) }}" class="guest-list__item-action guest-list__item-action--delete" title="usuń gościa">
                         </a>
                     </div>
+                    {% if guest.conflictedGuests|length > 0 %}
+                    <div>
+                        <p>Nie chce siedzieć obok:</p>
+                        <ul>
+                            {% for conflictedGuest in guest.conflictedGuests %}
+                            <li>{{ conflictedGuest.lastName }} {{ conflictedGuest.firstName }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>
