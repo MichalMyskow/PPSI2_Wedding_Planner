@@ -4,12 +4,17 @@
 <nav>
     <div class="top-nav">
         <div class="top-nav__content">
+            <div class="top-nav__content-group--end">
+                <a href="{{ path('home') }}" title="dashboard" class="top-nav__home"></a>
+            </div>
+            <div class="top-nav__content-group">
                 <a href="{{ path('view_wedding') }}" title="dane wesela" class="top-nav__user-wedding-settings">
                 </a>
                 <a href="{{ path('view_user') }}" title="ustawienia konta" class="top-nav__user-avatar">
                 </a>
                 <a href="{{ path('app_logout') }}" title="wyloguj się" class="top-nav__user-logout">
                 </a>
+            </div>
         </div>
     </div>
 </nav>
