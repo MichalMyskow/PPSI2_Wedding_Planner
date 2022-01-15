@@ -17,13 +17,16 @@
             @extend %fa-icon;
             @extend .fas;
             content: fa-content($fa-var-users);
-
-
         }
         &--checklist:before {
             @extend %fa-icon;
             @extend .fas;
             content: fa-content($fa-var-clipboard-list);
+        }
+        &--guest-placement:before {
+            @extend %fa-icon;
+            @extend .fas;
+            content: fa-content($fa-var-drafting-compass);
 
         }
     }
