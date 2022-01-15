@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block style %}
+        {{ encore_entry_link_tags('auth') }}
+{% endblock %}
+{% block main %}
+    <div class="main-margin-inline main-margin-block">
+        <section>
+            <div class="welcome-content">
+                <div class="welcome-nav">
+                    <h2 class="welcome-nav__current">Dane użytkownika</h2>
+                </div>
+                <div class="mb-3">
+                    Nazwa użytkownika: {{ user.username }}
+                </div>
+                <div class="mb-3">
+                    Adres email: {{ user.email }}
+                </div>
+                <div class="mb-3">
+                    Data rejestracji: {{ user.registeredAt|date("m.d.Y H:i:s") }}
+                </div>
+                <a href="{{ path('edit_user') }}" class="main-link--first">Zmień dane użytkownika</a>
+            </div>
+        </section>
+    </div>
+{% endblock %}

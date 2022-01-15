@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block style %}
+        {{ encore_entry_link_tags('auth') }}
+{% endblock %}
+{% block main %}
+        <div class="main-margin-inline main-margin-block">
+                <section>
+                        <div class="welcome-content">
+                                <div class="welcome-nav">
+                                        <h2 class="welcome-nav__current">Dziękujemy za potwierdzenie obecności :)</h2>
+                                </div>
+                        </div>
+                        <div>
+                                <h4>Oto twój link do podglądu przydzielonych miejsc:</h4>
+                                {#<a href="">Miejsca dla gości</a>#}
+                        </div>
+                </section>
+        </div>
+{% endblock %}

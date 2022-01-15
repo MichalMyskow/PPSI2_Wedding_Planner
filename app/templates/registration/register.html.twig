@@ -21,9 +21,14 @@
                             {{ form_errors(registrationForm.email) }}
                         </div>
                         <div class="main-form__input-group">
-                            {{ form_label(registrationForm.plainPassword, 'Hasło', {'label_attr': {'class': 'main-form__label'}}) }}
-                            {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'main-form__input'}}) }}
-                            {{ form_errors(registrationForm.plainPassword) }}
+                            {{ form_label(registrationForm.plainPassword.first, 'Hasło', {'label_attr': {'class': 'main-form__label'}}) }}
+                            {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'main-form__input'}}) }}
+                            {{ form_errors(registrationForm.plainPassword.first) }}
+                        </div>
+                        <div class="main-form__input-group">
+                            {{ form_label(registrationForm.plainPassword.second, 'Powtórz hasło', {'label_attr': {'class': 'main-form__label'}}) }}
+                            {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'main-form__input'}}) }}
+                            {{ form_errors(registrationForm.plainPassword.second) }}
                         </div>
                         <div class="main-form__input-group">
                             {{ form_label(registrationForm.username, 'Nazwa użytkownika', {'label_attr': {'class': 'main-form__label'}}) }}

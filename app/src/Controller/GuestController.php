@@ -18,8 +18,9 @@ class GuestController extends AbstractController
     private EntityManagerInterface $entityManager;
     private TokenStorageInterface $tokenStorage;
 
-    public function __construct(EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage)
-    {
+    public function __construct(EntityManagerInterface $entityManager,
+                                TokenStorageInterface $tokenStorage,
+                                ) {
         $this->entityManager = $entityManager;
         $this->tokenStorage = $tokenStorage;
     }
@@ -129,10 +130,14 @@ class GuestController extends AbstractController
         $wedding = $user->getWedding();
         $guests = $wedding->getGuests();
         $maxGuests = (count($guests) >= $wedding->getRoom()->getSize());
+        $guestsWithoutInvite = count($this->entityManager->getRepository(Guest::class)->findAllWithoutInvite($wedding));
 
         return $this->render('pages/guest-list.html.twig', [
             'guests' => $guests,
             'maxGuests' => $maxGuests,
+            'numberOfGuests' => count($guests),
+            'guestsWithoutInvite' => $guestsWithoutInvite,
+            'sentInvitationsCounter' => $request->get('sent_invitations_counter'),
         ]);
     }
 }

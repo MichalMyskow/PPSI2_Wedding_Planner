@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block style %}
+        {{ encore_entry_link_tags('auth') }}
+{% endblock %}
+{% block main %}
+        <div class="main-margin-inline main-margin-block">
+                <section>
+                        <div class="welcome-content">
+                                <div class="welcome-nav">
+                                        <h2 class="welcome-nav__current">Czy potwierdzasz obecność na weselu?</h2>
+                                        {# TODO: dodac info o weselu #}
+                                </div>
+                                <div class="main-form welcome-form">
+                                        {{ form_start(acceptationForm) }}
+                                        {{ form_errors(acceptationForm) }}
+                                        <div class="main-form__input-group--inline">
+                                                {{ form_widget(acceptationForm.acceptation, {'attr': {'class': 'main-form__checkbox'}}) }}
+                                                {{ form_label(acceptationForm.acceptation, 'Zaznacz jeśli potwierdzasz', {'label_attr': {'class': 'main-form__label'}}) }}
+                                                {{ form_errors(acceptationForm.acceptation) }}
+                                        </div>
+                                        <input type="submit" value="Potwierdź"  class="main-form__submit">
+                                        {{ form_end(acceptationForm) }}
+                                </div>
+                        </div>
+                </section>
+        </div>
+{% endblock %}
