@@ -3,11 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Cost;
-use App\Entity\Guest;
 use App\Entity\User;
 use App\Entity\Wedding;
 use App\Form\CostFormType;
-use App\Form\GuestFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,7 +81,7 @@ class CostController extends AbstractController
         }
 
         return $this->render('pages/edit_cost.html.twig', [
-            'guestForm' => $form->createView(),
+            'costForm' => $form->createView(),
         ]);
     }
 
@@ -102,7 +100,6 @@ class CostController extends AbstractController
         if (!$cost || $cost->getWedding() != $user->getWedding()) {
             return $this->redirectToRoute('view_costs');
         }
-
 
         $this->entityManager->remove($cost);
         $this->entityManager->flush();
@@ -123,15 +120,15 @@ class CostController extends AbstractController
         /** @var Wedding $wedding */
         $wedding = $user->getWedding();
         $costs = $wedding->getCosts();
-        $sum = 0;
+        $sum = 0.0;
 
-        foreach ($costs as $cost){
+        foreach ($costs as $cost) {
             $sum += $cost->getCost();
         }
 
         return $this->render('pages/cost.html.twig', [
             'costs' => $costs,
-            'sum'=> $sum,
+            'sum' => sprintf('%.2f', round($sum, 2)),
         ]);
     }
 }

@@ -3,10 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Cost;
-use App\Entity\Guest;
-use Doctrine\DBAL\Types\FloatType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,7 +15,9 @@ class CostFormType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('cost');
+            ->add('cost', MoneyType::class, [
+                'currency' => 'PLN',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
