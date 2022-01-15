@@ -93,12 +93,18 @@ function unsetGuestSeat(guest){
 function savePlan(){
     let savingPlan = [];
     let savingObject;
-    guestFormInput.forEach((guest) => {
+        guestFormInput.forEach((guest) => {
         savingObject = { id: parseInt(guest.dataset.guestId, 10), seatNumber: parseInt(guest.dataset.guestSeatId, 10) };
         savingPlan.push(savingObject);
     });
-    const myJSON = JSON.stringify(savingPlan, null, 2);
-    console.dir(myJSON);
+    let plan = JSON.stringify(savingPlan, null, 2);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', `${window.location.origin}/guest-placement/save`, false);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            // console.log(this.response);
+        };
+        xhr.send(plan);  
 }
 function clearPlan(){
     for (guest of guestFormInput) {
