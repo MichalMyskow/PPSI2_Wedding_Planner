@@ -12,7 +12,7 @@
         </section>
         <section>
             <div class="dashboard-grid">
-                <a class="home-card">
+                <div class="home-card">
                     <div class="home-card__header home-card__header--guests">
                         Goście
                     </div>
@@ -20,7 +20,45 @@
                         <p>Liczba zaproszonych gości: <span class="first-color">56</span></p>
                         <p>Przyjęte zaproszenia: <span class="first-color">0</span></p>
                     </div>
-                </a>
+                    <a class="home-card__button first-color" href="{{ path('view_guests') }}">Przejdź</a>
+                </div>
+                <div class="home-card">
+                    <div class="home-card__header home-card__header--budget">
+                        Budżet
+                    </div>
+                    <div class="home-card__content">
+                        <p>Całkowity koszt wesela: <span class="first-color">56</span></p>
+                    </div>
+                    <a class="home-card__button first-color" href="{{ path('view_costs') }}">Przejdź</a>
+                </div>
+                <div class="home-card">
+                    <div class="home-card__header home-card__header--checklist">
+                        Lista zadań
+                    </div>
+                    <div class="home-card__content">
+                        <p>Liczba zadań do ukończenia: <span class="first-color">0</span></p>
+                        <p>Liczba ukończonych zadań: <span class="first-color">0</span></p>
+                    </div>
+                    <a class="home-card__button first-color" href="{{ path('checklist') }}">Przejdź</a>
+                </div>
+                <div class="home-card">
+                    <div class="home-card__header home-card__header--guest-placement">
+                        Planowanie siedzeń
+                    </div>
+                    <div class="home-card__content">
+                        <p>Przykładowe dane: <span class="first-color">0</span></p>
+                    </div>
+                    <a class="home-card__button first-color" href="{{ path('guest_placement') }}">Przejdź</a>
+                </div>
+                <div class="home-card">
+                    <div class="home-card__header home-card__header--guests">
+                        Dane wesela
+                    </div>
+                    <div class="home-card__content">
+                        <p>Przykładowe dane: <span class="first-color">0</span></p>
+                    </div>
+                    <a class="home-card__button first-color" href="{{ path('view_wedding') }}">Przejdź</a>
+                </div>
             </div>
         </section>
     </div>

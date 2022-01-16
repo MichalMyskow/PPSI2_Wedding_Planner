@@ -1,20 +1,25 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/app.html.twig' %}
+
 {% block style %} 
-        {{ encore_entry_link_tags('auth') }}
+        {{ encore_entry_link_tags('guest_list') }}
 {% endblock %}
 {% block main %}
     <div class="main-margin-inline main-margin-block">
         <section>
-            <div class="welcome-content">
-                <div class="welcome-nav">
-                    <h2 class="welcome-nav__current">Dodawanie konfliktu</h2>
+            <div class="page-header">
+                <div class="page-header__content page-header__content--guest-conflict">
+                    <h2>Dodawanie konfliktu</h2>
                 </div>
+            </div>
+        </section>
+        <section>
+            <div class="main-form__center-container">
                 <div class="main-form welcome-form">
                     {{ form_start(guestConflictForm) }}
                     {{ form_errors(guestConflictForm) }}
                     <div class="main-form__input-group">
                         {{ form_label(guestConflictForm.conflictedGuests, 'Konflikty', {'label_attr': {'class': 'main-form__label'}}) }}
-                        {{ form_widget(guestConflictForm.conflictedGuests, {'attr': {'class': 'main-form__input'}}) }}
+                        {{ form_widget(guestConflictForm.conflictedGuests, {'attr': {'class': 'main-form__select'}}) }}
                         {{ form_errors(guestConflictForm.conflictedGuests) }}
                     </div>
                     <input type="submit" value="Dodaj konflikty"  class="main-form__submit">
@@ -23,4 +28,7 @@
             </div>
         </section>
     </div>
+{% endblock %}
+{% block script %} 
+        {{ encore_entry_script_tags('guest_list') }}
 {% endblock %}

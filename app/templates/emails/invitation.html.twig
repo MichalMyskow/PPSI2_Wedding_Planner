@@ -7,19 +7,35 @@
     <title>Invitation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poiret+One&display=swap" rel="stylesheet">
     <style>
         html {
-            background-color: coral;
+            background-color: #6c4f61;
+            color: white;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 26px;
+        }
+        .content{
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px;
+            border: 2px solid #dbb022;
+        }
+        .main-color{
+            color: #dbb022;
         }
     </style>
 </head>
 <body>
 <div>
     <section>
-        <div>
-            <p>{{ wedding.brideFirstName }} {{ wedding.brideLastName }} oraz {{ wedding.groomFirstName }} {{ wedding.groomLastName }} mają zaszczyt zaprosić</p>
+        <div class="content">
+            <p><span class="main-color">{{ wedding.brideFirstName }} {{ wedding.brideLastName }}</span> oraz <span class="main-color">{{ wedding.groomFirstName }} {{ wedding.groomLastName }}</span></p>
+            <p>mają zaszczyt zaprosić</p>
 
-            <p>Sz.P. {{ guest.firstName }} {{ guest.lastName }} na swoje wesele.</p>
+            <p>Sz.P. <span class="main-color">{{ guest.firstName }} {{ guest.lastName }}</span></p>
+            <p>na swoje wesele, które odbędzie się <span class="main-color">{{ wedding.date|date("d.m.Y") }}</span>, o godzinie <span class="main-color">{{ wedding.date|date("H:i") }}</span>.</p>
         </div>
     </section>
 </div>

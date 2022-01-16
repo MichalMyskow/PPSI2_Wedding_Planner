@@ -5,8 +5,21 @@
     &__content{
         @include main-margin-inline;
         display: flex;
-        justify-content: end;
         gap: 1rem;
+        justify-content: space-between;
+        &-group{
+            gap: 1rem;
+            display: flex;
+        }
+    }
+    &__home{
+        &:before{
+            @extend %fa-icon;
+            @extend .fas;
+            content: fa-content($fa-var-home);
+            color: $second;
+            font-size: 1.6rem;
+        }
     }
     &__user{
         &-avatar{
@@ -36,5 +49,6 @@
                 font-size: 1.6rem;
             }
         }
+
     }
 }

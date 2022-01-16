@@ -1,15 +1,13 @@
-.guest-list{
+.budget-list{
     &__item{
         padding-block: 1.5rem;
         border-bottom: 1px solid $second;
         display: flex;
         align-items: center;
         font-size: 1.2rem;
-        flex-wrap: wrap;
         &-datails{
             display: flex;
             align-items: center;
-            max-width: 200px;
         }
         &-action-list{
             margin-left: auto;
@@ -26,35 +24,12 @@
 
             &--delete{
                 &:before{
-                  content: fa-content($fa-var-user-minus);
-                }
-            }
-            &--file-download{
-                &:before{
-                  content: fa-content($fa-var-file-download);
-                }
-            }
-            &--send{
-                &:before{
-                  content: fa-content($fa-var-envelope);
+                  content: fa-content($fa-var-trash-alt);
                 }
             }
             &--edit{
                 &:before{
                   content: fa-content($fa-var-edit);
-                }
-            }
-            &--conflict{
-                &:before{
-                  content: fa-content($fa-var-user-times);
-                }
-            }
-            &--sended{
-                opacity: 0.5;
-                // pointer-events: none;
-                cursor: initial;
-                &:before{
-                  content: fa-content($fa-var-envelope-open-text);
                 }
             }
             &--disable{
