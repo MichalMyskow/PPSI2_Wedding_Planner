@@ -27,5 +27,10 @@
             @extend .fas;
           content: fa-content($fa-var-trash-alt);
         }
+        &--envelope:before{
+            @extend %fa-icon;
+            @extend .fas;
+          content: fa-content($fa-var-envelope);
+        }
     }
 }

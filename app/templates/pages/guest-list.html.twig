@@ -4,6 +4,8 @@
         {{ encore_entry_link_tags('guest_list') }}
 {% endblock %}
 {% block main %}
+     <div class="main-margin-inline main-margin-block">
+
 <section>
             <div class="page-header">
                 <div class="page-header__content page-header__content--guest-list">
@@ -12,25 +14,21 @@
             </div>
         </section>
         <section>
-            {% if not numberOfGuests == 0 and guestsWithoutInvite > 0 %}
             <div class="page-nav">
-                <a href="{{ path('send_invitations') }}" class="guest-list__item-action" title="wyślij zaproszenia">
-                    Wyślij zaproszenia
-                </a>
-            </div>
-            {% endif %}
             {% if not maxGuests %}
-            <div class="page-nav">
                 <a href="{{ path('add_guest') }}" {#id="add-guest-btn"#} class="page-nav__item page-nav__item--add-guest">
                     Dodaj gościa
                 </a>
-            </div>
             {% endif %}
-            {% if sentInvitationsCounter %}
-            <div class="page-nav">
+            {% if not numberOfGuests == 0 and guestsWithoutInvite > 0 %}
+                <a href="{{ path('send_invitations') }}" class="page-nav__item page-nav__item--envelope" title="wyślij zaproszenia">
+                    Wyślij zaproszenia
+                </a>
+            {% endif %}
+            {% if sentInvitationsCounter %}s
                 Wysłano {{ sentInvitationsCounter }} zaprosze{% if sentInvitationsCounter < 2 %}nie{% elseif sentInvitationsCounter < 5 %}nia{% else %}ń{% endif %}
-            </div>
             {% endif %}
+            </div>
         </section>
         <section>
             <div class="guest-list">
@@ -41,22 +39,19 @@
                         {{ guest.lastName }} {{ guest.firstName }} <span class="muted"> {% if guest.email %}({{ guest.email }}){% endif %} </span>
                     </div>
                     <div class="guest-list__item-action-list">
-                        <a href="{{ path('edit_guest_conflicts', {id: guest.id}) }}" {#class="guest-list__item-action guest-list__item-action--send"#} title="edytuj konflikty">
-                            Edytuj konflikty
+                        <a href="{{ path('edit_guest_conflicts', {id: guest.id}) }}" class="guest-list__item-action guest-list__item-action--conflict" title="edytuj konflikty">
+                            {# Edytuj konflikty #}
                         </a>
-                        <a href="{{ path('download_invitation', {id: guest.id}) }}" {#class="guest-list__item-action guest-list__item-action--send"#} title="pobierz zaproszenie">
-                            Pobierz zaproszenie
+                        <a href="{{ path('download_invitation', {id: guest.id}) }}" class="guest-list__item-action guest-list__item-action--file-download" title="pobierz zaproszenie">
+                            {# Pobierz zaproszenie #}
                         </a>
                         {% if not guest.invitationSent and not guest.acceptation and guest.email %}
-                        <a href="{{ path('send_invitation', {id: guest.id}) }}" {#class="guest-list__item-action guest-list__item-action--send"#} title="wyślij zaproszenie">
-                            Wyślij zaproszenie
+                        <a href="{{ path('send_invitation', {id: guest.id}) }}" class="guest-list__item-action guest-list__item-action--send" title="wyślij zaproszenie">
+                            {# Wyślij zaproszenie #}
                         </a>
                         {% endif %}
-                        <a href="{{ path('edit_guest', {id: guest.id}) }}" class="guest-list__item-action {#guest-list__item-action--edit#}" title="edytuj dane">
-                            Edytuj
-                        </a>
-                        <a href="{{ path('remove_guest', {id: guest.id}) }}" class="guest-list__item-action guest-list__item-action--delete" title="usuń gościa">
-                        </a>
+                        <a href="{{ path('edit_guest', {id: guest.id}) }}" class="guest-list__item-action guest-list__item-action--edit" title="edytuj dane"></a>
+                        <a href="{{ path('remove_guest', {id: guest.id}) }}" class="guest-list__item-action guest-list__item-action--delete" title="usuń gościa"></a>
                     </div>
                     {% if guest.conflictedGuests|length > 0 %}
                     <div>
@@ -73,7 +68,7 @@
             </div>
         </section>
 
-        <section>
+        {# <section>
             <div class="modal" id="modal"> 
                 <div id="modal-content" class="modal-content">
                     <div class="main-form">
@@ -100,7 +95,8 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> #}
+        </div>
 {% endblock %}
 {% block script %} 
         {{ encore_entry_script_tags('guest_list') }}

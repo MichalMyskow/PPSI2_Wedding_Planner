@@ -1,5 +1,4 @@
 .guest-list{
-    margin: 30px 150px;
     &__item{
         padding-block: 1.5rem;
         border-bottom: 1px solid $second;
@@ -12,12 +11,12 @@
         }
         &-action-list{
             margin-left: auto;
-            gap: 10px;
+            gap: 5px;
 
         }
         &-action{
-            padding: 10px 10px;
-            margin-inline: 10px;
+            padding: 5px 5px;
+            margin-inline: 5px;
             font-size: 1.2rem;
             color: $second;
             @extend %fa-icon;
@@ -28,6 +27,11 @@
                   content: fa-content($fa-var-user-minus);
                 }
             }
+            &--file-download{
+                &:before{
+                  content: fa-content($fa-var-file-download);
+                }
+            }
             &--send{
                 &:before{
                   content: fa-content($fa-var-envelope);
@@ -36,6 +40,11 @@
             &--edit{
                 &:before{
                   content: fa-content($fa-var-edit);
+                }
+            }
+            &--conflict{
+                &:before{
+                  content: fa-content($fa-var-user-times);
                 }
             }
             &--sended{
