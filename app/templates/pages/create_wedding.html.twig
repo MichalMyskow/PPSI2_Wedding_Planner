@@ -33,12 +33,12 @@
                     </div>
                     <div class="main-form__input-group">
                         {{ form_label(weddingForm.date, 'Planowana data wesela', {'label_attr': {'class': 'main-form__label'}}) }}
-                        {{ form_widget(weddingForm.date, {'attr': {'class': 'main-form__input'}}) }}
+                        {{ form_widget(weddingForm.date, {'attr': {'class': 'main-form__select main-form__select--date'}}) }}
                         {{ form_errors(weddingForm.date) }}
                     </div>
                     <div class="main-form__input-group">
                         {{ form_label(weddingForm.room, 'Sala weselna', {'label_attr': {'class': 'main-form__label'}}) }}
-                        {{ form_widget(weddingForm.room, {'attr': {'class': 'main-form__input'}}) }}
+                        {{ form_widget(weddingForm.room, {'attr': {'class': 'main-form__select'}}) }}
                         {{ form_errors(weddingForm.room) }}
                     </div>
                     <input type="submit" value="Stwórz wesele"  class="main-form__submit">
