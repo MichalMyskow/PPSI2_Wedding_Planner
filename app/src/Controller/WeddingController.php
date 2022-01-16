@@ -64,6 +64,7 @@ class WeddingController extends AbstractController
 
         /** @var Wedding $wedding */
         $wedding = $user->getWedding();
+        $room = $wedding->getRoom();
 
         if ($wedding->getDate() < (new \DateTime())) {
             return $this->redirectToRoute('view_wedding');
@@ -75,6 +76,15 @@ class WeddingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($wedding);
+
+            $updatedRoom = $wedding->getRoom();
+            if ($room !== $updatedRoom) {
+                $guests = $wedding->getGuests();
+                foreach ($guests as $guest) {
+                    $guest->setSeatNumber(null);
+                    $entityManager->persist($guest);
+                }
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('view_wedding');

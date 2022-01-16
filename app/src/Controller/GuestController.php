@@ -129,7 +129,7 @@ class GuestController extends AbstractController
         /** @var Wedding $wedding */
         $wedding = $user->getWedding();
         $guests = $wedding->getGuests();
-        $maxGuests = (count($guests) >= $wedding->getRoom()->getSize());
+        $maxGuests = (count($guests) >= ($wedding->getRoom()->getSize() - 2));
         $guestsWithoutInvite = count($this->entityManager->getRepository(Guest::class)->findAllWithoutInvite($wedding));
 
         return $this->render('pages/guest-list.html.twig', [
