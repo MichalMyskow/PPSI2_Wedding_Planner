@@ -33,6 +33,16 @@
             @extend .fas;
             content: fa-content($fa-var-user-plus);
         }
+        &--guest:before {
+            @extend %fa-icon;
+            @extend .fas;
+            content: fa-content($fa-var-user);
+        }
+        &--guest-conflict:before {
+            @extend %fa-icon;
+            @extend .fas;
+            content: fa-content($fa-var-user-times);
+        }
         &--budget:before {
             @extend %fa-icon;
             @extend .fas;

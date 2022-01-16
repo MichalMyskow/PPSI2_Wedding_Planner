@@ -6,7 +6,7 @@
 {% block main %}
      <div class="main-margin-inline main-margin-block">
 
-<section>
+        <section>
             <div class="page-header">
                 <div class="page-header__content page-header__content--guest-list">
                     <h2>Goście</h2>
@@ -25,7 +25,7 @@
                     Wyślij zaproszenia
                 </a>
             {% endif %}
-            {% if sentInvitationsCounter %}s
+            {% if sentInvitationsCounter %}
                 Wysłano {{ sentInvitationsCounter }} zaprosze{% if sentInvitationsCounter < 2 %}nie{% elseif sentInvitationsCounter < 5 %}nia{% else %}ń{% endif %}
             {% endif %}
             </div>
