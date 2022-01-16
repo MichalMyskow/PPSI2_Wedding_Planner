@@ -34,9 +34,6 @@
     <section>
         <h1 class="welcome-header">Wedding<br>planner</h1>
     </section>
-    {% for flashError in app.flashes('reset_password_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
 
     <section>
        <div class="welcome-content">
@@ -48,6 +45,9 @@
                     Wprowadź swój adres email a my wyślemy na niego
                     link resetujący twoje hasło.
                 </div>
+                {% for flashError in app.flashes('reset_password_error') %}
+                    <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+                {% endfor %}
                 {{ form_start(requestForm) }}
                     <div class="main-form__input-group">
                         {{ form_label(requestForm.email, 'Adres E-mail', {'label_attr': {'class': 'main-form__label'}}) }}
