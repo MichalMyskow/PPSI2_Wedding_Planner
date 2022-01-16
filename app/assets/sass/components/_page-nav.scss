@@ -32,5 +32,10 @@
             @extend .fas;
           content: fa-content($fa-var-envelope);
         }
+        &--add:before{
+            @extend %fa-icon;
+            @extend .fas;
+          content: fa-content($fa-var-plus);
+        }
     }
 }

@@ -86,6 +86,19 @@ input{
     
       }
     }
+    &__textarea{
+      border: none;
+      outline: 0;
+      padding: .8rem .8rem;
+      background: transparent;
+      color:#efefef;
+      border-bottom: 2px solid $second;
+      font-size: 1.2rem;
+      font-weight: 100;
+      width: 100%;
+      font-family: $main-font;
+      resize: none;
+    }
     &__label{
         color: #fff;
         font-size: 1.3rem;
@@ -155,6 +168,10 @@ input{
         }
       }
     }
+  &__input-wrap{
+    display: flex;
+    align-items: center;
+  }
 }
   @keyframes check-before {
     0% {

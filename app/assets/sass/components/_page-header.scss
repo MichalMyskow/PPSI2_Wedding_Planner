@@ -33,5 +33,10 @@
             @extend .fas;
             content: fa-content($fa-var-user-plus);
         }
+        &--budget:before {
+            @extend %fa-icon;
+            @extend .fas;
+            content: fa-content($fa-var-wallet);
+        }
     }
 }

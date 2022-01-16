@@ -1,0 +1,41 @@
+.budget-list{
+    &__item{
+        padding-block: 1.5rem;
+        border-bottom: 1px solid $second;
+        display: flex;
+        align-items: center;
+        font-size: 1.2rem;
+        &-datails{
+            display: flex;
+            align-items: center;
+        }
+        &-action-list{
+            margin-left: auto;
+            gap: 5px;
+
+        }
+        &-action{
+            padding: 5px 5px;
+            margin-inline: 5px;
+            font-size: 1.2rem;
+            color: $second;
+            @extend %fa-icon;
+            @extend .fas;
+
+            &--delete{
+                &:before{
+                  content: fa-content($fa-var-trash-alt);
+                }
+            }
+            &--edit{
+                &:before{
+                  content: fa-content($fa-var-edit);
+                }
+            }
+            &--disable{
+                opacity: 0.5;
+                cursor: initial;
+            }
+        }
+    }
+}

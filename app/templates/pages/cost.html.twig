@@ -1,48 +1,49 @@
 {% extends 'layouts/app.html.twig' %}
 
 {% block style %} 
-        {{ encore_entry_link_tags('guest_list') }}
+        {{ encore_entry_link_tags('budget') }}
 {% endblock %}
 {% block main %}
-<section>
+    <div class="main-margin-inline main-margin-block">
+        <section>
             <div class="page-header">
-                <div class="page-header__content page-header__content--guest-list">
-                    <h2>Koszt</h2>
+                <div class="page-header__content page-header__content--budget">
+                    <h2>Budżet</h2>
                 </div>
             </div>
         </section>
         <section>
             <div class="page-nav">
-                <a href="{{ path('add_cost') }}" {#id="add-guest-btn"#} class="page-nav__item page-nav__item--add-guest">
+                <a href="{{ path('add_cost') }}" {#id="add-guest-btn"#} class="page-nav__item page-nav__item--add">
                     Dodaj koszty
                 </a>
             </div>
         </section>
         <section>
-            <div class="guest-list">
+            <div class="budget-list">
                 {% for cost in costs %}
-                <div class="guest-list__item">
+                <div class="budget-list__item">
 
-                    <div class="guest-list__item-details">
-                        {{ cost.name }} {{ cost.description }} {{ cost.cost }}zł
+                    <div class="budget-list__item-details">
+                        {{ cost.name }} <span class="muted">{{ cost.description }}</span> <span class="first-color">{{ cost.cost }}</span> zł
                     </div>
-                    <div class="guest-list__item-action-list">
+                    <div class="budget-list__item-action-list">
 
-                        <a href="{{ path('edit_cost', {id: cost.id}) }}" class="guest-list__item-action {#guest-list__item-action--edit#}" title="edytuj dane">
-                            Edytuj
+                        <a href="{{ path('edit_cost', {id: cost.id}) }}" class="budget-list__item-action budget-list__item-action--edit" title="edytuj dane">
                         </a>
-                        <a href="{{ path('remove_cost', {id: cost.id}) }}" class="guest-list__item-action guest-list__item-action--delete" title="usuń">
+                        <a href="{{ path('remove_cost', {id: cost.id}) }}" class="budget-list__item-action budget-list__item-action--delete" title="usuń">
                         </a>
                     </div>
                 </div>
                 {% endfor %}
             </div>
-            <div>
-                {{sum}}
+            <div class="budget-summary">
+                <div>Całkowita kwota</div>
+                <div class="budget-summary__value"><span class="first-color">{{sum}}</div>
             </div>
         </section>
-
+    </div>
 {% endblock %}
 {% block script %} 
-        {{ encore_entry_script_tags('guest_list') }}
+        {{ encore_entry_script_tags('budget') }}
 {% endblock %}
