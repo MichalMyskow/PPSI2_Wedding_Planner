@@ -27,7 +27,11 @@
             @extend %fa-icon;
             @extend .fas;
             content: fa-content($fa-var-drafting-compass);
-
+        }
+        &--guest-add:before {
+            @extend %fa-icon;
+            @extend .fas;
+            content: fa-content($fa-var-user-plus);
         }
     }
 }
