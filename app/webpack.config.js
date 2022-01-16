@@ -27,6 +27,7 @@ Encore
     .addEntry('checklist', './assets/pages/checklist.js')
     .addEntry('guest_placement', './assets/pages/guest-placement.js')
     .addEntry('budget', './assets/pages/budget.js')
+    .addEntry('details', './assets/pages/details.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
