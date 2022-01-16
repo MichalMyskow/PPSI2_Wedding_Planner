@@ -1,29 +1,3 @@
-{# {% extends 'base.html.twig' %}
-
-{% block title %}Zresetuj swoje hasło{% endblock %}
-
-{% block main %}
-    {% for flashError in app.flashes('reset_password_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
-    <h1>Zresetuj swoje hasło</h1>
-
-    {{ form_start(requestForm) }}
-        {{ form_row(requestForm.email) }}
-        <div>
-            <small>
-                Wprowadź swój adres email a my wyślemy na niego
-                link resetujący twoje hasło.
-            </small>
-        </div>
-
-        <button class="btn btn-primary">Wyślij email resetujący hasło</button>
-    {{ form_end(requestForm) }}
-{% endblock %}
- #}
-
-
-
 {% extends 'base.html.twig' %}
 
 {% block style %} 
