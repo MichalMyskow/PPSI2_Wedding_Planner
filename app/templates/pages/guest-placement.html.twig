@@ -32,118 +32,15 @@
             <div class="guest-placement">
                 <div class="guest-placement__list">
                     <form id="guest_placement_form" class="guest-placement__list-form">
+                        {% for guest in guests %}
                         <div class="guest-placement__list-item">
                             <label class="guest-placement__list-label">
-                                <input type="radio" value="Kryspin Borkowski" name="guest" class="guest guest-placement__list-input" data-guest-id="1" data-guest-seat-id="">
-                                <div class="guest-placement__list-name">Kryspin Borkowski</div>
-                                <a class="guest-placement__list-unset-btn" data-delete-guest-id="1"></a>
+                                <input type="radio" name="guest" class="guest guest-placement__list-input" data-guest-id="{{ guest.id }}" data-guest-seat-id="">
+                                <div class="guest-placement__list-name">{{ guest.lastName }} {{ guest.firstName }}</div>
+                                <a class="guest-placement__list-unset-btn" data-delete-guest-id="{{ guest.id }}"></a>
                             </label>
                         </div>
-                        <div class="guest-placement__list-item">
-                            <label class="guest-placement__list-label">
-                                <input type="radio" value="Patryk Wiśniewski" name="guest" class="guest guest-placement__list-input" data-guest-id="2" data-guest-seat-id="">
-                                <div class="guest-placement__list-name">Patryk Wiśniewski</div>
-                                <a class="guest-placement__list-unset-btn" data-delete-guest-id="2"></a>
-                            </label>
-                        </div>
-                        <div class="guest-placement__list-item">
-                            <label class="guest-placement__list-label">
-                                <input type="radio" value="Nina Ziółkowska" name="guest" class="guest guest-placement__list-input" data-guest-id="3" data-guest-seat-id="">
-                                <div class="guest-placement__list-name">Nina Ziółkowska</div>
-                                <a class="guest-placement__list-unset-btn" data-delete-guest-id="3"></a>
-                            </label>
-                        </div>
-                        <div class="guest-placement__list-item">
-                            <label class="guest-placement__list-label">
-                                <input type="radio" value="Anastazy Woźniak" name="guest" class="guest guest-placement__list-input" data-guest-id="4" data-guest-seat-id="">
-                                <div class="guest-placement__list-name">Anastazy Woźniak</div>
-                                <a class="guest-placement__list-unset-btn" data-delete-guest-id="4"></a>
-                            </label>
-                        </div>
-                        <div class="guest-placement__list-item">
-                            <label class="guest-placement__list-label">
-                                <input type="radio" value="Kryspin Borkowski" name="guest" class="guest guest-placement__list-input" data-guest-id="5" data-guest-seat-id="">
-                                <div class="guest-placement__list-name">Kryspin Borkowski</div>
-                                <a class="guest-placement__list-unset-btn" data-delete-guest-id="5"></a>
-                            </label>
-                        </div>
-                        <div class="guest-placement__list-item">
-                            <label class="guest-placement__list-label">
-                                <input type="radio" value="Patryk Wiśniewski" name="guest" class="guest guest-placement__list-input" data-guest-id="6" data-guest-seat-id="">
-                                <div class="guest-placement__list-name">Patryk Wiśniewski</div>
-                                <a class="guest-placement__list-unset-btn" data-delete-guest-id="6"></a>
-                            </label>
-                        </div>
-                        <div class="guest-placement__list-item">
-                            <label class="guest-placement__list-label">
-                                <input type="radio" value="Nina Ziółkowska" name="guest" class="guest guest-placement__list-input" data-guest-id="7" data-guest-seat-id="">
-                                <div class="guest-placement__list-name">Nina Ziółkowska</div>
-                                <a class="guest-placement__list-unset-btn" data-delete-guest-id="7"></a>
-                            </label>
-                        </div>
-                        <div class="guest-placement__list-item">
-                            <label class="guest-placement__list-label">
-                                <input type="radio" value="Anastazy Woźniak" name="guest" class="guest guest-placement__list-input" data-guest-id="8" data-guest-seat-id="">
-                                <div class="guest-placement__list-name">Anastazy Woźniak</div>
-                                <a class="guest-placement__list-unset-btn" data-delete-guest-id="8"></a>
-                            </label>
-                        </div>
-                        <div class="guest-placement__list-item">
-                            <label class="guest-placement__list-label">
-                                <input type="radio" value="Kryspin Borkowski" name="guest" class="guest guest-placement__list-input" data-guest-id="9" data-guest-seat-id="">
-                                <div class="guest-placement__list-name">Kryspin Borkowski</div>
-                                <a class="guest-placement__list-unset-btn" data-delete-guest-id="9"></a>
-                            </label>
-                        </div>
-                        <div class="guest-placement__list-item">
-                            <label class="guest-placement__list-label">
-                                <input type="radio" value="Patryk Wiśniewski" name="guest" class="guest guest-placement__list-input" data-guest-id="10" data-guest-seat-id="">
-                                <div class="guest-placement__list-name">Patryk Wiśniewski</div>
-                                <a class="guest-placement__list-unset-btn" data-delete-guest-id="10"></a>
-                            </label>
-                        </div>
-                        <div class="guest-placement__list-item">
-                            <label class="guest-placement__list-label">
-                                <input type="radio" value="Nina Ziółkowska" name="guest" class="guest guest-placement__list-input" data-guest-id="11" data-guest-seat-id="">
-                                <div class="guest-placement__list-name">Nina Ziółkowska</div>
-                                <a class="guest-placement__list-unset-btn" data-delete-guest-id="11"></a>
-                            </label>
-                        </div>
-                        <div class="guest-placement__list-item">
-                            <label class="guest-placement__list-label">
-                                <input type="radio" value="Anastazy Woźniak" name="guest" class="guest guest-placement__list-input" data-guest-id="12" data-guest-seat-id="">
-                                <div class="guest-placement__list-name">Anastazy Woźniak</div>
-                                <a class="guest-placement__list-unset-btn" data-delete-guest-id="12"></a>
-                            </label>
-                        </div>
-                        <div class="guest-placement__list-item">
-                            <label class="guest-placement__list-label">
-                                <input type="radio" value="Kryspin Borkowski" name="guest" class="guest guest-placement__list-input" data-guest-id="13" data-guest-seat-id="">
-                                <div class="guest-placement__list-name">Kryspin Borkowski</div>
-                                <a class="guest-placement__list-unset-btn" data-delete-guest-id="13"></a>
-                            </label>
-                        </div>
-                        <div class="guest-placement__list-item">
-                            <label class="guest-placement__list-label">
-                                <input type="radio" value="Patryk Wiśniewski" name="guest" class="guest guest-placement__list-input" data-guest-id="14" data-guest-seat-id="">
-                                <div class="guest-placement__list-name">Patryk Wiśniewski</div>
-                                <a class="guest-placement__list-unset-btn" data-delete-guest-id="14"></a>
-                            </label>
-                        </div>
-                        <div class="guest-placement__list-item">
-                            <label class="guest-placement__list-label">
-                                <input type="radio" value="Nina Ziółkowska" name="guest" class="guest guest-placement__list-input" data-guest-id="15" data-guest-seat-id="">
-                                <div class="guest-placement__list-name">Nina Ziółkowska</div>                               
-                                <a class="guest-placement__list-unset-btn" data-delete-guest-id="15"></a>
-                            </label>
-                        </div>
-                        <div class="guest-placement__list-item">
-                            <label class="guest-placement__list-label">
-                                <input type="radio" value="Anastazy Woźniak" name="guest" class="guest guest-placement__list-input" data-guest-id="16" data-guest-seat-id="">
-                                <div class="guest-placement__list-name">Anastazy Woźniak</div>                               
-                                <a class="guest-placement__list-unset-btn" data-delete-guest-id="16"></a>
-                            </label>
-                        </div>
+                        {% endfor %}
                     </form>
                 </div>
                 <div class="guest-placement__plan">
