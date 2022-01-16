@@ -45,4 +45,6 @@ security:
         - { path: ^/reset-password/reset/, roles: PUBLIC_ACCESS }
         - { path: ^/privacy-policy, roles: PUBLIC_ACCESS }
         - { path: ^/accept-invitation/, roles: PUBLIC_ACCESS }
+        - { path: ^/view-guest-placement/, roles: PUBLIC_ACCESS }
+        - { path: ^/guest-placement/plan, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: ROLE_USER }
