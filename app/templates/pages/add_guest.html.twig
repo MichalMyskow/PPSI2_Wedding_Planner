@@ -1,14 +1,22 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/app.html.twig' %}
 {% block style %} 
-        {{ encore_entry_link_tags('auth') }}
+        {{ encore_entry_link_tags('guest_list') }}
 {% endblock %}
 {% block main %}
+
     <div class="main-margin-inline main-margin-block">
-        <section>
-            <div class="welcome-content">
-                <div class="welcome-nav">
-                    <h2 class="welcome-nav__current">Dodawanie gościa</h2>
+            <section>
+            <div class="page-header">
+                <div class="page-header__content page-header__content--guest-add">
+                    <h2>Dodawanie gościa</h2>
                 </div>
+            </div>
+        </section>
+        <section>
+            <div class="main-form__center-container">
+                {# <div class="welcome-nav">
+                    <h2 class="welcome-nav__current">Dodawanie gościa</h2>
+                </div> #}
                 <div class="main-form welcome-form">
                     {{ form_start(guestForm) }}
                     {{ form_errors(guestForm) }}
@@ -38,4 +46,7 @@
             </div>
         </section>
     </div>
+{% endblock %}
+{% block script %} 
+        {{ encore_entry_script_tags('guest_list') }}
 {% endblock %}

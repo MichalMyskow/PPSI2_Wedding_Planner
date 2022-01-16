@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{# {% extends 'base.html.twig' %}
 
 {% block title %}Password Reset Email Sent{% endblock %}
 
@@ -7,5 +7,28 @@
         Jeżeli istnieje konto pasujące do podanego adresu e-mail, właśnie wysłano wiadomość e-mail zawierającą łącze, za pomocą którego można zresetować hasło.
         Ten link wygaśnie za {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
     </p>
-    <p>Jeśli nie otrzymałeś wiadomości e-mail, sprawdź folder ze spamem lub <a href="{{ path('app_forgot_password_request') }}">spróbuj ponownie.</a>.</p>
+    <p>Jeśli nie otrzymałeś wiadomości e-mail, sprawdź folder ze spamem lub <a class="main-link--first" href="{{ path('app_forgot_password_request') }}">spróbuj ponownie.</a>.</p>
+{% endblock %} #}
+
+
+
+{% extends 'base.html.twig' %}
+
+{% block style %} 
+        {{ encore_entry_link_tags('auth') }}
+{% endblock %}
+{% block main %}
+<div class="main-margin-inline main-margin-block">
+    <section>
+        <h1 class="welcome-header">Wedding<br>planner</h1>
+    </section>
+    <section>
+       <div class="welcome-content">
+            <p>Jeżeli istnieje konto pasujące do podanego adresu e-mail, właśnie wysłano wiadomość e-mail zawierającą łącze, za pomocą którego można zresetować hasło.</p>
+            <p>Ten link wygaśnie za {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+            <p>Jeśli nie otrzymałeś wiadomości e-mail, sprawdź folder ze spamem lub <a class="main-link--first" href="{{ path('app_forgot_password_request') }}">spróbuj ponownie.</a>.</p>
+            <p><a class="main-link--first" href="{{ path('home') }}">Wróć do strony głównej</a></p>
+        </div>
+    </section>
+</div>
 {% endblock %}

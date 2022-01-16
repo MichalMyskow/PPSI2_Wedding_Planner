@@ -1,14 +1,19 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/app.html.twig' %}
+
 {% block style %} 
-        {{ encore_entry_link_tags('auth') }}
+        {{ encore_entry_link_tags('budget') }}
 {% endblock %}
 {% block main %}
     <div class="main-margin-inline main-margin-block">
         <section>
-            <div class="welcome-content">
-                <div class="welcome-nav">
-                    <h2 class="welcome-nav__current">Dodawanie kosztów</h2>
+            <div class="page-header">
+                <div class="page-header__content page-header__content--budget">
+                    <h2>Dodawanie kosztów</h2>
                 </div>
+            </div>
+        </section>
+        <section>
+            <div class="main-form__center-container">
                 <div class="main-form welcome-form">
                     {{ form_start(costForm) }}
                     {{ form_errors(costForm) }}
@@ -19,12 +24,14 @@
                     </div>
                     <div class="main-form__input-group">
                         {{ form_label(costForm.description, 'Opis', {'label_attr': {'class': 'main-form__label'}}) }}
-                        {{ form_widget(costForm.description, {'attr': {'class': 'main-form__input'}}) }}
+                        {{ form_widget(costForm.description, {'attr': {'class': 'main-form__textarea'}}) }}
                         {{ form_errors(costForm.description) }}
                     </div>
                     <div class="main-form__input-group">
                         {{ form_label(costForm.cost, 'Koszt', {'label_attr': {'class': 'main-form__label'}}) }}
+                        <div class="main-form__input-wrap">
                         {{ form_widget(costForm.cost, {'attr': {'class': 'main-form__input'}}) }}
+                        </div>
                         {{ form_errors(costForm.cost) }}
                     </div>
                     <input type="submit" value="Dodaj koszt"  class="main-form__submit">
@@ -33,4 +40,7 @@
             </div>
         </section>
     </div>
+{% endblock %}
+{% block script %} 
+        {{ encore_entry_script_tags('budget') }}
 {% endblock %}

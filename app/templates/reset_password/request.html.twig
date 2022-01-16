@@ -1,22 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Zresetuj swoje hasło{% endblock %}
-
-{% block main %}
-    {% for flashError in app.flashes('reset_password_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
-    <h1>Zresetuj swoje hasło</h1>
-
-    {{ form_start(requestForm) }}
-        {{ form_row(requestForm.email) }}
-        <div>
-            <small>
-                Wprowadź swój adres email a my wyślemy na niego
-                link resetujący twoje hasło.
-            </small>
-        </div>
-
-        <button class="btn btn-primary">Wyślij email resetujący hasło</button>
-    {{ form_end(requestForm) }}
+{% block style %} 
+        {{ encore_entry_link_tags('auth') }}
 {% endblock %}
+{% block main %}
+<div class="main-margin-inline main-margin-block">
+    <section>
+        <h1 class="welcome-header">Wedding<br>planner</h1>
+    </section>
+
+    <section>
+       <div class="welcome-content">
+            <div class="welcome-nav">
+                <h2 class="welcome-nav__current">Zresetuj swoje hasło</h2>
+            </div>
+            <div class="main-form welcome-form">
+                <div>
+                    Wprowadź swój adres email a my wyślemy na niego
+                    link resetujący twoje hasło.
+                </div>
+                {% for flashError in app.flashes('reset_password_error') %}
+                    <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+                {% endfor %}
+                {{ form_start(requestForm) }}
+                    <div class="main-form__input-group">
+                        {{ form_label(requestForm.email, 'Adres E-mail', {'label_attr': {'class': 'main-form__label'}}) }}
+                        {{ form_widget(requestForm.email, {'attr': {'class': 'main-form__input'}}) }}
+                        {{ form_errors(requestForm.email) }}
+                    </div>
+                    <input type="submit" value="Wyślij"  class="main-form__submit">
+                {{ form_end(requestForm) }}
+                <div class="welcome-bottom">
+                    <div>
+                        <a class="main-link--first" href="{{ path('home') }}" >Wróć do strony głównej</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
