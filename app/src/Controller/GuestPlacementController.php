@@ -59,20 +59,25 @@ class GuestPlacementController extends AbstractController
     {
         $uuid = $request->get('uuid');
 
-        $session = new Session();
-        $session->start();
-        $session->set('uuid', $uuid);
+        // $session = new Session();
+        // $session->start();
+        // $session->set('uuid', $uuid);
 
         /** @var Wedding $wedding */
-        $wedding = $this->entityManager->getRepository(Wedding::class)->findOneBy(['uuid' => $uuid]);
+        $guest = $this->entityManager->getRepository(Guest::class)->findOneBy(['uuid' => $uuid]);
+        $wedding = $guest->getWedding();
+        $room = $wedding->getRoom();
+        $roomSize = $room->getSize();
+        $roomView = "rooms/_room-$roomSize.html.twig";
 
         if (!$wedding) {
             return $this->redirectToRoute('home');
         }
 
-        return $this->render('pages/guest-placement.html.twig', [
+        return $this->render('pages/guest-placement-view.html.twig', [
             'controller_name' => 'GuestPlacementController',
-            'guests' => $wedding->getGuests(),
+            // 'guests' => $wedding->getGuests(),
+            'roomView' => $roomView,
         ]);
     }
 

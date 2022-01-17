@@ -26,6 +26,7 @@ Encore
     .addEntry('guest_list', './assets/pages/guest-list.js')
     .addEntry('checklist', './assets/pages/checklist.js')
     .addEntry('guest_placement', './assets/pages/guest-placement.js')
+    .addEntry('guest_placement_view', './assets/pages/guest-placement-view.js')
     .addEntry('budget', './assets/pages/budget.js')
     .addEntry('details', './assets/pages/details.js')
 
