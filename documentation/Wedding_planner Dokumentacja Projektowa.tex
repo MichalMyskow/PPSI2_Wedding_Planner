@@ -34,7 +34,7 @@ Anna Sokołowska (Frontend/Backend)
 Celem Projektu "PPSI2\textunderscore Wedding\textunderscore Planner" było utworzenie aplikacji do planowania ślubów, która będzie miała w sobie takie elementy jak rejestr gości z potwierdzeniem przybycia (RSVP) oraz możliwością ręcznej modyfikacji tej funkcji przez państwo młodych, planer miejsc siedzących oraz umożliwi stworzenie własnej listy rzeczy do wykonania.
 \\Państwo młodzi otrzymają także unikalny kod, wysyłany wraz z zaproszeniem, który pozwoli gościom na podgląd jak wyglądają miejsca siedzące.
 \\Po wejściu na naszą stronę użytkownik przywitany zostanie menu logowania oraz rejestracji. Oferujemy także możliwość zalogowania się przy pomocy Facebooka, co wymagało odrobinę zabawy aby dostać dostęp do developerskiego API. Istnieje także możliwość przypomnienia hasła w wypadku gdy zostało ono zapomniane.
-\\Po zalogowaniu się użytkownicy otrzymają możliwość utworzenia swojego wesela. Podając dane pana i panny młodych, planowaną datę oraz godzinę oraz wybrać jedną z trzech dostępnych sal. Po utworzeniu wesela istnieje także możliwość edycji go. W wypadku gdy użytkownik posiada już utworzone wesele może do niego dodać gości, przydzielić im miejsca ręcznie bądź pozwolić aby algorytm to zrobił za niego. A w razie błędów lub chęci zmiany któregokolwiek usadzenia mieć taką możliwość. Na stronie głównej pojawi się też informacja ilu gości zostało zaproszonych, ilu przyjęło już zaproszenia oraz ile dni pozostało do wesela. 
+\\Po zalogowaniu się użytkownicy otrzymają możliwość utworzenia swojego wesela. Podając dane pana i panny młodych, planowaną datę oraz godzinę oraz wybrać jedną z trzech dostępnych sal. Po utworzeniu wesela istnieje także możliwość edycji go. W wypadku gdy użytkownik posiada już utworzone wesele może do niego dodać gości, przydzielić im miejsca ręcznie z opcją wyświetlania konfliktów. A w razie błędów lub chęci zmiany któregokolwiek usadzenia mieć taką możliwość. Na stronie głównej pojawi się też informacja ilu gości zostało zaproszonych, ilu przyjęło już zaproszenia oraz ile dni pozostało do wesela. 
 \\
 Zaimplementowany jest także system checklisty, która jest w pełni tworzona przez użytkownika. Może on wpisać tam dowolne zadania, edytować je a także zaznaczać czy zostały one już ukończone. Umożliwiamy także dostęp do kalkulatora kosztów wesela.
 \\
@@ -121,19 +121,52 @@ Jak postawić środowisko testowe na dockerze?\\
     
 
 \subsection{Postawienie systemu zdalnie}
-W zależności od miejca tworzenia naszej instancji aplikacji internetowej (bezpośredni hosting stron www, serwer www czy w przygotowanym przez nas kontenerze na serwerze dedykowanym) sposób instalacji będzie się różnił ale w każdym przypadku będziemy musieli posłuzyc się narzędziami do transferu plików (FTP) i przesyłania komend do serwera (SSL) w celu wykonania zadań na serwerze.
+W naszym wypadku użyliśmy programu PuTTY, aby podłączyć się z serwerem Debianowym. Może do tego posłużyć dowolny klient SSH.\\
+Po tym musieliśmy zainstalować następujące pakiety:
+\begin{itemize}
+\item nginx 1.18
+\item PHP 8.0.14
+\item mariadb 10.5.12
+\item phpMyAdmin 5.0.4
+\item Node.js 16.13.2
+\end{itemize}
+Pliki naszej strony są automatycznie pobierane z repozytorium git.
+\begin{enumerate}
+\item Pobieranie zależności Composer'a: \\\\
+ \emph{composer install
+} \\
+ \item Pobranie zależności npm:\\\\
+ \emph{npm install
+} \\
+ \item Budowanie Assetów: \\\\
+ \emph{yarn build
+} \\
+ \item Utworzenie schematu bazy danych: \\\\
+ \emph{php bin/console doctrine:schema:update --force
+} \\
+ \item Załadowanie zdefiniowanych wczesniej danych do bazy danych: \\\\
+ \emph{php bin/console doctrine:fixtures:load
+} \\
 
-W przypadku instalacji na maszynie dedykowanej możemy zainstalowac serwer Apache lub uprzednio przygotować kontener w np. w Docerze. 
-Po instalacji serwera należy dobrać bibloteki jeżeli nie zostały uprzednio pobrane przez instalator, po czym za pomocą FTP przesłać pliki strony internetowej na serwer (w przypadku hostingu od razu przechodzimy do tego kroku czyli wysyłamy pliki na serwer).
-Zmieniamy konfiguracje wskazując na odpowiednią bazę danych np. PhpMyAdmin-MySQL, jeżeli nie mamy zainstalowanego narzędzia do obsługi baz danych, uprzednio je instalujemy.
+  \end{enumerate}
+
+
 \section{Testy}
 \subsection{Instrukcja uruchomienia testów}
-Placeholder
+\begin{enumerate}
+    \item Uruchomienie testów: \\\\
+    \emph{ php ./vendor/bin/phpunit
+} \\
+    \end{enumerate}
 \subsection{Opis testowanych funkcjonalności}
-Placeholder
+Do przeprowadzenia naszych testów używamy paczek, "phpunit", "phpunit symfony" oraz "test-pack".\\
+Głównym celem testów jest sprawdzenie czy na każdej podstronie w pełni działa autoryzacja. Jeśli mamy dbać o dane klientów, jest to podstawowa funkcjonalność. \\
+Poza tym sprawdzany jest cały system logowania, czy nie pojawiają się w nim błędy. \\
+Sprawdzane jest co się dzieje po zalogowaniu. Sprawdza to też czy stworzone jest wesele. W wypadku gdy wesele nie jest utworzone użytkownik jest przenoszony do ścieżki /create-wedding.
+
 \section{Dokumentacja}
-Nasz branch zawierający dokumentację: 
-\url{https://github.com/MichalMyskow/PPSI2_Wedding_Planner/tree/documentation}\\\\
+Link do pełnej dokumentacji na naszym repozytorium: 
+\url{https://github.com/MichalMyskow/PPSI2_Wedding_Planner/tree/feature/documentation/documentation}\\\\
 \section{Wnioski projektowe}
 Projekt ten nie był aż tak prostym przedsięwzięciem jak zakładaliśmy przy wybraniu tematu. Jednak ucząc się po drodze udało się nam go ukończyć. Nigdy wcześniej nie zajmowaliśmy się niczym związanym z tematyką weselną. Musieliśmy więc przeprowadzić trochę researchu, aby poprawnie utworzyć naszą aplikację.\\
 Poza techniczną stroną projektu musieliśmy się też zmierzyć po raz pierwszy w ramach uczelni z podziałem zadań na sprinty oraz estymatą.\\
