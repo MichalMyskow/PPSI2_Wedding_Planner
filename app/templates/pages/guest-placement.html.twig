@@ -26,12 +26,13 @@
 
         <section>
             <div class="guest-placement__message-box">
-                Wybierz wolne miejsce a następnie wybierz gościa. Kliknij w imię i nazwisko gościa, aby sprawdzić gdzie siedzi.
+                <p>Wybierz wolne miejsce a następnie wybierz gościa. Kliknij w imię i nazwisko gościa, aby sprawdzić gdzie siedzi.</p>
             </div>
             
             <div class="guest-placement">
                 <div class="guest-placement__list">
                     <form id="guest_placement_form" class="guest-placement__list-form">
+                    {% if guests is not empty %}
                         {% for guest in guests %}
                         <div class="guest-placement__list-item">
                             <label class="guest-placement__list-label">
@@ -41,6 +42,12 @@
                             </label>
                         </div>
                         {% endfor %}
+                    {% else %}
+                        <div class="muted">
+                            <p>Nie ma listy gości. Wprowadź gości, aby przydzielić miejsca.</p>
+                            <a class="main-link--first" href="{{ path('view_guests') }}">Przejdź do listy gości</a>
+                        </div>
+                    {% endif %}
                     </form>
                 </div>
                 <div class="guest-placement__plan">
