@@ -44,6 +44,24 @@ class Room
      */
     private $weddings;
 
+    /**
+     * @ORM\Column(name="street",type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
+     */
+    private string $street;
+
+    /**
+     * @ORM\Column(name="house_number", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
+     */
+    private string $houseNumber;
+
+    /**
+     * @ORM\Column(name="postcode", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
+     */
+    private string $postcode;
+
     public function __construct()
     {
         $this->weddings = new ArrayCollection();
@@ -116,6 +134,42 @@ class Room
                 $wedding->setRoom(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStreet(): string
+    {
+        return $this->street;
+    }
+
+    public function setStreet(string $street): self
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    public function getHouseNumber(): string
+    {
+        return $this->houseNumber;
+    }
+
+    public function setHouseNumber(string $houseNumber): self
+    {
+        $this->houseNumber = $houseNumber;
+
+        return $this;
+    }
+
+    public function getPostcode(): string
+    {
+        return $this->postcode;
+    }
+
+    public function setPostcode(string $postcode): self
+    {
+        $this->postcode = $postcode;
 
         return $this;
     }
