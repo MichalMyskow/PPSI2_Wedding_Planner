@@ -60,6 +60,7 @@
                         <p>Data wesela: <span class="first-color">{{ wedding.date|date("m.d.Y") }}</span></p>
                         <p>Panna młoda: <span class="first-color">{{ wedding.brideFirstName }} {{ wedding.brideLastName }}</span></p>
                         <p>Pan młody: <span class="first-color">{{ wedding.groomFirstName }} {{ wedding.groomLastName }}</span></p>
+                        <p>Sala: <span class="first-color">ul. {{ room.street }} {{ room.houseNumber }} {{ room.postcode }} {{ room.address }}</span></p>
                     </div>
                     <a class="home-card__button first-color" href="{{ path('view_wedding') }}">Przejdź</a>
                 </div>

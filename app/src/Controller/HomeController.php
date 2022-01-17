@@ -39,6 +39,8 @@ class HomeController extends AbstractController
         $guests = $wedding->getGuests();
         $guestsWithAcceptation = count($this->entityManager->getRepository(Guest::class)->findAllWithAcceptation($wedding));
 
+        $room = $wedding->getRoom();
+
         $costs = $wedding->getCosts();
         $sum = 0.0;
 
@@ -59,6 +61,7 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'wedding' => $wedding,
+            'room' => $room,
             'numberOfGuests' => count($guests),
             'guestsWithAcceptation' => $guestsWithAcceptation,
             'sum' => sprintf('%.2f', round($sum, 2)),
