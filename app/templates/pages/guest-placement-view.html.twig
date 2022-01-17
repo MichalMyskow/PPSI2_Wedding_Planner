@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block style %} 
+        {{ encore_entry_link_tags('guest_placement_view') }}
+{% endblock %}
+{% block main %}
+     <div class="main-margin-inline main-margin-block">
+        <section>
+            <div class="page-header">
+                <div class="page-header__content page-header__content--guest-placement">
+                    <h2>Planowanie siedzeń</h2>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="guest-placement__view">
+                <div class="guest-placement__plan">
+                    {% include roomView %}
+                </div>
+            </div>
+        </section>
+    </div>
+    <section>
+        <div class="modal" id="loader"> 
+            <div id="loader-content" class="modal-content">
+                Ładowanie
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+{% block script %} 
+        {{ encore_entry_script_tags('guest_placement_view') }}
+{% endblock %}

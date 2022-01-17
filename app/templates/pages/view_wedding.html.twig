@@ -24,7 +24,7 @@
                     Pan młody: {{ wedding.groomFirstName }} {{ wedding.groomLastName }}
                 </div>
                 <div class="details__item">
-                    Sala weselna: {{ room.name }} ({{ room.size }} miejsc) - {{ room.address }}
+                    Sala weselna: {{ room.name }} ({{ room.size }} miejsc) - ul. {{ room.street }} {{ room.houseNumber }} {{ room.postcode }} {{ room.address }}
                 </div>
                 {% if editable %}
                 <div class="details__button">

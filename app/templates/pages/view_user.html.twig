@@ -1,25 +1,35 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/app.html.twig' %}
+
 {% block style %}
-        {{ encore_entry_link_tags('auth') }}
+    {{ encore_entry_link_tags('details') }}
 {% endblock %}
 {% block main %}
     <div class="main-margin-inline main-margin-block">
         <section>
-            <div class="welcome-content">
-                <div class="welcome-nav">
-                    <h2 class="welcome-nav__current">Dane użytkownika</h2>
+            <div class="page-header">
+                <div class="page-header__content">
+                    <h2>Dane użytkownika</h2>
                 </div>
-                <div class="mb-3">
+            </div>
+        </section>
+        <section>
+            <div class="details">
+                <div class="details__item">
                     Nazwa użytkownika: {{ user.username }}
                 </div>
-                <div class="mb-3">
+                <div class="details__item">
                     Adres email: {{ user.email }}
                 </div>
-                <div class="mb-3">
+                <div class="details__item">
                     Data rejestracji: {{ user.registeredAt|date("m.d.Y H:i:s") }}
                 </div>
-                <a href="{{ path('edit_user') }}" class="main-link--first">Zmień dane użytkownika</a>
+                <div class="details__button">
+                    <a href="{{ path('edit_user') }}" class="main-link--first">Zmień dane użytkownika</a>
+                </div>
             </div>
         </section>
     </div>
+{% endblock %}
+{% block script %}
+    {{ encore_entry_script_tags('details') }}
 {% endblock %}

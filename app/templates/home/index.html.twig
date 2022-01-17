@@ -7,7 +7,8 @@
 <div class="main-margin-inline main-margin-block">
         <section>
             <div class="wedding-counter">
-                <p>Do wesela zostało: <span class="first-color">185</span> dni!</p>
+                <p>Do wesela zostało: <span class="first-color">{% if daysToWedding < 0 %} 0 {% else %} {{ daysToWedding }} {% endif %}</span> {% if daysToWedding == 1 %} dzień!
+                    {% else %} dni! {% endif %}</p>
             </div>
         </section>
         <section>
@@ -17,8 +18,8 @@
                         Goście
                     </div>
                     <div class="home-card__content">
-                        <p>Liczba zaproszonych gości: <span class="first-color">56</span></p>
-                        <p>Przyjęte zaproszenia: <span class="first-color">0</span></p>
+                        <p>Liczba zaproszonych gości: <span class="first-color">{{ numberOfGuests }}</span></p>
+                        <p>Przyjęte zaproszenia: <span class="first-color">{{ guestsWithAcceptation }}</span></p>
                     </div>
                     <a class="home-card__button first-color" href="{{ path('view_guests') }}">Przejdź</a>
                 </div>
@@ -27,7 +28,7 @@
                         Budżet
                     </div>
                     <div class="home-card__content">
-                        <p>Całkowity koszt wesela: <span class="first-color">56</span></p>
+                        <p>Całkowity koszt wesela: <span class="first-color">{{ sum }} zł</span></p>
                     </div>
                     <a class="home-card__button first-color" href="{{ path('view_costs') }}">Przejdź</a>
                 </div>
@@ -36,8 +37,8 @@
                         Lista zadań
                     </div>
                     <div class="home-card__content">
-                        <p>Liczba zadań do ukończenia: <span class="first-color">0</span></p>
-                        <p>Liczba ukończonych zadań: <span class="first-color">0</span></p>
+                        <p>Liczba zadań do ukończenia: <span class="first-color">{{ uncompletedTasks }}</span></p>
+                        <p>Liczba ukończonych zadań: <span class="first-color">{{ completedTasks }}</span></p>
                     </div>
                     <a class="home-card__button first-color" href="{{ path('checklist') }}">Przejdź</a>
                 </div>
@@ -46,7 +47,8 @@
                         Planowanie siedzeń
                     </div>
                     <div class="home-card__content">
-                        <p>Przykładowe dane: <span class="first-color">0</span></p>
+                        <p>Przydzielonych miejsc: <span class="first-color">{{ allocatedSeats }}</span></p>
+                        <p>Miejsc do przydzielenia: <span class="first-color">{{ unallocatedSeats }}</span></p>
                     </div>
                     <a class="home-card__button first-color" href="{{ path('guest_placement') }}">Przejdź</a>
                 </div>
@@ -55,7 +57,10 @@
                         Dane wesela
                     </div>
                     <div class="home-card__content">
-                        <p>Przykładowe dane: <span class="first-color">0</span></p>
+                        <p>Data wesela: <span class="first-color">{{ wedding.date|date("m.d.Y") }}</span></p>
+                        <p>Panna młoda: <span class="first-color">{{ wedding.brideFirstName }} {{ wedding.brideLastName }}</span></p>
+                        <p>Pan młody: <span class="first-color">{{ wedding.groomFirstName }} {{ wedding.groomLastName }}</span></p>
+                        <p>Sala: <span class="first-color">ul. {{ room.street }} {{ room.houseNumber }} {{ room.postcode }} {{ room.address }}</span></p>
                     </div>
                     <a class="home-card__button first-color" href="{{ path('view_wedding') }}">Przejdź</a>
                 </div>
