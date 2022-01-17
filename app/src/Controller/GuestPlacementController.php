@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Guest;
 use App\Entity\User;
 use App\Entity\Wedding;
+use App\Entity\Room;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -43,9 +44,12 @@ class GuestPlacementController extends AbstractController
         /** @var Wedding $wedding */
         $wedding = $user->getWedding();
         $guests = $wedding->getGuests();
+   
+        $roomSize = $wedding->getRoom()->getSize();
+        $roomView = "rooms/_room-$roomSize.html.twig";
 
         return $this->render('pages/guest-placement.html.twig', [
-            'controller_name' => 'GuestPlacementController',
+            'roomView' => $roomView,
             'guests' => $guests,
         ]);
     }
