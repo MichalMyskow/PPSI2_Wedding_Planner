@@ -20,6 +20,27 @@ class GuestRepository extends ServiceEntityRepository
         parent::__construct($registry, Guest::class);
     }
 
+    public function findAllWithAcceptation(Wedding $wedding)
+    {
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.acceptation = :acceptation')
+            ->setParameter('acceptation', true)
+            ->andWhere('g.wedding = :wedding')
+            ->setParameter('wedding', $wedding)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllAllocatedSeats(Wedding $wedding)
+    {
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.seatNumber IS NOT NULL')
+            ->andWhere('g.wedding = :wedding')
+            ->setParameter('wedding', $wedding)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findAllWithoutInvite(Wedding $wedding)
     {
         return $this->createQueryBuilder('g')

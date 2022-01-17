@@ -11,6 +11,7 @@
                 </div>
                 <div class="main-form welcome-form">
                     {{ form_start(weddingForm) }}
+                    {{ form_errors(weddingForm) }}
                     <div class="main-form__input-group">
                         {{ form_label(weddingForm.brideFirstName, 'Imię panny młodej', {'label_attr': {'class': 'main-form__label'}}) }}
                         {{ form_widget(weddingForm.brideFirstName, {'attr': {'class': 'main-form__input'}}) }}

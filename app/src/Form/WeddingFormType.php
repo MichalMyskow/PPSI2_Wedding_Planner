@@ -16,13 +16,13 @@ class WeddingFormType extends AbstractType
     {
         $years = [];
 
-        for ($i = 0; $i <= 5; $i++){
+        for ($i = 0; $i <= 5; ++$i) {
             $years[] = (new \DateTime(sprintf('+%d years', $i)))->format('Y');
         }
 
         $builder
             ->add('date', DateTimeType::class, [
-                'years' => $years
+                'years' => $years,
             ])
             ->add('brideFirstName')
             ->add('brideLastName')
@@ -30,9 +30,10 @@ class WeddingFormType extends AbstractType
             ->add('groomLastName')
             ->add('room', EntityType::class, [
                 'class' => Room::class,
-                'choice_label' => function ($room){
-                    /** @var Room $room */
-                    return sprintf('%s (%d miejsc) - %s', $room->getName(), $room->getSize(), $room->getAddress());
+                'choice_label' => function ($room) {
+                    /* @var Room $room */
+                    return sprintf('%s (%d miejsc) - ul. %s %s %s %s', $room->getName(), $room->getSize(),
+                        $room->getStreet(), $room->getHouseNumber(), $room->getPostcode(), $room->getAddress());
                 },
             ]);
     }
