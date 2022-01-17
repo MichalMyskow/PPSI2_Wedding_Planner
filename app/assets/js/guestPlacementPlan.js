@@ -99,7 +99,15 @@ function savePlan(){
     });
     let plan = JSON.stringify(savingPlan, null, 2);
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', `${window.location.origin}/guest-placement/save`, false);
+        xhr.open('POST', `${window.location.origin}/guest-placement/save`, true);
+        xhr.addEventListener("loadstart", function(){
+            document.querySelector("#loader-content").innerHTML = "Ładowanie";
+            document.querySelector("#loader").classList.add('active');
+        });
+        xhr.addEventListener("loadend", function(){
+            document.querySelector("#loader-content").innerHTML = "Zapisano";
+            setTimeout(() => {document.querySelector("#loader").classList.remove('active');}, 2000);
+        });
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xhr.onload = function() {
             // console.log(this.response);
