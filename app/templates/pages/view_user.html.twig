@@ -13,6 +13,13 @@
             </div>
         </section>
         <section>
+            <div class="page-nav">
+                <a class="page-nav__item page-nav__item--back main-link--first" href="{{ path('home') }}">
+                    Wróć
+                </a>
+            </div>
+        </section>
+        <section>
             <div class="details">
                 <div class="details__item">
                     Nazwa użytkownika: {{ user.username }}
@@ -21,7 +28,7 @@
                     Adres email: {{ user.email }}
                 </div>
                 <div class="details__item">
-                    Data rejestracji: {{ user.registeredAt|date("m.d.Y H:i:s") }}
+                    Data rejestracji: {{ user.registeredAt|date("d.m.Y H:i:s") }}
                 </div>
                 <div class="details__button">
                     <a href="{{ path('edit_user') }}" class="main-link--first">Zmień dane użytkownika</a>

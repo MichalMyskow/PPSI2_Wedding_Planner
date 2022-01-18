@@ -59,10 +59,6 @@ class GuestPlacementController extends AbstractController
     {
         $uuid = $request->get('uuid');
 
-        // $session = new Session();
-        // $session->start();
-        // $session->set('uuid', $uuid);
-
         /** @var Wedding $wedding */
         $guest = $this->entityManager->getRepository(Guest::class)->findOneBy(['uuid' => $uuid]);
         $wedding = $guest->getWedding();
@@ -75,8 +71,7 @@ class GuestPlacementController extends AbstractController
         }
 
         return $this->render('pages/guest-placement-view.html.twig', [
-            'controller_name' => 'GuestPlacementController',
-            // 'guests' => $wedding->getGuests(),
+            'guest' => $guest,
             'roomView' => $roomView,
         ]);
     }
@@ -87,15 +82,10 @@ class GuestPlacementController extends AbstractController
         /** @var User $user */
         $user = $this->tokenStorage->getToken()?->getUser() ?: null;
 
-        if (!$user) {
-            $session = new Session();
 
-            /** @var Wedding $wedding */
-            $wedding = $this->entityManager->getRepository(Wedding::class)->findOneBy(['uuid' => $session->get('uuid')]);
-        } else {
-            $wedding = $user->getWedding();
-        }
-
+        /** @var Wedding $wedding */
+        $wedding = $user->getWedding();
+        
         $encoder = new JsonEncoder();
         $normalizer = new ObjectNormalizer();
         $serializer = new Serializer([$normalizer], [$encoder]);

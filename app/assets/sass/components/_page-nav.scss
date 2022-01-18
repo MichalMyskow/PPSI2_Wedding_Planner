@@ -2,7 +2,8 @@
     // margin: 30px 150px;
     color: $second;
     display: flex;
-    gap: 2rem;
+    gap: .5rem 2rem;
+    flex-wrap: wrap;
     &__item{
         &:before{
             color: $second;
@@ -36,6 +37,11 @@
             @extend %fa-icon;
             @extend .fas;
           content: fa-content($fa-var-plus);
+        }
+        &--back:before{
+            @extend %fa-icon;
+            @extend .fas;
+          content: fa-content($fa-var-angle-double-left);
         }
     }
 }

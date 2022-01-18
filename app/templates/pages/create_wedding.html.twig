@@ -1,14 +1,18 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/app.html.twig' %}
 {% block style %} 
-        {{ encore_entry_link_tags('auth') }}
+        {{ encore_entry_link_tags('details') }}
 {% endblock %}
 {% block main %}
     <div class="main-margin-inline main-margin-block">
         <section>
-            <div class="welcome-content">
-                <div class="welcome-nav">
-                    <h2 class="welcome-nav__current">Tworzenie wesela</h2>
-                </div>
+            <div class="main-form__center-container">
+                <section>
+                    <div class="page-header">
+                        <div class="page-header__content">
+                            <h2>Tworzenie wesela</h2>
+                        </div>
+                    </div>
+                </section>
                 <div class="main-form welcome-form">
                     {{ form_start(weddingForm) }}
                     {{ form_errors(weddingForm) }}
@@ -48,4 +52,7 @@
             </div>
         </section>
     </div>
+{% endblock %}
+{% block script %} 
+        {{ encore_entry_script_tags('details') }}
 {% endblock %}

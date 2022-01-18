@@ -1,6 +1,9 @@
 html{
     scrollbar-width : thin;
     scrollbar-color: $second transparent;
+    @media (max-width: $mobile-m) {
+        font-size: 14px;
+    }
 }
 
 body{

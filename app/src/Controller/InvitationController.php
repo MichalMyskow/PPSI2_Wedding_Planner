@@ -157,7 +157,7 @@ class InvitationController extends AbstractController
             $entityManager->flush();
 
             return $this->render('pages/acceptation_confirmed.html.twig', [
-                'uuid' => $wedding->getUuid()->toRfc4122(),
+                'uuid' => $guest->getUuid()->toRfc4122(),
             ]);
         }
 
