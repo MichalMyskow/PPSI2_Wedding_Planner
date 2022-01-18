@@ -80,7 +80,7 @@ class Guest
      * @Assert\Type(type="bool")
      * @Assert\NotNull()
      */
-    private $invitationSent = false;
+    private bool $invitationSent = false;
 
     public function __construct()
     {
