@@ -15,13 +15,16 @@
         </section>
         <section>
             <div class="page-nav">
+                <a class="page-nav__item page-nav__item--back main-link--first" href="{{ path('home') }}">
+                    Wróć
+                </a>
             {% if not maxGuests %}
-                <a href="{{ path('add_guest') }}" {#id="add-guest-btn"#} class="page-nav__item page-nav__item--add-guest">
+                <a href="{{ path('add_guest') }}" {#id="add-guest-btn"#} class="main-link--first page-nav__item page-nav__item--add-guest">
                     Dodaj gościa
                 </a>
             {% endif %}
             {% if not numberOfGuests == 0 and guestsWithoutInvite > 0 %}
-                <a href="{{ path('send_invitations') }}" class="page-nav__item page-nav__item--envelope" title="wyślij zaproszenia">
+                <a href="{{ path('send_invitations') }}" class="main-link--first page-nav__item page-nav__item--envelope" title="wyślij zaproszenia">
                     Wyślij zaproszenia
                 </a>
             {% endif %}
