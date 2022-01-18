@@ -82,15 +82,10 @@ class GuestPlacementController extends AbstractController
         /** @var User $user */
         $user = $this->tokenStorage->getToken()?->getUser() ?: null;
 
-        if (!$user) {
-            $session = new Session();
 
-            /** @var Wedding $wedding */
-            $wedding = $this->entityManager->getRepository(Wedding::class)->findOneBy(['uuid' => $session->get('uuid')]);
-        } else {
-            $wedding = $user->getWedding();
-        }
-
+        /** @var Wedding $wedding */
+        $wedding = $user->getWedding();
+        
         $encoder = new JsonEncoder();
         $normalizer = new ObjectNormalizer();
         $serializer = new Serializer([$normalizer], [$encoder]);
