@@ -14,7 +14,10 @@
         </section>
         <section>
             <div class="page-nav">
-                <a href="{{ path('add_cost') }}" {#id="add-guest-btn"#} class="page-nav__item page-nav__item--add">
+                <a class="page-nav__item page-nav__item--back main-link--first" href="{{ path('home') }}">
+                    Wróć
+                </a>
+                <a href="{{ path('add_cost') }}" {#id="add-guest-btn"#} class="page-nav__item page-nav__item--add main-link--first">
                     Dodaj koszty
                 </a>
             </div>
@@ -39,7 +42,7 @@
             </div>
             <div class="budget-summary">
                 <div>Całkowita kwota</div>
-                <div class="budget-summary__value"><span class="first-color">{{sum}}</div>
+                <div class="budget-summary__value"><span class="first-color">{{sum}}</span> zł</div>
             </div>
         </section>
     </div>

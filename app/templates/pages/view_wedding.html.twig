@@ -13,9 +13,16 @@
             </div>
         </section>
         <section>
+            <div class="page-nav">
+                <a class="page-nav__item page-nav__item--back main-link--first" href="{{ path('home') }}">
+                    Wróć
+                </a>
+            </div>
+        </section>
+        <section>
             <div class="details">
                 <div class="details__item">
-                    Data wesela: {{ wedding.date|date("m.d.Y") }}
+                    Data wesela: {{ wedding.date|date("d.m.Y") }}
                 </div>
                 <div class="details__item">
                     Panna młoda: {{ wedding.brideFirstName }} {{ wedding.brideLastName }}

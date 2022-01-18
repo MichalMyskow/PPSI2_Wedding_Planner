@@ -1,5 +1,5 @@
 let guestForm = document.querySelector("#guest_placement_form");
-let guestFormInput = guestForm.elements['guest'];
+let guestFormInput = guestForm.querySelectorAll(".guest");
 
 let seats = document.querySelectorAll(".guest-placement__seat");
 let unsetBtns = document.querySelectorAll(".guest-placement__list-unset-btn");
@@ -110,7 +110,6 @@ function savePlan(){
         });
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xhr.onload = function() {
-            // console.log(this.response);
         };
         xhr.send(plan);  
 }

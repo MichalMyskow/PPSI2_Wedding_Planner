@@ -33,9 +33,13 @@
         <div class="content">
             <p><span class="main-color">{{ wedding.brideFirstName }} {{ wedding.brideLastName }}</span> oraz <span class="main-color">{{ wedding.groomFirstName }} {{ wedding.groomLastName }}</span></p>
             <p>mają zaszczyt zaprosić</p>
-
+            <br>
             <p>Sz.P. <span class="main-color">{{ guest.firstName }} {{ guest.lastName }}</span></p>
-            <p>na swoje wesele, które odbędzie się <span class="main-color">{{ wedding.date|date("d.m.Y") }}</span>, o godzinie <span class="main-color">{{ wedding.date|date("H:i") }}</span>.</p>
+            <p>na swoje wesele, które odbędzie się <span class="main-color">{{ wedding.date|date("d.m.Y") }}</span>,</p> 
+            <p>o godzinie <span class="main-color">{{ wedding.date|date("H:i") }}</span>.</p>
+            <br>
+            <p>Wesele odbędzie się na sali</p>
+            <p>przy ul. <span class="main-color">{{ wedding.getRoom.street }} {{ wedding.getRoom.houseNumber }}, {{ wedding.getRoom.postcode }} {{ wedding.getRoom.address }}</span>.</p>
         </div>
     </section>
 </div>

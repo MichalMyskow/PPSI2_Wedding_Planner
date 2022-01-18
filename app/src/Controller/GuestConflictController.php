@@ -46,6 +46,7 @@ class GuestConflictController extends AbstractController
 
         $form = $this->createForm(GuestConflictFormType::class, $guest, [
             'actualGuest' => $guest,
+            'user' => $user,
         ]);
         $form->handleRequest($request);
 
