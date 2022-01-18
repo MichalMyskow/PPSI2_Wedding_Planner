@@ -44,6 +44,11 @@
                         {{ form_label(guestForm.acceptation, 'Obecność potwierdzona', {'label_attr': {'class': 'main-form__label'}}) }}
                         {{ form_errors(guestForm.acceptation) }}
                     </div>
+                    <div class="main-form__input-group--inline">
+                        {{ form_widget(guestForm.invitationSent, {'attr': {'class': 'main-form__checkbox'}}) }}
+                        {{ form_label(guestForm.invitationSent, 'Zaproszenie wysłane', {'label_attr': {'class': 'main-form__label'}}) }}
+                        {{ form_errors(guestForm.invitationSent) }}
+                    </div>
                     <input type="submit" value="Edytuj gościa"  class="main-form__submit">
                     {{ form_end(guestForm) }}
                 </div>

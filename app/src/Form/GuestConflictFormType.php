@@ -37,6 +37,7 @@ class GuestConflictFormType extends AbstractType
                     return sprintf('%s %s', $guest->getLastName(), $guest->getFirstName());
                 },
                 'multiple' => true,
+                'required' => false,
             ]);
     }
 

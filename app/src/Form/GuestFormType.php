@@ -21,6 +21,12 @@ class GuestFormType extends AbstractType
                 'attr' => [
                     'class' => 'switch',
                 ],
+            ])
+            ->add('invitationSent', CheckboxType::class, [
+                'required' => false,
+                'attr' => [
+                    'class' => 'switch',
+                ],
             ]);
     }
 
