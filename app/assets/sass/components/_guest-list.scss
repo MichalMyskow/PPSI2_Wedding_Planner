@@ -6,6 +6,10 @@
         align-items: center;
         font-size: 1.2rem;
         flex-wrap: wrap;
+        @media (max-width: $mobile-s) {
+          overflow-wrap: anywhere;
+          font-size: 1rem;
+        }
         &-datails{
             display: flex;
             align-items: center;

@@ -8,11 +8,17 @@
     font-size: 5rem;
     text-align: center;
     border-bottom: 2px solid $second;
+    @media (max-width: $mobile-xl) {
+        font-size: 3rem;
+    }
 }
 
 .dashboard-grid{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    @media(min-width: $mobile-xl){
+        grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    }
+    
     margin: 30px 0px;
     gap: 20px 40px;
 
