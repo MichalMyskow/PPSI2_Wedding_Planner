@@ -1,0 +1,186 @@
+\documentclass{article}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdfpagemode=FullScreen,
+    }
+
+\title{PPSI2\textunderscore Wedding\textunderscore Planner}
+\author{
+Jakub Engielski (Leader/PM/Frontend),\\
+Jan Kwiatkowski (Frontend/Backend), \\
+Szymon Michno (Tester), \\
+Michał Myśków (DevOps/Backend), \\
+Anna Sokołowska (Frontend/Backend)
+}
+
+
+\date{Styczeń 2022}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+
+\begin{document}
+
+\maketitle
+
+\section{Opis funkcjonalny systemu}
+Celem Projektu "PPSI2\textunderscore Wedding\textunderscore Planner" było utworzenie aplikacji do planowania ślubów, która będzie miała w sobie takie elementy jak rejestr gości z potwierdzeniem przybycia (RSVP) oraz możliwością ręcznej modyfikacji tej funkcji przez państwo młodych, planer miejsc siedzących oraz umożliwi stworzenie własnej listy rzeczy do wykonania.
+\\Państwo młodzi otrzymają także unikalny kod, wysyłany wraz z zaproszeniem, który pozwoli gościom na podgląd jak wyglądają miejsca siedzące.
+\\Po wejściu na naszą stronę użytkownik przywitany zostanie menu logowania oraz rejestracji. Oferujemy także możliwość zalogowania się przy pomocy Facebooka, co wymagało odrobinę zabawy aby dostać dostęp do developerskiego API. Istnieje także możliwość przypomnienia hasła w wypadku gdy zostało ono zapomniane.
+\\Po zalogowaniu się użytkownicy otrzymają możliwość utworzenia swojego wesela. Podając dane pana i panny młodych, planowaną datę oraz godzinę oraz wybrać jedną z trzech dostępnych sal. Po utworzeniu wesela istnieje także możliwość edycji go. W wypadku gdy użytkownik posiada już utworzone wesele może do niego dodać gości, przydzielić im miejsca ręcznie z opcją wyświetlania konfliktów. A w razie błędów lub chęci zmiany któregokolwiek usadzenia mieć taką możliwość. Na stronie głównej pojawi się też informacja ilu gości zostało zaproszonych, ilu przyjęło już zaproszenia oraz ile dni pozostało do wesela. 
+\\
+Zaimplementowany jest także system checklisty, która jest w pełni tworzona przez użytkownika. Może on wpisać tam dowolne zadania, edytować je a także zaznaczać czy zostały one już ukończone. Umożliwiamy także dostęp do kalkulatora kosztów wesela.
+\\
+Poza tym mamy system RSVP, który pozwala na wysłanie maila potwierdzającego obecność dla gościa. Jeśli jednak dany gość jest osobą mniej zaznajomioną z komputerami pozwalamy także na wydrukowanie gotowych tekstów zaproszeń aby móc wysłać je metodą tradycyjną.
+
+
+\section{Streszczenie opisu technologicznego}
+Korzystamy z framework'u Symfony 5.3.9 wspierającego język PHP, dzięki któremu jesteśmy w stanie utworzyć nasz projekt w jakimkolwiek logicznym odstępie czasu. Wybraliśmy Symfony zmiast na przykład Laravela, gdyż chcieliśmy spróbować coś czego nie używaliśmy wcześniej przez co poszerzyć nasze możliwości.\\
+Do bazy danych użyliśmy systemu zarządzania relacyjną bazą danych MariaDB. Ma on znacznie większą liczbę nowych funkcji w odróżnieniu od MySQL'a co czyni ją lepszą pod względem wydajnosci.\\
+Docker umożliwia nam łatwe pakowanie, dostarczanie oraz uruchamianie aplikacji jako lekkie, przenośne i samowystarczalne kontenery, które mogą działać praktycznie wszędzie.\\
+Webpack Encore, część framework'u Symfony, posłużył nam do szybkiego i wygodnego utworzenia layout'u, a także zapewnienia, że nasza strona będzie miała w pełni dziające RWD. Co jest niezbędne w świece gdzie smartfony stają się coraz bardziej powszechne.\\
+PHPStorm jest lekkim i inteligentnym środowiskiem progamistycznym (IDE),  z którego korzystaliśmy podczas  pisania kodu naszej webowej aplikacji. Szybki, intuicyjny i wygodny edytor kodu pozwoliły nam na szybkie debugowanie.\\
+Github, czyli system kontroli wersji, pozwalający wielu użytkownikom pracować na różnych komputerach bez zaburzania przepływu pracy. Oczywiście to na nim utworzylismy nasze repozytorium.\\
+Trello - tablica pozwalająca na wygodną organizację pracy, poprzez przypisywanie zadań do konkretnych osób. Możemy też nadać konkretnym zadaniom wagę czyniąc to bardzo czytelnym backlogiem zadań\\
+Discord - komunikator głosow-tekstowy pozwalający na szybką i wygodną komunikację pośród zespołu.
+\section{Instrukcję lokalnego i zdalnego uruchomienia systemu}
+\subsection{Postawienie systemu lokalnie}
+Wymagane oprogramowanie:\\
+PHPStorm lub dowolny inny IDE\\
+Docker Desktop\\
+Terminal Windows (nie jest potrzebny osobno jeśli jest wbudowany w IDE jak w PHPStorm)\\
+Github Desktop – aby móc wprowadzać zmiany, bądź pobierać aktualizacje jeśli są potrzebne. (nie jest wymagany  jeśli jest wbudowany w IDE, bądź jeśli ktoś posiada zainstalowany pakiet GIT do użytku poprzez terminal)\\\\
+Jak postawić środowisko testowe na dockerze?\\
+\href{https://docs.docker.com/docker-for-windows/}{Instrukcja dla Windowsa}\\
+\href{https://docs.docker.com/compose/install/}{Instrukcja dla Linuxa}\\\\
+\textbf{Jeżeli wszystko zainstalowałeś, przejdź do instrukcji poniżej:}
+\begin{enumerate}
+    \item Pobranie projektu z repozytorium oraz przejście do jego folderu: \\\\
+    \emph{ git clone https://github.com/MichalMyskow/PPSI2\textunderscore Wedding\textunderscore Planner.git} \\
+   			 \emph{ cd PPSI2\textunderscore Wedding\textunderscore Planner} \\
+    \item Konfiguracja pliku .env\\\\
+    \emph{cp .env .env.local} \\
+    \item Uruchomienie kontenerów dockerowych:\\\\
+    \emph{docker-compose up -d --build}\\
+    \item Pobranie zależności Composer:\\\\
+    \emph{docker-compose exec php composer install}\\
+ 			 \item Pobranie zależności npm:\\\\
+ 		   \emph{docker-compose exec php npm install}\\
+ 			 \item Budowanie Assetów:\\\\
+ 		   \emph{docker-compose exec php npm run dev}\\
+    \end{enumerate}
+\textbf{Migracje:}\\
+\begin{enumerate}
+\item Utworzenie migracji: \\\\
+ \emph{php bin/console doctrine:migrations:diff} \\
+ \emph{php bin/console doctrine:migrations:migrate} \\\\
+  \end{enumerate}
+ \textbf{Bez migracji:}\\
+ \begin{enumerate}
+\item Utworzenie schematu bazy danych: \\\\
+ \emph{php bin/console doctrine:schema:update --force} \\
+ \item Załadowanie zdefiniowanych wczesniej danych do bazy danych: \\\\
+ \emph{php bin/console doctrine:fixtures:load} \\
+ \end{enumerate}
+
+
+
+
+
+
+\textbf{Usługi:}
+    \begin{itemize}
+        \item www http://localhost:8080
+        \item phpmyadmin http://localhost:8081 \\\\
+    \end{itemize}
+    
+    
+    \textbf{Dane logowania do phpMyAdmin:}
+     \begin{itemize}
+        \item Serwer: database
+        \item Użytkownik: user
+        \item Hasło: 123qwe
+        \item Nazwa bazy danych: weddingplannerdb \\\\
+    \end{itemize}
+\textbf{Przydatne Komendy:}\\
+\begin{enumerate}
+\item Docker - uruchomienie kontenerów: \\\\
+ \emph{docker-compose up -d} \\
+ \item Docker - zatrzymanie kontenerów: \\\\
+ \emph{docker-compose stop} \\
+ \item Docker - zatrzymanie i usunięcie kontenerów \\\\
+ \emph{docker-compose down} \\
+  \end{enumerate}
+    
+
+\subsection{Postawienie systemu zdalnie}
+W naszym wypadku użyliśmy programu PuTTY, aby podłączyć się z serwerem Debianowym. Może do tego posłużyć dowolny klient SSH.\\
+Po tym musieliśmy zainstalować następujące pakiety:
+\begin{itemize}
+\item nginx 1.18
+\item PHP 8.0.14
+\item mariadb 10.5.12
+\item phpMyAdmin 5.0.4
+\item Node.js 16.13.2
+\end{itemize}
+Pliki naszej strony są automatycznie pobierane z repozytorium git.
+\begin{enumerate}
+\item Pobieranie zależności Composer'a: \\\\
+ \emph{composer install
+} \\
+ \item Pobranie zależności npm:\\\\
+ \emph{npm install
+} \\
+ \item Budowanie Assetów: \\\\
+ \emph{yarn build
+} \\
+ \item Utworzenie schematu bazy danych: \\\\
+ \emph{php bin/console doctrine:schema:update --force
+} \\
+ \item Załadowanie zdefiniowanych wczesniej danych do bazy danych: \\\\
+ \emph{php bin/console doctrine:fixtures:load
+} \\
+
+  \end{enumerate}
+
+
+\section{Testy}
+\subsection{Instrukcja uruchomienia testów}
+\begin{enumerate}
+    \item Uruchomienie testów: \\\\
+    \emph{ php ./vendor/bin/phpunit
+} \\
+    \end{enumerate}
+\subsection{Opis testowanych funkcjonalności}
+Do przeprowadzenia naszych testów używamy paczek, "phpunit", "phpunit symfony" oraz "test-pack".\\
+Głównym celem testów jest sprawdzenie czy na każdej podstronie w pełni działa autoryzacja. Jeśli mamy dbać o dane klientów, jest to podstawowa funkcjonalność. \\
+Poza tym sprawdzany jest cały system logowania, czy nie pojawiają się w nim błędy. \\
+Sprawdzane jest co się dzieje po zalogowaniu. Sprawdza to też czy stworzone jest wesele. W wypadku gdy wesele nie jest utworzone użytkownik jest przenoszony do ścieżki /create-wedding.
+
+\section{Dokumentacja}
+Link do pełnej dokumentacji na naszym repozytorium: 
+\url{https://github.com/MichalMyskow/PPSI2_Wedding_Planner/tree/main/documentation}\\\\
+\section{Wnioski projektowe}
+Projekt ten nie był aż tak prostym przedsięwzięciem jak zakładaliśmy przy wybraniu tematu. Jednak ucząc się po drodze udało się nam go ukończyć. Nigdy wcześniej nie zajmowaliśmy się niczym związanym z tematyką weselną. Musieliśmy więc przeprowadzić trochę researchu, aby poprawnie utworzyć naszą aplikację.\\
+Poza techniczną stroną projektu musieliśmy się też zmierzyć po raz pierwszy w ramach uczelni z podziałem zadań na sprinty oraz estymatą.\\
+Niektórzy członkowie naszego zespołu mieli już z tym styczność w życiu zawodowym, natomiast niektórzy musieli zainteresować się tym tematem po raz pierwszy.\\
+Nie mieliśmy też osoby, która personalnie byłaby zainteresowana frontendem. Musiała więc to być praca wspólna, aby osiągnąć nasz cel końcowy.\\
+Możemy więc wynieść następujące wnioski:\\
+\begin{itemize}
+\item Przygotowanie aplikacji wymaga wiedzy poza czystą wiedzą techniczną, jak w naszym wypadku wiedzę o weselach
+\item Warto posiadać członków zespołu, którzy posiadają głęboką wiedzę w danym zakresie, np. Dev-ops
+\item Wykupienie domeny jest bardzo proste
+\item Organizacja grupy może być wymagająca, gdy niektórzy członkowie są osobami pracującymi
+\item Flow pracy może łatwo być przerwany w wypadku chorób i różnych prywatnych spraw w zespole
+\item Nie należy być zbyt optymistycznym w przygotowywaniu estymaty
+\end{itemize}
+
+
+\end{document}
