@@ -21,7 +21,7 @@
                         <p>Liczba zaproszonych gości: <span class="first-color">{{ numberOfGuests }}</span></p>
                         <p>Przyjęte zaproszenia: <span class="first-color">{{ guestsWithAcceptation }}</span></p>
                     </div>
-                    <a class="home-card__button first-color" href="{{ path('view_guests') }}">Przejdź</a>
+                    <a class="home-card__button main-link--first" href="{{ path('view_guests') }}">Przejdź</a>
                 </div>
                 <div class="home-card">
                     <div class="home-card__header home-card__header--budget">
@@ -30,7 +30,7 @@
                     <div class="home-card__content">
                         <p>Całkowity koszt wesela: <span class="first-color">{{ sum }} zł</span></p>
                     </div>
-                    <a class="home-card__button first-color" href="{{ path('view_costs') }}">Przejdź</a>
+                    <a class="home-card__button main-link--first" href="{{ path('view_costs') }}">Przejdź</a>
                 </div>
                 <div class="home-card">
                     <div class="home-card__header home-card__header--checklist">
@@ -40,7 +40,7 @@
                         <p>Liczba zadań do ukończenia: <span class="first-color">{{ uncompletedTasks }}</span></p>
                         <p>Liczba ukończonych zadań: <span class="first-color">{{ completedTasks }}</span></p>
                     </div>
-                    <a class="home-card__button first-color" href="{{ path('checklist') }}">Przejdź</a>
+                    <a class="home-card__button main-link--first" href="{{ path('checklist') }}">Przejdź</a>
                 </div>
                 <div class="home-card">
                     <div class="home-card__header home-card__header--guest-placement">
@@ -50,7 +50,7 @@
                         <p>Przydzielonych miejsc: <span class="first-color">{{ allocatedSeats }}</span></p>
                         <p>Miejsc do przydzielenia: <span class="first-color">{{ unallocatedSeats }}</span></p>
                     </div>
-                    <a class="home-card__button first-color" href="{{ path('guest_placement') }}">Przejdź</a>
+                    <a class="home-card__button main-link--first" href="{{ path('guest_placement') }}">Przejdź</a>
                 </div>
                 <div class="home-card">
                     <div class="home-card__header home-card__header--guests">
@@ -62,7 +62,7 @@
                         <p>Pan młody: <span class="first-color">{{ wedding.groomFirstName }} {{ wedding.groomLastName }}</span></p>
                         <p>Sala: <span class="first-color">ul. {{ room.street }} {{ room.houseNumber }} {{ room.postcode }} {{ room.address }}</span></p>
                     </div>
-                    <a class="home-card__button first-color" href="{{ path('view_wedding') }}">Przejdź</a>
+                    <a class="home-card__button main-link--first" href="{{ path('view_wedding') }}">Przejdź</a>
                 </div>
             </div>
         </section>
