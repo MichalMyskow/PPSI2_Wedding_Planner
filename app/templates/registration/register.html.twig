@@ -39,7 +39,7 @@
                             {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'main-form__checkbox'}}) }}
                             {{ form_label(registrationForm.agreeTerms, 'Akceptuję', {'label_attr': {'class': 'main-form__label'}}) }}
                             {{ form_errors(registrationForm.agreeTerms) }}
-                            <a href="{{ path('privacy_policy') }}" class="main-link--first">&nbsp;politykę prywatnosci</a>
+                            <a href="{{ path('privacy_policy') }}" class="main-link--first" target="_blank">&nbsp;politykę prywatnosci</a>
                         </div>
                         <input type="submit" value="Zarejestruj się"  class="main-form__submit">
                     {{ form_end(registrationForm) }}
