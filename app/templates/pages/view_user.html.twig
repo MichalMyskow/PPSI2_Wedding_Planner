@@ -21,7 +21,7 @@
                     Adres email: {{ user.email }}
                 </div>
                 <div class="details__item">
-                    Data rejestracji: {{ user.registeredAt|date("m.d.Y H:i:s") }}
+                    Data rejestracji: {{ user.registeredAt|date("d.m.Y H:i:s") }}
                 </div>
                 <div class="details__button">
                     <a href="{{ path('edit_user') }}" class="main-link--first">Zmień dane użytkownika</a>
