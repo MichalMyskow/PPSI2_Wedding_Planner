@@ -48,5 +48,10 @@
             @extend .fas;
             content: fa-content($fa-var-wallet);
         }
+        &--view-guest-placement:before {
+            @extend %fa-icon;
+            @extend .fas;
+            content: fa-content($fa-var-chair);
+        }
     }
 }

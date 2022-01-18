@@ -7,8 +7,8 @@
      <div class="main-margin-inline main-margin-block">
         <section>
             <div class="page-header">
-                <div class="page-header__content page-header__content--guest-placement">
-                    <h2>Planowanie siedzeń</h2>
+                <div class="page-header__content page-header__content--view-guest-placement">
+                    <h2>Podgląd miejsca</h2>
                 </div>
             </div>
         </section>
@@ -28,7 +28,7 @@
             </div>
         </div>
     </section>
-
+    <input type="hidden" id="viewing-guest-seat-id" value="{{ guest.seatNumber }}">
 {% endblock %}
 {% block script %} 
         {{ encore_entry_script_tags('guest_placement_view') }}
