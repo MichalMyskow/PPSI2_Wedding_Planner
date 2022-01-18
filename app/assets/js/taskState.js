@@ -4,7 +4,6 @@ let editTaskBtns = document.querySelectorAll(".edit-task");
 let deleteTaskBtns = document.querySelectorAll(".delete-task-btn");
 let baseUrl = `${window.location.origin}`;
 let url = ``;
-// console.log(url);
 inputs.forEach(btn => btn.addEventListener('change', function() {
     if (this.checked) {
         url = `${baseUrl}/task/complete/${this.dataset.id}`

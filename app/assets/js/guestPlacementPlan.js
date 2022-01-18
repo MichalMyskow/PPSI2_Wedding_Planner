@@ -110,7 +110,6 @@ function savePlan(){
         });
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xhr.onload = function() {
-            // console.log(this.response);
         };
         xhr.send(plan);  
 }
