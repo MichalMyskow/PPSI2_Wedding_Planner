@@ -5,6 +5,7 @@ let editTaskBtns = document.querySelectorAll(".edit-task-btn");
 
 let editForm = document.querySelector('#edit_task_form');
 let nameInput = editForm.elements['name'];
+let personInput = editForm.elements['person'];
 let idInput = editForm.elements['task_id'];
 let editSubmit = document.querySelector('#edit_submit');
 
@@ -44,6 +45,7 @@ editTaskBtns.forEach(btn => btn.addEventListener('click', function(){
     xhr.onload = function() {
         var result = JSON.parse(this.responseText);
         nameInput.value=result.name;
+        personInput.value=result.person;
         idInput.value=result.id;
     };
     xhr.send();
@@ -58,6 +60,7 @@ editSubmit.addEventListener("click", function(e){
     e.preventDefault();
     var data = {};
     data.name = nameInput.value;
+    data.person = personInput.value;
     var json = JSON.stringify(data);
 
     var xhr = new XMLHttpRequest();
@@ -74,6 +77,7 @@ editSubmit.addEventListener("click", function(e){
         var result = JSON.parse(this.responseText);
         if (xhr.readyState == 4 && xhr.status == "200" && result.status === "success") {
             task.querySelectorAll('.checklist__name')[0].innerHTML = nameInput.value;
+            task.querySelectorAll('.checklist__person')[1].innerHTML = personInput.value;
             hideEditModal();
         }
     };
