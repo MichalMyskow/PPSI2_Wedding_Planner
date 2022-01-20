@@ -9,6 +9,7 @@ use App\Form\AcceptationFormType;
 use App\Service\GeneratorService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\SnappyBundle\Snappy\Response\SnappyResponse;
+use Knp\Snappy\Pdf;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use ZipArchive;
 
 class InvitationController extends AbstractController
 {
@@ -104,6 +106,54 @@ class InvitationController extends AbstractController
             'image/png'
         );
     }
+
+    #[Route('/download-all-invitation', name: 'download_all_invitation')]
+    public function downloadAllInvitation(): Response
+    {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()?->getUser() ?: null;
+
+        if ($user && !$user->getWedding()) {
+            return $this->redirectToRoute('create_wedding');
+        };
+
+        /** @var Wedding $wedding */
+        $wedding = $user->getWedding();
+        $guests = $wedding->getGuests();
+        $files = array();
+        foreach ($guests as $guest) {
+            $image = $this->generatorService->generateImage($wedding, $guest);
+            array_push($files, $image);
+        }
+
+        $zipName = $wedding->GetId().'.zip';
+        $zip = new ZipArchive;
+        $zip->open($zipName, ZipArchive::CREATE);
+        //foreach ($files as $file) {
+       //     $zip->addFile($file);
+       // }
+        $zip->close();
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/zip');
+        $response->headers->set('Content-disposition','attachment; filename="' . $zipName . '"');
+       // $response->headers->set('Content-Length: ' . filesize($zipName));
+        //$response->sendHeaders();
+       // $response->headers->set(readfile($zipName));
+
+        return $response;
+    }
+//        header("Content-type: application/zip");
+//        header('Content-Disposition: attachment; filename='.$guest->getUuid()->toRfc4122());
+//        header("Pragma: no-cache");
+//        header("Expires: 0");
+//        readfile("$archive_file_name");
+//
+//        return new SnappyResponse(
+//            $files[0],
+//            sprintf('Zaproszenie-%s.png', $guest->getUuid()->toRfc4122()),
+//            'image/png'
+//
+//        );
 
     public function sendMail(Guest $guest, Wedding $wedding, MailerInterface $mailer, $image): void
     {
