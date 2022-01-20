@@ -77,7 +77,7 @@ editSubmit.addEventListener("click", function(e){
         var result = JSON.parse(this.responseText);
         if (xhr.readyState == 4 && xhr.status == "200" && result.status === "success") {
             task.querySelectorAll('.checklist__name')[0].innerHTML = nameInput.value;
-            task.querySelectorAll('.checklist__person')[1].innerHTML = personInput.value;
+            task.querySelectorAll('.checklist__person')[0].innerHTML = personInput.value;
             hideEditModal();
         }
     };
