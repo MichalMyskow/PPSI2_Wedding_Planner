@@ -44,7 +44,7 @@ class GeneratorService
         return $this->image->getOutputFromHtml($html);
     }
 
-    private function getContentHTML(Wedding $wedding, Guest $guest): string
+    public function getContentHTML(Wedding $wedding, Guest $guest): string
     {
         return $this->twig->render('emails/invitation.html.twig', [
             'wedding' => $wedding,
