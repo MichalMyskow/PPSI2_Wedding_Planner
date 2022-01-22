@@ -34,6 +34,7 @@
                             <div class="checklist__name">{{ task.name }}</div>
                         </label>
                         <div class="checklist__buttons">
+                            <div class="checklist__person">{{ task.person }}</div>
                             <a class="checklist__buttons-item checklist__buttons-item--edit edit-task-btn" data-id="{{ task.id }}"></a>
                             <a class="checklist__buttons-item checklist__buttons-item--delete delete-task-btn" data-id="{{ task.id }}"></a>
                         </div>
@@ -56,7 +57,11 @@
                         {{ form_widget(taskForm.name, {'attr': {'class': 'main-form__input', 'value':''}}) }}
                         {{ form_errors(taskForm.name) }}
                     </div>
-
+                    <div class="main-form__input-group">
+                        {{ form_label(taskForm.person, 'Przypisz osobe do zadania', {'label_attr': {'class': 'main-form__label'}}) }}
+                        {{ form_widget(taskForm.person, {'attr': {'class': 'main-form__input', 'value':''}}) }}
+                        {{ form_errors(taskForm.person) }}
+                    </div>
                     <input type="submit" value="Zatwierdź" class="main-form__submit">
 
                     {{ form_end(taskForm) }}
@@ -74,24 +79,16 @@
                         <label class="main-form__label">
                             Nazwa
                                 <input type="text" name="name" class="main-form__input">
-                        </label>
+
+                            Przypisana osoba do zadania
+                                <input type="text" name="person" class="main-form__input">
+
+                            </label>
                         </div>
                         <input type="hidden" name="task_id">
                         <input type="submit" value="Zatwierdź"  id="edit_submit" class="main-form__submit">
                     </form>
 
-                    {# {{ form_start(taskForm, {'attr': {'id':'edit_task_form'}})}}
-                    <div class="main-form__input-group">
-                        {{ form_label(taskForm.name, 'Nazwa', {'label_attr': {'class': 'main-form__label'}}) }}
-                        {{ form_widget(taskForm.name, {'attr': {'class': 'main-form__input'}}) }}
-                        {{ form_errors(taskForm.name) }}
-                    </div>
-
-                    <input type="hidden" name="task_id">
-
-                    <input type="submit" value="Zatwierdź"  id="edit_submit" class="main-form__submit">
-
-                    {{ form_end(taskForm) }} #}
                     </div>
                 </div>
             </div>

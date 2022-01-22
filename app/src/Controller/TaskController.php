@@ -37,8 +37,10 @@ class TaskController extends AbstractController
 
         $data = $request->toArray();
         $name = $data['name'];
+        $person = $data['person'];
 
         $task->setName($name);
+        $task->setPerson($person);
             $errors = $validator->validate($task);
             if (count($errors)  === 0) {
             $taskService->saveTask($task);

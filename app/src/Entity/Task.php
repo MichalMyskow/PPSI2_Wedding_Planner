@@ -33,6 +33,11 @@ class Task
     private ?string $description;
 
     /**
+     * @ORM\Column(name="person", type="string", length=255, nullable=true)
+     */
+    private ?string $person;
+
+    /**
      * @ORM\Column(name="completed", type="boolean", nullable=false)
      * @Assert\Type(type="bool")
      * @Assert\NotNull()
@@ -81,6 +86,19 @@ class Task
     public function setCompleted(bool $completed): self
     {
         $this->completed = $completed;
+
+        return $this;
+    }
+
+    public function getPerson(): ?string
+    {
+            return $this->person;
+
+    }
+
+    public function setPerson(?string $person): self
+    {
+        $this->person = $person;
 
         return $this;
     }

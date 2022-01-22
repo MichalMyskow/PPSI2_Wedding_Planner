@@ -72,6 +72,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private string $facebookAccessToken;
 
+    /**
+     * @ORM\Column(name="admin", type="boolean", nullable=false)
+     * @Assert\Type(type="bool")
+     * @Assert\NotNull()
+     */
+    private $admin = false;
+
     public function __construct()
     {
         $this->registeredAt = new DateTimeImmutable();
@@ -112,8 +119,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
+        if ($this->admin) {
+            $roles[] = 'ROLE_ADMIN';
+        }
 
         return array_unique($roles);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->admin;
     }
 
     public function setRoles(array $roles): self
