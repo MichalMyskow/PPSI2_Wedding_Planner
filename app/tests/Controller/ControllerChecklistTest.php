@@ -2,37 +2,52 @@
 
 namespace App\Tests\Controller;
 
+use App\DataFixtures\AppFixtures;
+use App\DataFixtures\CostFixture;
+use App\DataFixtures\GuestFixture;
+use App\DataFixtures\TaskFixture;
+use App\DataFixtures\UserFixtures;
+use App\DataFixtures\WeddingFixture;
+use App\Repository\RoomRepository;
 use App\Repository\UserRepository;
+use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ControllerChecklistTest extends WebTestCase
 {
-    public function test_user_can_create_checklist(): void
+    protected $client;
+
+    protected function setUp(): void
     {
-        $client = static::createClient();
-        $repository =  static::getContainer()->get(UserRepository::class);
+        parent::setUp();
 
-        $user = $repository->findOneByEmail('test@test.com');
-        $client->loginUser($user);
+        $this->client = static::createClient();
+        $this->client->followRedirects();
 
-        $data = [
-            'name' => 'TEST NAME',
-        ];
+        $manager = $this->client->getContainer()->get('doctrine')->getManager();
+        $purger = new ORMPurger($manager);
 
-        $client->request('POST', '/checklist', $data);
-
-        $this->assertResponseRedirects('/create-wedding', 302);
+        $executor = new ORMExecutor($manager, $purger);
+        $executor->execute([
+            new AppFixtures(),
+            new UserFixtures($this->client->getContainer()->get(UserPasswordHasherInterface::class)),
+            new WeddingFixture($this->client->getContainer()->get(RoomRepository::class)),
+            new CostFixture(),
+            new GuestFixture(),
+            new TaskFixture(),
+        ]);
     }
 
     public function test_user_can_get_checklist(): void
     {
-        $client = static::createClient();
         $repository =  static::getContainer()->get(UserRepository::class);
 
         $user = $repository->findOneByEmail('test@test.com');
-        $client->loginUser($user);
+        $this->client->loginUser($user);
 
-        $client->request('GET', '/checklist');
+        $this->client->request('GET', '/checklist');
         $this->assertResponseIsSuccessful();
     }
 }
