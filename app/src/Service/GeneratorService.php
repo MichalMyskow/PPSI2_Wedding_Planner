@@ -21,9 +21,9 @@ class GeneratorService
         $this->image = $image;
     }
 
-    public function generatePdf(Wedding $wedding, Guest $guest): string
+    public function generatePdf(Wedding $wedding, Guest $guest, string $qrcode): string
     {
-        $html = $this->getContentHTML($wedding, $guest);
+        $html = $this->getContentHTML($wedding, $guest, $qrcode);
 
         $this->pdf->setTimeout(120);
         $this->pdf->setOption('enable-local-file-access', true);
@@ -31,9 +31,9 @@ class GeneratorService
         return $this->pdf->getOutputFromHtml($html);
     }
 
-    public function generateImage(Wedding $wedding, Guest $guest): string
+    public function generateImage(Wedding $wedding, Guest $guest, string $qrcode): string
     {
-        $html = $this->getContentHTML($wedding, $guest);
+        $html = $this->getContentHTML($wedding, $guest, $qrcode);
 
         $this->image->setTimeout(120);
         $this->image->setOptions([
@@ -44,11 +44,12 @@ class GeneratorService
         return $this->image->getOutputFromHtml($html);
     }
 
-    public function getContentHTML(Wedding $wedding, Guest $guest): string
+    public function getContentHTML(Wedding $wedding, Guest $guest, string $qrcode): string
     {
         return $this->twig->render('emails/invitation.html.twig', [
             'wedding' => $wedding,
             'guest' => $guest,
+            'qrcode' => $qrcode,
         ]);
     }
 }

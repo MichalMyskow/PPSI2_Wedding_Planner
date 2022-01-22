@@ -40,6 +40,10 @@
             <br>
             <p>Wesele odbędzie się na sali</p>
             <p>przy ul. <span class="main-color">{{ wedding.getRoom.street }} {{ wedding.getRoom.houseNumber }}, {{ wedding.getRoom.postcode }} {{ wedding.getRoom.address }}</span>.</p>
+            {% if qrcode %}
+                <img src="{{ qrcode }}">
+            {% endif %}
+            <p>Kod QR potwierdzający obecność</p>
         </div>
     </section>
 </div>
