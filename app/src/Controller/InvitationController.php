@@ -131,10 +131,10 @@ class InvitationController extends AbstractController
 
         foreach ($guests as $guest) {
             $image = $this->generatorService->getContentHTML($wedding, $guest);
-            $pdf= new Image('/usr/bin/wkhtmltoimage');
+            $png = new Image('/usr/bin/wkhtmltoimage');
             $path ='Zaproszenie.'.$guest->getFirstName().'.'.$guest->getLastName().'.'.$guest->getId().'.png';
             array_push($toDelate, $path);
-            $pdf->generateFromHtml($image, $path);
+            $png->generateFromHtml($image, $path);
             $zip->addFile($path);
         }
 
