@@ -116,7 +116,6 @@ class InvitationController extends AbstractController
     {
         /** @var User $user */
         $user = $this->tokenStorage->getToken()?->getUser() ?: null;
-
         if ($user && !$user->getWedding()) {
             return $this->redirectToRoute('create_wedding');
         };
@@ -125,36 +124,23 @@ class InvitationController extends AbstractController
         $wedding = $user->getWedding();
         $guests = $wedding->getGuests();
         $zipName = $wedding->GetId().'.zip';
-        $toDelate = [];
+        $zipPath = tempnam(sys_get_temp_dir(), 'Zaproszenie');
 
-        if(file_exists($zipName)){
-            unlink($zipName);
-        }
         $zip = new ZipArchive;
-        $zip->open($zipName, ZipArchive::CREATE);
+        $zip->open($zipPath, ZipArchive::CREATE);
 
         foreach ($guests as $guest) {
             $qrcode = $qrcodeService->qrcode($guest->getUuid()->toRfc4122());
-            $image = $this->generatorService->getContentHTML($wedding, $guest, $qrcode);
-
-            $png = new Image($_ENV["WKHTMLTOIMAGE_PATH"]);
-            $path ='Zaproszenie.'.$guest->getFirstName().'.'.$guest->getLastName().'.'.$guest->getId().'.png';
-            array_push($toDelate, $path);
-
-            $png->generateFromHtml($image, $path);
-
-            $zip->addFile($path);
+            $image = $this->generatorService->generateImage($wedding, $guest, $qrcode);
+            $name ='Zaproszenie.'.$guest->getFirstName().'.'.$guest->getLastName().'.'.$guest->getId().'.png';
+            $zip->addFromString($name, $image);
         }
 
         $zip->close();
 
-        foreach ($toDelate as $path) {
-            unlink($path);
-        }
-
-        $response = new Response(file_get_contents($zipName), 200, array(
+        $response = new Response(file_get_contents($zipPath), 200, array(
             'Content-Type' => 'application/zip',
-            'Content-Length' => filesize($zipName),
+            'Content-Length' => filesize($zipPath),
             'Content-Disposition' => 'attachment; filename=Zaproszenia' . $zipName,));
 
         return $response->send();
