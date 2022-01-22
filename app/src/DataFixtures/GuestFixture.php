@@ -4,9 +4,10 @@ namespace App\DataFixtures;
 
 use App\Entity\Guest;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class GuestFixture extends Fixture
+class GuestFixture extends Fixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -18,15 +19,28 @@ class GuestFixture extends Fixture
             $guest->setLastName('Bobovsky' . $i);
             $guest->setAcceptation(($i%2) === 0);
             $guest->setSeatNumber($i);
-            $guest->setWedding($this->getReference('wedding'));
+
+            $wedding = $this->getReference('wedding');
+            $wedding->addGuest($guest);
+            $manager->persist($wedding);
+
+            $guest->setWedding($wedding);
+
             $guest->setInvitationSent(($i%2) === 0);
 
             if (($i%2) === 0) {
-                $guest->addConflictedGuest($this->getReference('guest' . $i));
+                $guest->addConflictedGuest($guest);
             }
 
-            $this->setReference('guest' . $i, $guest);
+            $this->addReference('guest' . $i, $guest);
+            
+            $manager->persist($guest);
         }
         $manager->flush();
+    }
+
+    public function getOrder(): int
+    {
+        return 5;
     }
 }

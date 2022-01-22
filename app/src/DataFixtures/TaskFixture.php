@@ -4,9 +4,10 @@ namespace App\DataFixtures;
 
 use App\Entity\Task;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class TaskFixture extends Fixture
+class TaskFixture extends Fixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -15,10 +16,21 @@ class TaskFixture extends Fixture
         $task->setName('testTask');
         $task->setDescription('testDesc');
         $task->setCompleted(true);
-        $task->setWedding($this->getReference('wedding'));
 
+        $wedding = $this->getReference('wedding');
+        $wedding->addTask($task);
+        $manager->persist($wedding);
+
+        $task->setWedding($wedding);
+
+        $manager->persist($task);
         $manager->flush();
 
-        $this->setReference('task', $task);
+        $this->addReference('task', $task);
+    }
+
+    public function getOrder(): int
+    {
+        return 6;
     }
 }

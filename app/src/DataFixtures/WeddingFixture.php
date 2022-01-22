@@ -4,12 +4,22 @@ namespace App\DataFixtures;
 
 
 use App\Entity\Wedding;
+use App\Repository\RoomRepository;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\Loader;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class WeddingFixture extends Fixture
+class WeddingFixture extends Fixture implements OrderedFixtureInterface
 {
+    protected RoomRepository $repository;
+
+    public function __construct(RoomRepository $repository) 
+    {
+        $this->repository = $repository;
+    }
+
     public function load(ObjectManager $manager): void
     {
         $wedding = new Wedding();
@@ -20,13 +30,16 @@ class WeddingFixture extends Fixture
         $wedding->setGroomFirstName('Pan');
         $wedding->setGroomLastName('Marian');
         $wedding->setOwner($this->getReference('user'));
-        $wedding->addCost($this->getReference('cost'));
-        $wedding->addTask($this->getReference('task'));
-        $wedding->addGuest($this->getReference('guest'));
-        $wedding->setRoom($this->getReference('room'));
+        $wedding->setRoom($this->repository->findOneBy(['name' => 'mała']));
 
+        $manager->persist($wedding);
         $manager->flush();
 
-        $this->setReference('wedding', $wedding);
+        $this->addReference('wedding', $wedding);
+    }
+
+    public function getOrder(): int
+    {
+        return 3;
     }
 }
