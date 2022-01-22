@@ -14,6 +14,7 @@ class TaskFormType extends AbstractType
         $builder
             ->add('name')
             // ->add('description')
+            ->add('person')
             // ->add('completed')
             // ->add('wedding')
         ;

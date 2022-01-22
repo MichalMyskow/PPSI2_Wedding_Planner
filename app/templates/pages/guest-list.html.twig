@@ -23,6 +23,9 @@
                     Dodaj gościa
                 </a>
             {% endif %}
+                <a href="{{ path('download_all_invitation') }}" class="guest-list__item-action guest-list__item-action--file-download" title="pobierz wszytkie zaproszenia">
+                    Pobierz wszytkie zaproszenia
+                </a>
             {% if not numberOfGuests == 0 and guestsWithoutInvite > 0 %}
                 <a href="{{ path('send_invitations') }}" class="main-link--first page-nav__item page-nav__item--envelope" title="wyślij zaproszenia">
                     Wyślij zaproszenia

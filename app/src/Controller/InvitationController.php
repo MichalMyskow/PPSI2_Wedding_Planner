@@ -7,8 +7,10 @@ use App\Entity\User;
 use App\Entity\Wedding;
 use App\Form\AcceptationFormType;
 use App\Service\GeneratorService;
+use App\Service\QrcodeService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\SnappyBundle\Snappy\Response\SnappyResponse;
+use Knp\Snappy\Image;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +19,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use ZipArchive;
 
 class InvitationController extends AbstractController
 {
@@ -34,7 +37,7 @@ class InvitationController extends AbstractController
     }
 
     #[Route('/send-invitations', name: 'send_invitations')]
-    public function sendInvitations(MailerInterface $mailer): Response
+    public function sendInvitations(MailerInterface $mailer, QrcodeService $qrcodeService): Response
     {
         /** @var User $user */
         $user = $this->tokenStorage->getToken()?->getUser() ?: null;
@@ -49,7 +52,8 @@ class InvitationController extends AbstractController
 
         $counter = 0;
         foreach ($guests as $guest) {
-            $image = $this->generatorService->generateImage($wedding, $guest);
+            $qrcode = $qrcodeService->qrcode($guest->getUuid()->toRfc4122());
+            $image = $this->generatorService->generateImage($wedding, $guest, $qrcode);
             $this->sendMail($guest, $wedding, $mailer, $image);
             ++$counter;
         }
@@ -58,7 +62,7 @@ class InvitationController extends AbstractController
     }
 
     #[Route('/send-invitation/{id}', name: 'send_invitation')]
-    public function sendInvitation(int $id, MailerInterface $mailer): Response
+    public function sendInvitation(int $id, MailerInterface $mailer, QrcodeService $qrcodeService): Response
     {
         /** @var User $user */
         $user = $this->tokenStorage->getToken()?->getUser() ?: null;
@@ -73,7 +77,8 @@ class InvitationController extends AbstractController
         /** @var Wedding $wedding */
         $wedding = $user->getWedding();
 
-        $image = $this->generatorService->generateImage($wedding, $guest);
+        $qrcode = $qrcodeService->qrcode($guest->getUuid()->toRfc4122());
+        $image = $this->generatorService->generateImage($wedding, $guest, $qrcode);
 
         $this->sendMail($guest, $wedding, $mailer, $image);
 
@@ -81,7 +86,7 @@ class InvitationController extends AbstractController
     }
 
     #[Route('/download-invitation/{id}', name: 'download_invitation')]
-    public function downloadInvitation(int $id): Response
+    public function downloadInvitation(int $id, QrcodeService $qrcodeService): Response
     {
         /** @var User $user */
         $user = $this->tokenStorage->getToken()?->getUser() ?: null;
@@ -96,13 +101,63 @@ class InvitationController extends AbstractController
         /** @var Wedding $wedding */
         $wedding = $user->getWedding();
 
-        $image = $this->generatorService->generateImage($wedding, $guest);
+        $qrcode = $qrcodeService->qrcode($guest->getUuid()->toRfc4122());
+        $image = $this->generatorService->generateImage($wedding, $guest, $qrcode);
 
         return new SnappyResponse(
             $image,
             sprintf('Zaproszenie-%s.png', $guest->getUuid()->toRfc4122()),
             'image/png'
         );
+    }
+
+    #[Route('/download-all-invitation', name: 'download_all_invitation')]
+    public function downloadAllInvitation(QrcodeService $qrcodeService): Response
+    {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()?->getUser() ?: null;
+
+        if ($user && !$user->getWedding()) {
+            return $this->redirectToRoute('create_wedding');
+        };
+
+        /** @var Wedding $wedding */
+        $wedding = $user->getWedding();
+        $guests = $wedding->getGuests();
+        $zipName = $wedding->GetId().'.zip';
+        $toDelate = [];
+
+        if(file_exists($zipName)){
+            unlink($zipName);
+        }
+        $zip = new ZipArchive;
+        $zip->open($zipName, ZipArchive::CREATE);
+
+        foreach ($guests as $guest) {
+            $qrcode = $qrcodeService->qrcode($guest->getUuid()->toRfc4122());
+            $image = $this->generatorService->getContentHTML($wedding, $guest, $qrcode);
+
+            $png = new Image($_ENV["WKHTMLTOIMAGE_PATH"]);
+            $path ='Zaproszenie.'.$guest->getFirstName().'.'.$guest->getLastName().'.'.$guest->getId().'.png';
+            array_push($toDelate, $path);
+
+            $png->generateFromHtml($image, $path);
+
+            $zip->addFile($path);
+        }
+
+        $zip->close();
+
+        foreach ($toDelate as $path) {
+            unlink($path);
+        }
+
+        $response = new Response(file_get_contents($zipName), 200, array(
+            'Content-Type' => 'application/zip',
+            'Content-Length' => filesize($zipName),
+            'Content-Disposition' => 'attachment; filename=Zaproszenia' . $zipName,));
+
+        return $response->send();
     }
 
     public function sendMail(Guest $guest, Wedding $wedding, MailerInterface $mailer, $image): void
@@ -143,7 +198,9 @@ class InvitationController extends AbstractController
         }
 
         if ($guest->getAcceptation()) {
-            return $this->render('pages/acceptation_confirmed.html.twig', []);
+            return $this->render('pages/acceptation_confirmed.html.twig', [
+                'uuid' => $guest->getUuid()->toRfc4122(),
+            ]);
         }
 
         $wedding = $guest->getWedding();

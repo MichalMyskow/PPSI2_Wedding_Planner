@@ -47,4 +47,5 @@ security:
         - { path: ^/accept-invitation/, roles: PUBLIC_ACCESS }
         - { path: ^/view-guest-placement/, roles: PUBLIC_ACCESS }
         - { path: ^/guest-placement/plan, roles: PUBLIC_ACCESS }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/, roles: ROLE_USER }

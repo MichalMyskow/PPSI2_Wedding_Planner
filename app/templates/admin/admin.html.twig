@@ -1,0 +1,44 @@
+{% extends 'layouts/app.html.twig' %}
+
+{% block style %} 
+        {{ encore_entry_link_tags('guest_list') }}
+{% endblock %}
+{% block main %}
+     <div class="main-margin-inline main-margin-block">
+
+        <section>
+            <div class="page-header">
+                <div class="page-header__content page-header__content--guest-list">
+                    <h2>Panel Administratorski</h2>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="page-nav">
+                <a class="page-nav__item page-nav__item--back main-link--first" href="{{ path('home') }}">
+                    Wróć
+                </a>
+            </div>
+        </section>
+        <section>
+            <div class="guest-list">
+                {% for user in users %}
+                <div class="guest-list__item">
+
+                    <div class="guest-list__item-details">
+                       Uzytkownik: {{ user.username }} {% if user.wedding %} Panna młoda: {{ user.wedding.brideFirstName}} {{ user.wedding.brideLastName}} Pan młody: {{ user.wedding.groomFirstName}} {{ user.wedding.groomLastName}} {% endif %}
+                    </div>
+                    <div class="guest-list__item-action-list">
+                        <a href="{{ path('admin_remove_user', {id: user.id}) }}" class="guest-list__item-action guest-list__item-action--delete" title="usuń użytkownika"></a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+
+        </div>
+{% endblock %}
+{% block script %} 
+        {{ encore_entry_script_tags('guest_list') }}
+{% endblock %}
